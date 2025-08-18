@@ -1,0 +1,30 @@
+description: "Wildnis-Retter – ein kindgerechtes Flutter-Spiel (7–14 Jahre) mit Missionen, Stickerbuch, Elternbereich und Firebase-Backend."
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+  flutter_riverpod: ^2.5.1
+  shared_preferences: ^2.2.3
+  firebase_core: ^3.4.0
+  firebase_auth: ^5.2.0
+  cloud_firestore: ^5.4.2
+  firebase_storage: ^12.2.0
+  in_app_purchase: ^3.2.0
+  audioplayers: ^5.2.1
+uses-material-design: true
+generate: true
+
+# Localization configuration (Flutter gen-l10n)
+gen-l10n:
+  arb-dir: lib/l10n
+  template-arb-file: app_de.arb
+  output-localization-file: app_localizations.dart
+  output-class: L10n
+  untranslated-messages-file: l10n_untranslated.txt
+  preferred-supported-locales:
+    - de
+    - ru
+    - tg
