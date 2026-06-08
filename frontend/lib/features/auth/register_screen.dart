@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../core/providers.dart';
 import 'auth_controller.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final _email = TextEditingController();
   final _password = TextEditingController();
+  final _firstName = TextEditingController();
+  final _lastName = TextEditingController();
+  String _role = 'SENDER';
 
   @override
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _firstName.dispose();
+    _lastName.dispose();
     super.dispose();
   }
 
@@ -28,7 +32,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       ref
           .read(authControllerProvider.notifier)
-          .login(email: _email.text.trim(), password: _password.text);
+          .register(
+            email: _email.text.trim(),
+            password: _password.text,
+            firstName: _firstName.text.trim(),
+            lastName: _lastName.text.trim(),
+            role: _role,
+          );
     }
   }
 
@@ -37,22 +47,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final auth = ref.watch(authControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Anmelden')),
+      appBar: AppBar(title: const Text('Registrieren')),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
-          child: Padding(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    'TJ-Shipping',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                  TextFormField(
+                    key: const Key('firstName'),
+                    controller: _firstName,
+                    decoration: const InputDecoration(labelText: 'Vorname'),
+                    validator: (v) =>
+                        (v == null || v.isEmpty) ? 'Pflichtfeld' : null,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    key: const Key('lastName'),
+                    controller: _lastName,
+                    decoration: const InputDecoration(labelText: 'Nachname'),
+                    validator: (v) =>
+                        (v == null || v.isEmpty) ? 'Pflichtfeld' : null,
+                  ),
+                  const SizedBox(height: 12),
                   TextFormField(
                     key: const Key('email'),
                     controller: _email,
@@ -71,6 +92,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     validator: (v) => (v == null || v.length < 8)
                         ? 'Mindestens 8 Zeichen'
                         : null,
+                  ),
+                  const SizedBox(height: 12),
+                  DropdownButtonFormField<String>(
+                    key: const Key('role'),
+                    initialValue: _role,
+                    decoration: const InputDecoration(
+                      labelText: 'Ich möchte …',
+                    ),
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'SENDER',
+                        child: Text('Pakete senden'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'TRAVELER',
+                        child: Text('Platz anbieten'),
+                      ),
+                      DropdownMenuItem(value: 'BOTH', child: Text('Beides')),
+                    ],
+                    onChanged: (v) => setState(() => _role = v ?? 'SENDER'),
                   ),
                   const SizedBox(height: 24),
                   if (auth.status == AuthStatus.error && auth.error != null)
@@ -93,12 +134,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               width: 20,
                               child: CircularProgressIndicator(strokeWidth: 2),
                             )
-                          : const Text('Anmelden'),
+                          : const Text('Konto erstellen'),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () => context.push('/register'),
-                    child: const Text('Noch kein Konto? Registrieren'),
                   ),
                 ],
               ),

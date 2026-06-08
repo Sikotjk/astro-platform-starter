@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
+import '../features/kyc/kyc_controller.dart';
+import '../features/kyc/kyc_repository.dart';
 import '../features/trips/trips_controller.dart';
 import '../features/trips/trips_repository.dart';
 import '../models/trip.dart';
@@ -34,3 +36,11 @@ final tripsControllerProvider =
     StateNotifierProvider<TripsController, AsyncValue<List<Trip>>>(
       (ref) => TripsController(ref.watch(tripsRepositoryProvider)),
     );
+
+final kycRepositoryProvider = Provider<KycRepository>(
+  (ref) => DioKycRepository(ref.watch(apiClientProvider).dio),
+);
+
+final kycControllerProvider = StateNotifierProvider<KycController, KycState>(
+  (ref) => KycController(ref.watch(kycRepositoryProvider)),
+);
