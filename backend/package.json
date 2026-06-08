@@ -4,21 +4,38 @@
   "description": "P2P-Crowdshipping backend (Tadschikistan-Route) — NestJS + Prisma + PostgreSQL",
   "private": true,
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/main.js",
+    "start:dev": "ts-node src/main.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "db:seed": "ts-node prisma/seed.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@nestjs/common": "^10.4.15",
+    "@nestjs/config": "^3.3.0",
+    "@nestjs/core": "^10.4.15",
+    "@nestjs/jwt": "^10.2.0",
+    "@nestjs/platform-express": "^10.4.15",
     "@prisma/client": "^5.22.0",
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
     "stripe": "^17.5.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.12.7",
     "prisma": "^5.22.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",
