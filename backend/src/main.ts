@@ -2,11 +2,13 @@ import 'reflect-metadata';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { DomainExceptionFilter } from './common/domain-exception.filter';
 
 async function bootstrap(): Promise<void> {
   // rawBody:true ist nötig, damit der Stripe-Webhook die Signatur prüfen kann.
   const app = await NestFactory.create(AppModule, { rawBody: true });
 
+  app.useGlobalFilters(new DomainExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // unbekannte Felder verwerfen

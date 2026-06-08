@@ -1,6 +1,7 @@
 // In-Memory-Implementierung des PaymentGateway für Tests & lokale Entwicklung.
 // Protokolliert alle Aufrufe und prüft Idempotenz, ohne Stripe zu kontaktieren.
 
+import { randomBytes } from 'node:crypto';
 import type {
   PaymentGateway,
   CreateEscrowInput,
@@ -10,6 +11,10 @@ import type {
   RefundInput,
   RefundResult,
 } from './payment.gateway';
+
+// Zufallssuffix, damit Fake-IDs auch über App-Neustarts hinweg eindeutig sind
+// (paymentIntentId/transferId sind in der DB unique).
+const rand = () => randomBytes(6).toString('hex');
 
 export interface FakeCall {
   type: 'createEscrow' | 'releaseEscrow' | 'refund';
@@ -25,7 +30,7 @@ export class FakePaymentGateway implements PaymentGateway {
 
   async createEscrow(input: CreateEscrowInput): Promise<CreateEscrowResult> {
     this.calls.push({ type: 'createEscrow', bookingId: input.bookingId, amountMinor: input.amountMinor });
-    const id = `pi_fake_${++this.seq}`;
+    const id = `pi_fake_${++this.seq}_${rand()}`;
     return { paymentIntentId: id, clientSecret: `${id}_secret` };
   }
 
@@ -40,7 +45,7 @@ export class FakePaymentGateway implements PaymentGateway {
       amountMinor: input.payoutMinor,
       idempotencyKey: input.idempotencyKey,
     });
-    const id = `tr_fake_${++this.seq}`;
+    const id = `tr_fake_${++this.seq}_${rand()}`;
     this.seenIdempotencyKeys.set(input.idempotencyKey, id);
     return { transferId: id };
   }
@@ -55,7 +60,7 @@ export class FakePaymentGateway implements PaymentGateway {
       amountMinor: input.amountMinor,
       idempotencyKey: input.idempotencyKey,
     });
-    const id = `re_fake_${++this.seq}`;
+    const id = `re_fake_${++this.seq}_${rand()}`;
     this.seenIdempotencyKeys.set(input.idempotencyKey, id);
     return { refundId: id };
   }
