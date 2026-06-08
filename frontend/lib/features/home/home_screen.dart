@@ -32,6 +32,12 @@ class HomeScreen extends ConsumerWidget {
               label: const Text('Trips suchen'),
             ),
             const SizedBox(height: 12),
+            FilledButton.tonalIcon(
+              onPressed: () => context.push('/bookings'),
+              icon: const Icon(Icons.inventory_2),
+              label: const Text('Meine Buchungen'),
+            ),
+            const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: () => context.push('/kyc'),
               icon: const Icon(Icons.verified_user),

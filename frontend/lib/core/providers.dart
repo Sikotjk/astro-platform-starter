@@ -2,10 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
+import '../features/bookings/bookings_controller.dart';
+import '../features/bookings/bookings_repository.dart';
 import '../features/kyc/kyc_controller.dart';
 import '../features/kyc/kyc_repository.dart';
 import '../features/trips/trips_controller.dart';
 import '../features/trips/trips_repository.dart';
+import '../models/booking.dart';
 import '../models/trip.dart';
 import 'api_client.dart';
 import 'token_store.dart';
@@ -44,3 +47,12 @@ final kycRepositoryProvider = Provider<KycRepository>(
 final kycControllerProvider = StateNotifierProvider<KycController, KycState>(
   (ref) => KycController(ref.watch(kycRepositoryProvider)),
 );
+
+final bookingsRepositoryProvider = Provider<BookingsRepository>(
+  (ref) => DioBookingsRepository(ref.watch(apiClientProvider).dio),
+);
+
+final bookingsControllerProvider =
+    StateNotifierProvider<BookingsController, AsyncValue<List<BookingSummary>>>(
+      (ref) => BookingsController(ref.watch(bookingsRepositoryProvider)),
+    );
