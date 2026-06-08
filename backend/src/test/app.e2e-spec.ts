@@ -567,3 +567,53 @@ describe('Push-Geräteregistrierung', () => {
     expect(list.body.length).toBe(0);
   });
 });
+
+describe('Account & Dashboard', () => {
+  it('GET /me liefert das Profil ohne sensible Felder', async () => {
+    const r = await request(http()).get('/me').set(auth(state.senderToken));
+    expect(r.status).toBe(200);
+    expect(r.body.email).toBe('sender@e2e.de');
+    expect(r.body.passwordHash).toBeUndefined();
+    expect(r.body.kycSessionId).toBeUndefined();
+  });
+
+  it('PATCH /me aktualisiert Name und Sprache', async () => {
+    const r = await request(http())
+      .patch('/me')
+      .set(auth(state.senderToken))
+      .send({ firstName: 'Anvar', preferredLocale: 'ru' });
+    expect(r.status).toBe(200);
+    expect(r.body.firstName).toBe('Anvar');
+    expect(r.body.preferredLocale).toBe('ru');
+  });
+
+  it('PATCH /me lehnt ungültige Sprache ab (400)', async () => {
+    const r = await request(http())
+      .patch('/me')
+      .set(auth(state.senderToken))
+      .send({ preferredLocale: 'fr' });
+    expect(r.status).toBe(400);
+  });
+
+  it('GET /bookings listet die eigenen Buchungen des Senders', async () => {
+    const r = await request(http()).get('/bookings').set(auth(state.senderToken));
+    expect(r.status).toBe(200);
+    expect(r.body.length).toBe(2);
+    expect(r.body[0].package.title).toBeDefined();
+    expect(r.body[0].trip.originAirport).toBeDefined();
+  });
+
+  it('GET /bookings?role=TRAVELER liefert für den Sender nichts', async () => {
+    const r = await request(http()).get('/bookings?role=TRAVELER').set(auth(state.senderToken));
+    expect(r.body.length).toBe(0);
+  });
+
+  it('GET /bookings?status=... filtert nach Status', async () => {
+    const confirmed = await request(http())
+      .get('/bookings?status=CONFIRMED')
+      .set(auth(state.senderToken));
+    expect(confirmed.body.length).toBe(2);
+    const paid = await request(http()).get('/bookings?status=PAID').set(auth(state.senderToken));
+    expect(paid.body.length).toBe(0);
+  });
+});

@@ -9,7 +9,12 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { BookingService } from './booking.service';
 import type { Actor, BookingStatus } from './booking.machine';
-import { CreateBookingDto } from './dto/booking.dto';
+import { CreateBookingDto, ListBookingsDto } from './dto/booking.dto';
+import {
+  buildBookingListWhere,
+  parseStatusFilter,
+  type BookingListRole,
+} from './booking-list.filter';
 
 @Injectable()
 export class BookingsService {
@@ -100,6 +105,38 @@ export class BookingsService {
     const booking = await this.requireBooking(bookingId);
     const actor = this.resolveActor(userId, role, booking.senderId, booking.travelerId);
     return this.domain.transition(bookingId, to, actor);
+  }
+
+  // ── "Meine Buchungen": Liste mit Rollen-/Statusfilter + Pagination ───────────
+  async listForUser(userId: string, dto: ListBookingsDto) {
+    const where = buildBookingListWhere(userId, {
+      role: dto.role as BookingListRole | undefined,
+      statuses: parseStatusFilter(dto.status),
+    }) as Prisma.BookingWhereInput;
+
+    return this.prisma.booking.findMany({
+      where,
+      orderBy: { updatedAt: 'desc' },
+      take: Math.min(dto.take ?? 20, 100),
+      skip: dto.skip ?? 0,
+      select: {
+        id: true,
+        status: true,
+        paymentStatus: true,
+        itemPrice: true,
+        serviceFee: true,
+        totalAmount: true,
+        currency: true,
+        senderId: true,
+        travelerId: true,
+        createdAt: true,
+        updatedAt: true,
+        package: { select: { title: true, weightKg: true } },
+        trip: {
+          select: { originAirport: true, destinationAirport: true, departureAt: true },
+        },
+      },
+    });
   }
 
   async findOne(userId: string, bookingId: string) {

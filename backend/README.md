@@ -24,6 +24,7 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **Dispute-/Mediation-Tooling:** `Dispute`-Modell, Admin-Rolle/Guard, Eröffnen + Admin-Auflösung (`src/disputes/`, E2E verifiziert)
 - [x] **Saved Searches + Match-Alerts:** gespeicherte Suchen lösen bei passenden neuen Trips In-App-Benachrichtigungen aus (`src/alerts/`, E2E verifiziert)
 - [x] **Push-Versand:** `PushSender`-Interface (FCM/APNs-Relay) + Fake, Geräte-Token-Registrierung; Alerts pushen zusätzlich an registrierte Geräte (`src/push/`)
+- [x] **Account & Dashboard:** `GET/PATCH /me` (Profil) + `GET /bookings` (eigene Buchungen, Rollen-/Statusfilter, Pagination)
 
 ## Setup
 
@@ -99,6 +100,8 @@ CONFIRMED ──releaseEscrow()──> Transfer itemPrice an Traveler-Connect-Ac
 | Methode & Pfad | Auth | Zweck |
 | --- | --- | --- |
 | `POST /auth/register` · `POST /auth/login` | – | JWT erhalten |
+| `GET /me` · `PATCH /me` | JWT | eigenes Profil lesen/aktualisieren |
+| `GET /bookings?role=&status=&take=&skip=` | JWT | eigene Buchungen (Rollen-/Statusfilter, Pagination) |
 | `POST /kyc/session` | JWT | Identitätsprüfung starten → `clientSecret`, Status PENDING |
 | `GET /kyc/status` | JWT | aktuellen KYC-Status abfragen |
 | `POST /webhooks/stripe-identity` | Signatur | `…verified` → `kycStatus=VERIFIED` (idempotent) |

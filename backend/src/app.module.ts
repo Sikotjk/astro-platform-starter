@@ -13,12 +13,14 @@ import { ReviewsModule } from './reviews/reviews.module';
 import { DisputesModule } from './disputes/disputes.module';
 import { AlertsModule } from './alerts/alerts.module';
 import { PushModule } from './push/push.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule,
     AuthModule,
+    UsersModule,
     TripsModule,
     PackagesModule,
     CustomsModule,

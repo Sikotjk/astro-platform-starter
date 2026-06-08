@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
-import { CreateBookingDto } from './dto/booking.dto';
+import { CreateBookingDto, ListBookingsDto } from './dto/booking.dto';
 import { JwtAuthGuard } from '../common/jwt-auth.guard';
 import { CurrentUser } from '../common/current-user.decorator';
 import type { AuthUser } from '../common/jwt-auth.guard';
@@ -13,6 +13,12 @@ export class BookingsController {
   @Post()
   create(@CurrentUser() u: AuthUser, @Body() dto: CreateBookingDto) {
     return this.bookings.create(u.userId, dto);
+  }
+
+  /** "Meine Buchungen" mit optionalem Rollen-/Statusfilter. */
+  @Get()
+  list(@CurrentUser() u: AuthUser, @Query() query: ListBookingsDto) {
+    return this.bookings.listForUser(u.userId, query);
   }
 
   @Get(':id')
