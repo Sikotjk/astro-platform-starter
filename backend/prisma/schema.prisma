@@ -112,11 +112,31 @@ model User {
   reviewsReceived    Review[]  @relation("ReviewTarget")
   savedSearches      SavedSearch[]
   notifications      Notification[]
+  deviceTokens       DeviceToken[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([kycStatus])
+}
+
+enum DevicePlatform {
+  IOS
+  ANDROID
+  WEB
+}
+
+// Registriertes Push-Token eines Geräts (für FCM/APNs-Versand).
+model DeviceToken {
+  id       String         @id @default(cuid())
+  userId   String
+  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token    String         @unique
+  platform DevicePlatform
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 // Gespeicherte Suche eines Senders -> löst Benachrichtigungen aus, sobald ein

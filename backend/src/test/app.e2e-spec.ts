@@ -528,3 +528,42 @@ describe('Saved Searches & Match-Benachrichtigungen', () => {
     expect(unread.body.length).toBe(0);
   });
 });
+
+describe('Push-Geräteregistrierung', () => {
+  it('registriert ein Geräte-Token (idempotent) und listet es', async () => {
+    const reg = await request(http())
+      .post('/devices')
+      .set(auth(state.senderToken))
+      .send({ token: 'fcm-token-abcdefghij', platform: 'ANDROID' });
+    expect(reg.status).toBe(201);
+    state.deviceId = reg.body.id;
+
+    // gleiches Token erneut -> kein Duplikat (upsert)
+    await request(http())
+      .post('/devices')
+      .set(auth(state.senderToken))
+      .send({ token: 'fcm-token-abcdefghij', platform: 'ANDROID' })
+      .expect(201);
+
+    const list = await request(http()).get('/devices').set(auth(state.senderToken));
+    expect(list.body.length).toBe(1);
+    expect(list.body[0].platform).toBe('ANDROID');
+  });
+
+  it('lehnt zu kurze Tokens ab (400)', async () => {
+    const r = await request(http())
+      .post('/devices')
+      .set(auth(state.senderToken))
+      .send({ token: 'short', platform: 'IOS' });
+    expect(r.status).toBe(400);
+  });
+
+  it('entfernt ein Gerät', async () => {
+    await request(http())
+      .delete(`/devices/${state.deviceId}`)
+      .set(auth(state.senderToken))
+      .expect(200);
+    const list = await request(http()).get('/devices').set(auth(state.senderToken));
+    expect(list.body.length).toBe(0);
+  });
+});

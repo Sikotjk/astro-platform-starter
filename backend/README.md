@@ -23,6 +23,7 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **Code-Qualität:** ESLint (Flat-Config) + Prettier, als CI-Steps verankert (`npm run lint`, `npm run format:check`)
 - [x] **Dispute-/Mediation-Tooling:** `Dispute`-Modell, Admin-Rolle/Guard, Eröffnen + Admin-Auflösung (`src/disputes/`, E2E verifiziert)
 - [x] **Saved Searches + Match-Alerts:** gespeicherte Suchen lösen bei passenden neuen Trips In-App-Benachrichtigungen aus (`src/alerts/`, E2E verifiziert)
+- [x] **Push-Versand:** `PushSender`-Interface (FCM/APNs-Relay) + Fake, Geräte-Token-Registrierung; Alerts pushen zusätzlich an registrierte Geräte (`src/push/`)
 
 ## Setup
 
@@ -111,6 +112,7 @@ CONFIRMED ──releaseEscrow()──> Transfer itemPrice an Traveler-Connect-Ac
 | `POST\|GET /saved-searches` · `DELETE /saved-searches/:id` | JWT | gespeicherte Suchen verwalten |
 | `GET /notifications?unread=true` | JWT | Benachrichtigungen (Match-Alerts) abrufen |
 | `POST /notifications/:id/read` · `POST /notifications/read-all` | JWT | als gelesen markieren |
+| `POST\|GET /devices` · `DELETE /devices/:id` | JWT | Push-Geräte-Tokens (FCM/APNs) verwalten |
 | `GET /users/:id/reviews` | – | öffentliches Bewertungsprofil |
 | `POST /trips` | JWT (KYC) | Trip anbieten |
 | `GET /trips` | – | Match-Suche (Route/Datum/freie kg) |
