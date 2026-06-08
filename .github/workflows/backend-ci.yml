@@ -60,6 +60,12 @@ jobs:
       - name: Apply migrations
         run: npx prisma migrate deploy
 
+      - name: Lint (ESLint)
+        run: npm run lint
+
+      - name: Format check (Prettier)
+        run: npm run format:check
+
       - name: Typecheck
         run: npm run typecheck
 

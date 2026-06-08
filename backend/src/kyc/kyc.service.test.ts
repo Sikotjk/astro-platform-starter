@@ -36,7 +36,11 @@ describe('startVerification', () => {
 describe('handleEvent (Webhook)', () => {
   it('setzt VERIFIED bei verified-Event', async () => {
     const { sessionId } = await service.startVerification('u1');
-    const r = await service.handleEvent('evt_1', 'identity.verification_session.verified', sessionId);
+    const r = await service.handleEvent(
+      'evt_1',
+      'identity.verification_session.verified',
+      sessionId,
+    );
     expect(r).toMatchObject({ processed: true, status: 'VERIFIED' });
     expect(await service.getStatus('u1')).toBe('VERIFIED');
   });
@@ -49,8 +53,16 @@ describe('handleEvent (Webhook)', () => {
 
   it('ist idempotent (dasselbe Event zweimal)', async () => {
     const { sessionId } = await service.startVerification('u1');
-    const first = await service.handleEvent('evt_dup', 'identity.verification_session.verified', sessionId);
-    const second = await service.handleEvent('evt_dup', 'identity.verification_session.verified', sessionId);
+    const first = await service.handleEvent(
+      'evt_dup',
+      'identity.verification_session.verified',
+      sessionId,
+    );
+    const second = await service.handleEvent(
+      'evt_dup',
+      'identity.verification_session.verified',
+      sessionId,
+    );
     expect(first.processed).toBe(true);
     expect(second.processed).toBe(false);
   });

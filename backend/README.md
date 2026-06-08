@@ -20,6 +20,7 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **Automatisierte E2E-Tests:** 18 supertest-Integrationstests gegen echte App+DB (`src/test/app.e2e-spec.ts`)
 - [x] **CI-Pipeline:** GitHub Actions (`.github/workflows/backend-ci.yml`) — typecheck/build/unit/e2e, live grün
 - [x] **Docker-Compose:** `docker compose up --build` (PostgreSQL + API, Auto-Migration)
+- [x] **Code-Qualität:** ESLint (Flat-Config) + Prettier, als CI-Steps verankert (`npm run lint`, `npm run format:check`)
 
 ## Setup
 

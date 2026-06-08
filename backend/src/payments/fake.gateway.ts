@@ -29,7 +29,11 @@ export class FakePaymentGateway implements PaymentGateway {
   private readonly seenIdempotencyKeys = new Map<string, string>();
 
   async createEscrow(input: CreateEscrowInput): Promise<CreateEscrowResult> {
-    this.calls.push({ type: 'createEscrow', bookingId: input.bookingId, amountMinor: input.amountMinor });
+    this.calls.push({
+      type: 'createEscrow',
+      bookingId: input.bookingId,
+      amountMinor: input.amountMinor,
+    });
     const id = `pi_fake_${++this.seq}_${rand()}`;
     return { paymentIntentId: id, clientSecret: `${id}_secret` };
   }

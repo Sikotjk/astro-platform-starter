@@ -105,7 +105,10 @@ export class BookingsService {
   async findOne(userId: string, bookingId: string) {
     const booking = await this.prisma.booking.findUnique({
       where: { id: bookingId },
-      include: { statusEvents: { orderBy: { createdAt: 'asc' } }, package: { include: { items: true } } },
+      include: {
+        statusEvents: { orderBy: { createdAt: 'asc' } },
+        package: { include: { items: true } },
+      },
     });
     if (!booking) throw new NotFoundException('Buchung nicht gefunden.');
     if (booking.senderId !== userId && booking.travelerId !== userId) {
@@ -114,12 +117,7 @@ export class BookingsService {
     return booking;
   }
 
-  private resolveActor(
-    userId: string,
-    role: string,
-    senderId: string,
-    travelerId: string,
-  ): Actor {
+  private resolveActor(userId: string, role: string, senderId: string, travelerId: string): Actor {
     if (role === 'ADMIN') return 'ADMIN';
     if (userId === senderId) return 'SENDER';
     if (userId === travelerId) return 'TRAVELER';

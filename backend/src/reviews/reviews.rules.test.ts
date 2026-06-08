@@ -3,7 +3,9 @@ import { resolveReviewTarget, nextRatingAggregate, ReviewError } from './reviews
 import type { ReviewableBooking } from './reviews.rules';
 
 const b = (status: ReviewableBooking['status']): ReviewableBooking => ({
-  senderId: 's1', travelerId: 't1', status,
+  senderId: 's1',
+  travelerId: 't1',
+  status,
 });
 
 describe('resolveReviewTarget', () => {
@@ -21,7 +23,10 @@ describe('resolveReviewTarget', () => {
 
 describe('nextRatingAggregate', () => {
   it('berechnet den ersten Durchschnitt', () => {
-    expect(nextRatingAggregate({ ratingAvg: 0, ratingCount: 0 }, 5)).toEqual({ ratingAvg: 5, ratingCount: 1 });
+    expect(nextRatingAggregate({ ratingAvg: 0, ratingCount: 0 }, 5)).toEqual({
+      ratingAvg: 5,
+      ratingCount: 1,
+    });
   });
   it('mittelt korrekt und rundet auf 2 Stellen', () => {
     const r = nextRatingAggregate({ ratingAvg: 4, ratingCount: 2 }, 5); // (4+4+5)/3 = 4.333

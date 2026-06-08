@@ -153,7 +153,17 @@ export const BLOCKLIST: ReadonlyArray<BlocklistEntry> = [
   },
   {
     code: 'BLOCK_DRUGS',
-    keywords: ['drogen', 'drug', 'narcot', 'kokain', 'cocaine', 'heroin', 'cannabis', 'marij', 'наркот'],
+    keywords: [
+      'drogen',
+      'drug',
+      'narcot',
+      'kokain',
+      'cocaine',
+      'heroin',
+      'cannabis',
+      'marij',
+      'наркот',
+    ],
     reason: {
       de: 'Betäubungsmittel/Drogen sind strikt verboten.',
       ru: 'Наркотические средства строго запрещены.',

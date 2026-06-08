@@ -21,7 +21,11 @@ export class ManifestPdfService {
     @Inject(MANIFEST_PDF_RENDERER) private readonly renderer: ManifestPdfRenderer,
   ) {}
 
-  async generate(bookingId: string, userId: string, locale: Locale = 'de'): Promise<RenderedManifest> {
+  async generate(
+    bookingId: string,
+    userId: string,
+    locale: Locale = 'de',
+  ): Promise<RenderedManifest> {
     const booking = await this.prisma.booking.findUnique({
       where: { id: bookingId },
       include: {
@@ -38,7 +42,9 @@ export class ManifestPdfService {
     // Das offizielle Manifest existiert erst, wenn der Traveler den Inhalt
     // bestätigt hat (Beweiskette). Vorher gibt es nur die Zoll-Vorschau.
     if (!booking.travelerAcceptedTermsAt) {
-      throw new BookingStateError('Traveler hat den Inhalt noch nicht bestätigt — Manifest noch nicht verfügbar.');
+      throw new BookingStateError(
+        'Traveler hat den Inhalt noch nicht bestätigt — Manifest noch nicht verfügbar.',
+      );
     }
 
     const items: DeclarationItemInput[] = booking.package.items.map((i) => ({
@@ -53,7 +59,11 @@ export class ManifestPdfService {
     const manifest = buildManifest({
       bookingId: booking.id,
       sender: { fullName: `${booking.sender.firstName} ${booking.sender.lastName}` },
-      recipient: { fullName: booking.package.recipientName, city: booking.package.recipientCity, phone: booking.package.recipientPhone },
+      recipient: {
+        fullName: booking.package.recipientName,
+        city: booking.package.recipientCity,
+        phone: booking.package.recipientPhone,
+      },
       traveler: { fullName: `${booking.traveler.firstName} ${booking.traveler.lastName}` },
       trip: {
         originAirport: booking.trip.originAirport,

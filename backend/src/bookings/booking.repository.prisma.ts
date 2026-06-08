@@ -7,11 +7,7 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { eurosToMinor } from '../common/money';
 import type { BookingStatus } from './booking.machine';
-import type {
-  BookingRecord,
-  BookingRepository,
-  ApplyTransitionInput,
-} from './booking.repository';
+import type { BookingRecord, BookingRepository, ApplyTransitionInput } from './booking.repository';
 
 type BookingWithParties = Prisma.BookingGetPayload<{
   include: { sender: true; traveler: true };
@@ -61,7 +57,8 @@ export class PrismaBookingRepository implements BookingRepository {
     return this.prisma.$transaction(async (tx) => {
       const data: Prisma.BookingUpdateManyMutationInput = { status: input.to };
       if (input.patch?.paymentStatus !== undefined) data.paymentStatus = input.patch.paymentStatus;
-      if (input.patch?.paymentIntentId !== undefined) data.paymentIntentId = input.patch.paymentIntentId;
+      if (input.patch?.paymentIntentId !== undefined)
+        data.paymentIntentId = input.patch.paymentIntentId;
       if (input.patch?.transferId !== undefined) data.transferId = input.patch.transferId;
 
       // Optimistic concurrency: nur aktualisieren, wenn Status noch `from` ist.

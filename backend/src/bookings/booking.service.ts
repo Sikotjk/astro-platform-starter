@@ -165,7 +165,8 @@ export class BookingService {
       throw new BookingStateError('Escrow wurde für dieses Booking bereits ausgezahlt.');
     }
     if (!b.paymentIntentId) throw new BookingStateError('Kein PaymentIntent zum Auszahlen.');
-    if (!b.travelerStripeAccountId) throw new BookingStateError('Traveler hat keinen Connect-Account.');
+    if (!b.travelerStripeAccountId)
+      throw new BookingStateError('Traveler hat keinen Connect-Account.');
 
     // Externer Call zuerst (idempotent), danach DB-Persistierung.
     const { transferId } = await this.payments.releaseEscrow({

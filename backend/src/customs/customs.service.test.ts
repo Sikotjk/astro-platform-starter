@@ -28,13 +28,17 @@ describe('Grundentscheidungen', () => {
   });
 
   it('WARN bei Elektronik über Wertgrenze', () => {
-    const r = svc.evaluate([item({ category: 'ELECTRONICS', description: 'Laptop', unitValueEur: 800 })]);
+    const r = svc.evaluate([
+      item({ category: 'ELECTRONICS', description: 'Laptop', unitValueEur: 800 }),
+    ]);
     expect(r.level).toBe('WARN');
     expect(r.findings[0].codes).toContain('ELECTRONICS_DUTY_OVER_THRESHOLD');
   });
 
   it('Elektronik unter Wertgrenze warnt nur kategorienbedingt, aber nicht über Schwelle', () => {
-    const r = svc.evaluate([item({ category: 'ELECTRONICS', description: 'Kopfhörer', unitValueEur: 50 })]);
+    const r = svc.evaluate([
+      item({ category: 'ELECTRONICS', description: 'Kopfhörer', unitValueEur: 50 }),
+    ]);
     expect(r.findings[0].codes).not.toContain('ELECTRONICS_DUTY_OVER_THRESHOLD');
   });
 });
@@ -67,7 +71,9 @@ describe('Versiegelt & Gesamtwert', () => {
   });
 
   it('warnt bei Gesamtwert über zollfreier Grenze', () => {
-    const r = svc.evaluate([item({ category: 'GIFTS', description: 'Schmuck', quantity: 1, unitValueEur: 1200 })]);
+    const r = svc.evaluate([
+      item({ category: 'GIFTS', description: 'Schmuck', quantity: 1, unitValueEur: 1200 }),
+    ]);
     expect(r.globalMessages.length).toBeGreaterThan(0);
     expect(r.totalValueEur).toBe(1200);
   });

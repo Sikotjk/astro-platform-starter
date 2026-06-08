@@ -3,11 +3,7 @@
 // Webhook-Idempotenz, ohne PostgreSQL.
 
 import type { BookingStatus, Actor } from './booking.machine';
-import type {
-  BookingRecord,
-  BookingRepository,
-  ApplyTransitionInput,
-} from './booking.repository';
+import type { BookingRecord, BookingRepository, ApplyTransitionInput } from './booking.repository';
 
 export interface StatusEvent {
   bookingId: string;
@@ -46,9 +42,7 @@ export class InMemoryBookingRepository implements BookingRepository {
 
     // Optimistic Concurrency: Status muss noch dem erwarteten `from` entsprechen.
     if (current.status !== input.from) {
-      throw new Error(
-        `Concurrency-Konflikt: erwartet ${input.from}, ist ${current.status}.`,
-      );
+      throw new Error(`Concurrency-Konflikt: erwartet ${input.from}, ist ${current.status}.`);
     }
 
     const updated: BookingRecord = {

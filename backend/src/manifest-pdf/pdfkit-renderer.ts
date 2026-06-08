@@ -14,30 +14,60 @@ import type { Locale } from '../customs/customs.types';
 const LABELS: Record<Locale, Record<string, string>> = {
   de: {
     title: 'Frachtmanifest / Zoll-Deklaration',
-    booking: 'Buchung', sender: 'Absender', recipient: 'Empfänger',
-    traveler: 'Transporteur', route: 'Route', departure: 'Abflug',
-    category: 'Kategorie', description: 'Beschreibung', qty: 'Menge', value: 'Wert (EUR)',
-    total: 'Gesamtwert', accepted: 'Bestätigt vom Reisenden am', ruleset: 'Regelwerk',
+    booking: 'Buchung',
+    sender: 'Absender',
+    recipient: 'Empfänger',
+    traveler: 'Transporteur',
+    route: 'Route',
+    departure: 'Abflug',
+    category: 'Kategorie',
+    description: 'Beschreibung',
+    qty: 'Menge',
+    value: 'Wert (EUR)',
+    total: 'Gesamtwert',
+    accepted: 'Bestätigt vom Reisenden am',
+    ruleset: 'Regelwerk',
     hash: 'Integritäts-Hash (SHA-256)',
-    disclaimer: 'Der Absender bestätigt die Richtigkeit dieser Angaben. Der Reisende befördert ausschließlich den deklarierten Inhalt.',
+    disclaimer:
+      'Der Absender bestätigt die Richtigkeit dieser Angaben. Der Reisende befördert ausschließlich den deklarierten Inhalt.',
   },
   ru: {
     title: 'Грузовой манифест / Таможенная декларация',
-    booking: 'Бронирование', sender: 'Отправитель', recipient: 'Получатель',
-    traveler: 'Перевозчик', route: 'Маршрут', departure: 'Вылет',
-    category: 'Категория', description: 'Описание', qty: 'Кол-во', value: 'Стоимость (EUR)',
-    total: 'Общая стоимость', accepted: 'Подтверждено путешественником', ruleset: 'Версия правил',
+    booking: 'Бронирование',
+    sender: 'Отправитель',
+    recipient: 'Получатель',
+    traveler: 'Перевозчик',
+    route: 'Маршрут',
+    departure: 'Вылет',
+    category: 'Категория',
+    description: 'Описание',
+    qty: 'Кол-во',
+    value: 'Стоимость (EUR)',
+    total: 'Общая стоимость',
+    accepted: 'Подтверждено путешественником',
+    ruleset: 'Версия правил',
     hash: 'Хеш целостности (SHA-256)',
-    disclaimer: 'Отправитель подтверждает достоверность данных. Путешественник перевозит только заявленное содержимое.',
+    disclaimer:
+      'Отправитель подтверждает достоверность данных. Путешественник перевозит только заявленное содержимое.',
   },
   tg: {
     title: 'Манифести бор / Декларатсияи гумрукӣ',
-    booking: 'Фармоиш', sender: 'Фиристанда', recipient: 'Гиранда',
-    traveler: 'Интиқолдиҳанда', route: 'Масир', departure: 'Парвоз',
-    category: 'Категория', description: 'Тавсиф', qty: 'Шумора', value: 'Арзиш (EUR)',
-    total: 'Арзиши умумӣ', accepted: 'Аз ҷониби мусофир тасдиқ шуд', ruleset: 'Версияи қоидаҳо',
+    booking: 'Фармоиш',
+    sender: 'Фиристанда',
+    recipient: 'Гиранда',
+    traveler: 'Интиқолдиҳанда',
+    route: 'Масир',
+    departure: 'Парвоз',
+    category: 'Категория',
+    description: 'Тавсиф',
+    qty: 'Шумора',
+    value: 'Арзиш (EUR)',
+    total: 'Арзиши умумӣ',
+    accepted: 'Аз ҷониби мусофир тасдиқ шуд',
+    ruleset: 'Версияи қоидаҳо',
     hash: 'Ҳэши яклухтӣ (SHA-256)',
-    disclaimer: 'Фиристанда дурустии маълумотро тасдиқ мекунад. Мусофир танҳо мӯҳтавои эъломшударо мебарад.',
+    disclaimer:
+      'Фиристанда дурустии маълумотро тасдиқ мекунад. Мусофир танҳо мӯҳтавои эъломшударо мебарад.',
   },
 };
 
@@ -96,7 +126,10 @@ export class PdfKitManifestRenderer implements ManifestPdfRenderer {
       doc.text(t.description, cols.desc, y);
       doc.text(t.qty, cols.qty, y, { width: 50, align: 'right' });
       doc.text(t.value, cols.val, y, { width: 90, align: 'right' });
-      doc.moveTo(50, y + 14).lineTo(545, y + 14).stroke();
+      doc
+        .moveTo(50, y + 14)
+        .lineTo(545, y + 14)
+        .stroke();
     };
     let y = doc.y;
     header(y);
@@ -106,9 +139,17 @@ export class PdfKitManifestRenderer implements ManifestPdfRenderer {
       doc.text(it.category, cols.cat, y, { width: 105 });
       doc.text(it.description, cols.desc, y, { width: 215 });
       doc.text(String(it.quantity), cols.qty, y, { width: 50, align: 'right' });
-      doc.text((it.quantity * it.unitValueEur).toFixed(2), cols.val, y, { width: 90, align: 'right' });
+      doc.text((it.quantity * it.unitValueEur).toFixed(2), cols.val, y, {
+        width: 90,
+        align: 'right',
+      });
       y += 20;
-      if (y > 720) { doc.addPage(); y = 50; header(y); y += 20; }
+      if (y > 720) {
+        doc.addPage();
+        y = 50;
+        header(y);
+        y += 20;
+      }
     }
     doc.moveTo(50, y).lineTo(545, y).stroke();
     y += 6;

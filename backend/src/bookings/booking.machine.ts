@@ -95,17 +95,37 @@ export const TRANSITIONS: ReadonlyArray<TransitionDefinition> = [
     effect: 'NONE',
   },
   // Rückerstattung vor Übergabe (Sender zieht zurück / Traveler sagt ab).
-  { from: 'PAID', to: 'CANCELLED', allowedActors: ['SENDER', 'TRAVELER', 'ADMIN'], effect: 'REFUND' },
+  {
+    from: 'PAID',
+    to: 'CANCELLED',
+    allowedActors: ['SENDER', 'TRAVELER', 'ADMIN'],
+    effect: 'REFUND',
+  },
 
   // ── Transport ─────────────────────────────────────────────────────────────
   { from: 'HANDED_OVER', to: 'IN_TRANSIT', allowedActors: ['TRAVELER', 'SYSTEM'], effect: 'NONE' },
-  { from: 'HANDED_OVER', to: 'DISPUTED', allowedActors: ['SENDER', 'TRAVELER', 'ADMIN'], effect: 'NONE' },
+  {
+    from: 'HANDED_OVER',
+    to: 'DISPUTED',
+    allowedActors: ['SENDER', 'TRAVELER', 'ADMIN'],
+    effect: 'NONE',
+  },
 
   { from: 'IN_TRANSIT', to: 'DELIVERED', allowedActors: ['TRAVELER'], effect: 'NONE' },
-  { from: 'IN_TRANSIT', to: 'DISPUTED', allowedActors: ['SENDER', 'TRAVELER', 'ADMIN'], effect: 'NONE' },
+  {
+    from: 'IN_TRANSIT',
+    to: 'DISPUTED',
+    allowedActors: ['SENDER', 'TRAVELER', 'ADMIN'],
+    effect: 'NONE',
+  },
 
   // ── Abschluss: Bestätigung löst Auszahlung an Traveler aus ───────────────────
-  { from: 'DELIVERED', to: 'CONFIRMED', allowedActors: ['SENDER', 'SYSTEM'], effect: 'RELEASE_ESCROW' },
+  {
+    from: 'DELIVERED',
+    to: 'CONFIRMED',
+    allowedActors: ['SENDER', 'SYSTEM'],
+    effect: 'RELEASE_ESCROW',
+  },
   { from: 'DELIVERED', to: 'DISPUTED', allowedActors: ['SENDER', 'ADMIN'], effect: 'NONE' },
 
   // ── Streitbeilegung (nur Admin/Mediation) ────────────────────────────────────
@@ -130,10 +150,7 @@ const DEFAULT_CONTEXT: BookingContext = {
   escrowHeld: false,
 };
 
-function findTransition(
-  from: BookingStatus,
-  to: BookingStatus,
-): TransitionDefinition | undefined {
+function findTransition(from: BookingStatus, to: BookingStatus): TransitionDefinition | undefined {
   return TRANSITIONS.find((t) => t.from === from && t.to === to);
 }
 

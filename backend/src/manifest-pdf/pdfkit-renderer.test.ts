@@ -8,8 +8,20 @@ const svc = new CustomsService();
 const renderer = new PdfKitManifestRenderer();
 
 const items: DeclarationItemInput[] = [
-  { category: 'CLOTHING', description: 'Winterjacke', quantity: 2, unitValueEur: 45, isSealed: false },
-  { category: 'GIFTS', description: 'Чойник (Teekanne)', quantity: 1, unitValueEur: 30, isSealed: false },
+  {
+    category: 'CLOTHING',
+    description: 'Winterjacke',
+    quantity: 2,
+    unitValueEur: 45,
+    isSealed: false,
+  },
+  {
+    category: 'GIFTS',
+    description: 'Чойник (Teekanne)',
+    quantity: 1,
+    unitValueEur: 30,
+    isSealed: false,
+  },
 ];
 
 function manifest() {

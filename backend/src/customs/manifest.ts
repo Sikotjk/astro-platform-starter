@@ -93,7 +93,8 @@ export function buildManifest(input: BuildManifestInput): Manifest {
 
 /** Verifiziert die Integrität eines Manifests (z.B. beim erneuten Abruf). */
 export function verifyManifest(manifest: Manifest): boolean {
-  const { contentHash, declaration, ...core } = manifest;
+  // `declaration` ist nicht Teil des gehashten Kerns -> beim Verifizieren ausschließen.
+  const { contentHash, declaration: _declaration, ...core } = manifest;
   const recomputed = createHash('sha256').update(canonicalize(core)).digest('hex');
   return recomputed === contentHash;
 }
@@ -164,7 +165,10 @@ const LABELS: Record<Locale, Record<string, string>> = {
 };
 
 function esc(s: string): string {
-  return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+  return s.replace(
+    /[&<>"]/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!,
+  );
 }
 
 /** Rendert das Manifest als HTML (Vorlage für die PDF-Erzeugung). */

@@ -3,7 +3,9 @@ import { assertCanMessage, assertCanRead, participantRole, ChatAuthError } from 
 import type { BookingParticipants } from './chat.rules';
 
 const b = (status: BookingParticipants['status']): BookingParticipants => ({
-  senderId: 's1', travelerId: 't1', status,
+  senderId: 's1',
+  travelerId: 't1',
+  status,
 });
 
 describe('participantRole', () => {

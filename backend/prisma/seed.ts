@@ -76,9 +76,27 @@ async function main(): Promise<void> {
       recipientCity: 'Dushanbe',
       items: {
         create: [
-          { category: 'CLOTHING', description: 'Winterjacke', quantity: 2, unitValueEur: new Prisma.Decimal('45.00'), isSealed: false },
-          { category: 'GIFTS', description: 'Tee-Set', quantity: 1, unitValueEur: new Prisma.Decimal('30.00'), isSealed: false },
-          { category: 'ELECTRONICS', description: 'Kopfhörer', quantity: 2, unitValueEur: new Prisma.Decimal('30.00'), isSealed: false },
+          {
+            category: 'CLOTHING',
+            description: 'Winterjacke',
+            quantity: 2,
+            unitValueEur: new Prisma.Decimal('45.00'),
+            isSealed: false,
+          },
+          {
+            category: 'GIFTS',
+            description: 'Tee-Set',
+            quantity: 1,
+            unitValueEur: new Prisma.Decimal('30.00'),
+            isSealed: false,
+          },
+          {
+            category: 'ELECTRONICS',
+            description: 'Kopfhörer',
+            quantity: 2,
+            unitValueEur: new Prisma.Decimal('30.00'),
+            isSealed: false,
+          },
         ],
       },
     },

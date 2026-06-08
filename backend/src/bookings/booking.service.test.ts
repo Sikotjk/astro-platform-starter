@@ -77,8 +77,12 @@ describe('Vollständiger Happy-Path-Flow inkl. Escrow', () => {
 
 describe('Compliance-Gate im Service', () => {
   it('blockt HANDED_OVER ohne Zoll-Deklaration', async () => {
-    repo.seed(makeBooking({ status: 'PAID', paymentStatus: 'ESCROW_HELD', paymentIntentId: 'pi_x' }));
-    await expect(service.transition('bk_1', 'HANDED_OVER', 'SENDER')).rejects.toThrow(/Zoll-Deklaration/);
+    repo.seed(
+      makeBooking({ status: 'PAID', paymentStatus: 'ESCROW_HELD', paymentIntentId: 'pi_x' }),
+    );
+    await expect(service.transition('bk_1', 'HANDED_OVER', 'SENDER')).rejects.toThrow(
+      /Zoll-Deklaration/,
+    );
   });
 });
 
@@ -98,7 +102,9 @@ describe('Webhook-Idempotenz', () => {
 
 describe('Refund-Pfad', () => {
   it('erstattet den Sender bei Storno nach Zahlung (PAID → CANCELLED)', async () => {
-    repo.seed(makeBooking({ status: 'PAID', paymentStatus: 'ESCROW_HELD', paymentIntentId: 'pi_r' }));
+    repo.seed(
+      makeBooking({ status: 'PAID', paymentStatus: 'ESCROW_HELD', paymentIntentId: 'pi_r' }),
+    );
 
     const b = await service.transition('bk_1', 'CANCELLED', 'SENDER');
     expect(b.status).toBe('CANCELLED');
@@ -125,7 +131,9 @@ describe('Doppel-Auszahlung verhindern', () => {
         travelerAcceptedTerms: true,
       }),
     );
-    await expect(service.transition('bk_1', 'CONFIRMED', 'SENDER')).rejects.toThrow(BookingStateError);
+    await expect(service.transition('bk_1', 'CONFIRMED', 'SENDER')).rejects.toThrow(
+      BookingStateError,
+    );
   });
 });
 
@@ -135,6 +143,10 @@ describe('Audit-Log', () => {
     await service.transition('bk_1', 'ACCEPTED', 'TRAVELER');
     await service.createEscrow('bk_1'); // reiner Patch -> kein Event
     expect(repo.events).toHaveLength(1);
-    expect(repo.events[0]).toMatchObject({ fromStatus: 'REQUESTED', toStatus: 'ACCEPTED', triggeredBy: 'TRAVELER' });
+    expect(repo.events[0]).toMatchObject({
+      fromStatus: 'REQUESTED',
+      toStatus: 'ACCEPTED',
+      triggeredBy: 'TRAVELER',
+    });
   });
 });

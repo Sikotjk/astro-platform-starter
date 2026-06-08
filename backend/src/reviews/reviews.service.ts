@@ -1,5 +1,4 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { resolveReviewTarget, nextRatingAggregate } from './reviews.rules';
 import type { BookingStatus } from '../bookings/booking.machine';

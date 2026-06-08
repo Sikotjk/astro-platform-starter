@@ -1,12 +1,23 @@
 import { describe, it, expect } from 'vitest';
-import { buildManifest, verifyManifest, renderManifestHtml, type BuildManifestInput } from './manifest';
+import {
+  buildManifest,
+  verifyManifest,
+  renderManifestHtml,
+  type BuildManifestInput,
+} from './manifest';
 import { CustomsService } from './customs.service';
 import type { DeclarationItemInput } from './customs.types';
 
 const svc = new CustomsService();
 
 const items: DeclarationItemInput[] = [
-  { category: 'CLOTHING', description: 'Winterjacke', quantity: 2, unitValueEur: 50, isSealed: false },
+  {
+    category: 'CLOTHING',
+    description: 'Winterjacke',
+    quantity: 2,
+    unitValueEur: 50,
+    isSealed: false,
+  },
   { category: 'GIFTS', description: 'Tee-Set', quantity: 1, unitValueEur: 30, isSealed: false },
 ];
 
@@ -33,7 +44,15 @@ describe('buildManifest', () => {
   });
 
   it('verweigert Manifest für BLOCK-Deklaration', () => {
-    const blocked = [{ category: 'OTHER' as const, description: 'Waffe', quantity: 1, unitValueEur: 0, isSealed: false }];
+    const blocked = [
+      {
+        category: 'OTHER' as const,
+        description: 'Waffe',
+        quantity: 1,
+        unitValueEur: 0,
+        isSealed: false,
+      },
+    ];
     const input = { ...baseInput(), items: blocked, declaration: svc.evaluate(blocked) };
     expect(() => buildManifest(input)).toThrow(/BLOCK/);
   });
@@ -68,7 +87,13 @@ describe('renderManifestHtml', () => {
 
   it('escaped HTML-Sonderzeichen in Beschreibungen', () => {
     const evil: DeclarationItemInput[] = [
-      { category: 'OTHER', description: 'T-Shirt <script>x</script> & co', quantity: 1, unitValueEur: 10, isSealed: false },
+      {
+        category: 'OTHER',
+        description: 'T-Shirt <script>x</script> & co',
+        quantity: 1,
+        unitValueEur: 10,
+        isSealed: false,
+      },
     ];
     const input = { ...baseInput(), items: evil, declaration: svc.evaluate(evil) };
     const html = renderManifestHtml(buildManifest(input), 'de');
