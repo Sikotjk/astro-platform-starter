@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/features/auth/register_screen.dart';
+
+import '../../support/localized_app.dart';
 
 void main() {
   testWidgets('RegisterScreen zeigt alle Felder + Rollenauswahl', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      const ProviderScope(child: MaterialApp(home: RegisterScreen())),
-    );
+    await tester.pumpWidget(localizedApp(const RegisterScreen()));
+    await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('firstName')), findsOneWidget);
     expect(find.byKey(const Key('lastName')), findsOneWidget);
@@ -22,9 +22,8 @@ void main() {
   testWidgets('Validierung zeigt Fehler bei leeren Pflichtfeldern', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      const ProviderScope(child: MaterialApp(home: RegisterScreen())),
-    );
+    await tester.pumpWidget(localizedApp(const RegisterScreen()));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.widgetWithText(FilledButton, 'Konto erstellen'));
     await tester.pump();

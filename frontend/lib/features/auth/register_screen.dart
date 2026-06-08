@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/language_menu.dart';
 import 'auth_controller.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -45,9 +47,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = ref.watch(authControllerProvider);
+    final l10n = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Registrieren')),
+      appBar: AppBar(
+        title: Text(l10n.navRegister),
+        actions: const [LanguageMenu()],
+      ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
@@ -61,26 +67,26 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   TextFormField(
                     key: const Key('firstName'),
                     controller: _firstName,
-                    decoration: const InputDecoration(labelText: 'Vorname'),
+                    decoration: InputDecoration(labelText: l10n.fieldFirstName),
                     validator: (v) =>
-                        (v == null || v.isEmpty) ? 'Pflichtfeld' : null,
+                        (v == null || v.isEmpty) ? l10n.validRequired : null,
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
                     key: const Key('lastName'),
                     controller: _lastName,
-                    decoration: const InputDecoration(labelText: 'Nachname'),
+                    decoration: InputDecoration(labelText: l10n.fieldLastName),
                     validator: (v) =>
-                        (v == null || v.isEmpty) ? 'Pflichtfeld' : null,
+                        (v == null || v.isEmpty) ? l10n.validRequired : null,
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
                     key: const Key('email'),
                     controller: _email,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(labelText: 'E-Mail'),
+                    decoration: InputDecoration(labelText: l10n.fieldEmail),
                     validator: (v) => (v == null || !v.contains('@'))
-                        ? 'Gültige E-Mail eingeben'
+                        ? l10n.validEmail
                         : null,
                   ),
                   const SizedBox(height: 12),
@@ -88,28 +94,28 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     key: const Key('password'),
                     controller: _password,
                     obscureText: true,
-                    decoration: const InputDecoration(labelText: 'Passwort'),
-                    validator: (v) => (v == null || v.length < 8)
-                        ? 'Mindestens 8 Zeichen'
-                        : null,
+                    decoration: InputDecoration(labelText: l10n.fieldPassword),
+                    validator: (v) =>
+                        (v == null || v.length < 8) ? l10n.validPassword : null,
                   ),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<String>(
                     key: const Key('role'),
                     initialValue: _role,
-                    decoration: const InputDecoration(
-                      labelText: 'Ich möchte …',
-                    ),
-                    items: const [
+                    decoration: InputDecoration(labelText: l10n.roleLabel),
+                    items: [
                       DropdownMenuItem(
                         value: 'SENDER',
-                        child: Text('Pakete senden'),
+                        child: Text(l10n.roleSender),
                       ),
                       DropdownMenuItem(
                         value: 'TRAVELER',
-                        child: Text('Platz anbieten'),
+                        child: Text(l10n.roleTraveler),
                       ),
-                      DropdownMenuItem(value: 'BOTH', child: Text('Beides')),
+                      DropdownMenuItem(
+                        value: 'BOTH',
+                        child: Text(l10n.roleBoth),
+                      ),
                     ],
                     onChanged: (v) => setState(() => _role = v ?? 'SENDER'),
                   ),
@@ -134,7 +140,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               width: 20,
                               child: CircularProgressIndicator(strokeWidth: 2),
                             )
-                          : const Text('Konto erstellen'),
+                          : Text(l10n.registerButton),
                     ),
                   ),
                 ],
