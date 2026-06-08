@@ -7,6 +7,7 @@ import { PackagesModule } from './packages/packages.module';
 import { CustomsModule } from './customs/customs.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { KycModule } from './kyc/kyc.module';
+import { ManifestPdfModule } from './manifest-pdf/manifest-pdf.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { KycModule } from './kyc/kyc.module';
     CustomsModule,
     BookingsModule,
     KycModule,
+    ManifestPdfModule,
   ],
 })
 export class AppModule {}

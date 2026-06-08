@@ -1,0 +1,1 @@
+export const MANIFEST_PDF_RENDERER = Symbol('MANIFEST_PDF_RENDERER');
