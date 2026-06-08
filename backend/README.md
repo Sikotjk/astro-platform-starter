@@ -8,7 +8,7 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **Schritt 1 — Daten-Fundament:** Prisma-Schema (`prisma/schema.prisma`)
 - [x] **Schritt 2 — Booking-State-Machine:** erlaubte Statusübergänge + Guards (`src/bookings/booking.machine.ts`, 15 Unit-Tests grün)
 - [x] **Schritt 3 — Escrow-Flow:** Stripe Connect hinter `PaymentGateway`-Interface (`src/payments/`), `BookingService`-Orchestrierung + Webhook-Idempotenz (`src/bookings/booking.service.ts`, 22 Tests grün)
-- [ ] **Schritt 4 — Compliance-Gate:** Zoll-Deklaration + Manifest-PDF
+- [x] **Schritt 4 — Compliance-Gate (Zoll):** versionierte Regel-Engine + `CustomsService` + signiertes Manifest (`src/customs/`, 42 Tests grün)
 - [ ] **Schritt 5 — API-Module:** auth · users · trips · packages · bookings · chat
 
 ## Setup (lokal)
@@ -49,6 +49,17 @@ CONFIRMED ──releaseEscrow()──> Transfer itemPrice an Traveler-Connect-Ac
 - **Stripe-Modell:** Separate Charges & Transfers, verknüpft via `transfer_group = booking_<id>`.
 - **Idempotenz:** Webhooks über `ProcessedWebhookEvent`; Geld-Calls über feste `idempotencyKey`s (`release_<id>`, `refund_<id>`).
 - **Testbar ohne Stripe:** `FakePaymentGateway` + `InMemoryBookingRepository`.
+
+## Zoll-Compliance (Schritt 4)
+
+`src/customs/` prüft die digitale Inhaltsdeklaration und schützt den Traveler:
+
+- **Versionierte Regel-Engine** (`customs.rules.ts`, `RULESET_VERSION`): Kategorie-Regeln (ALLOW/WARN/BLOCK), Wert-Schwellen, Nachweispflichten + harte mehrsprachige Sperrliste (Waffen, Drogen, Sprengstoff, Bargeld).
+- **`CustomsService.evaluate()`**: liefert Gesamtstufe + Item-Befunde + lokalisierte Texte (de/ru/tg). `declarable = level !== BLOCK` → entriegelt das Compliance-Gate aus Schritt 2/3.
+- **Signiertes Manifest** (`manifest.ts`): kanonischer SHA-256-Hash (manipulationssicher), `verifyManifest()`, mehrsprachiges HTML als PDF-Vorlage (XSS-escaped). Dies ist die Schutzurkunde des Travelers am Zoll.
+
+> ⚠️ Schwellen/Kategorien sind illustrativ — vor Go-live zoll-/rechtlich
+> verifizieren; tadschikische Texte nativ prüfen lassen.
 
 > Geldbeträge stets als `Decimal`, niemals `Float`. KYC-Rohdaten werden nicht
 > gespeichert — nur Stripe-Identity-Referenzen und Verifizierungs-Claims.
