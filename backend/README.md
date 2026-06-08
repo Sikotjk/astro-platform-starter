@@ -18,8 +18,21 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **Chat:** REST-Verlauf + socket.io-Gateway (JWT-Auth, Räume pro Buchung) (`src/chat/`)
 - [x] **Reviews:** Bewertung nach CONFIRMED + Rating-Aggregat-Pflege (`src/reviews/`, E2E: 4,8→4,82 verifiziert)
 - [x] **Automatisierte E2E-Tests:** 18 supertest-Integrationstests gegen echte App+DB (`src/test/app.e2e-spec.ts`)
+- [x] **CI-Pipeline:** GitHub Actions (`.github/workflows/backend-ci.yml`) — typecheck/build/unit/e2e, live grün
+- [x] **Docker-Compose:** `docker compose up --build` (PostgreSQL + API, Auto-Migration)
 
-## Setup (lokal)
+## Setup
+
+### Variante A — Docker (One-Command)
+
+```bash
+cd backend
+docker compose up --build      # startet PostgreSQL + API (Port 3000)
+# Migrationen laufen automatisch beim Start; danach optional seeden:
+docker compose exec api npm run db:seed
+```
+
+### Variante B — lokal (Node + eigene PostgreSQL)
 
 ```bash
 cd backend

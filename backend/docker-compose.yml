@@ -1,0 +1,37 @@
+# Lokales One-Command-Setup: `docker compose up --build`
+# Startet PostgreSQL + die API (inkl. automatischer Migration beim Start).
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tj_shipping
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/tj_shipping
+      JWT_ACCESS_SECRET: dev-secret-change-me
+      PLATFORM_FEE_RATE: '0.15'
+      PORT: '3000'
+      # Ohne Stripe-Keys nutzt die App automatisch die Fake-Gateways.
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+
+volumes:
+  pgdata:
