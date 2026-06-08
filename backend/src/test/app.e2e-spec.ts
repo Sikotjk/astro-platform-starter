@@ -469,3 +469,62 @@ describe('Dispute & Mediation', () => {
     expect(r.status).toBe(409);
   });
 });
+
+describe('Saved Searches & Match-Benachrichtigungen', () => {
+  it('Sender legt eine passende und eine unpassende Suche an', async () => {
+    const match = await request(http())
+      .post('/saved-searches')
+      .set(auth(state.senderToken))
+      .send({ originAirport: 'FRA', destinationAirport: 'DYU', minFreeKg: 5 });
+    expect(match.status).toBe(201);
+
+    const noMatch = await request(http())
+      .post('/saved-searches')
+      .set(auth(state.senderToken))
+      .send({ originAirport: 'MUC', destinationAirport: 'IST' });
+    expect(noMatch.status).toBe(201);
+
+    const list = await request(http()).get('/saved-searches').set(auth(state.senderToken));
+    expect(list.body.length).toBe(2);
+  });
+
+  it('ein neuer passender Trip erzeugt genau eine Benachrichtigung', async () => {
+    // Vorher keine Benachrichtigungen.
+    const before = await request(http()).get('/notifications').set(auth(state.senderToken));
+    expect(before.body.length).toBe(0);
+
+    // Traveler stellt einen passenden Trip ein.
+    await request(http())
+      .post('/trips')
+      .set(auth(state.travelerToken))
+      .send({
+        originAirport: 'FRA',
+        destinationAirport: 'DYU',
+        departureAt: '2026-10-01T10:00:00Z',
+        capacityKgTotal: 12,
+        pricePerKg: 7,
+      })
+      .expect(201);
+
+    const after = await request(http()).get('/notifications').set(auth(state.senderToken));
+    expect(after.body.length).toBe(1);
+    expect(after.body[0].type).toBe('TRIP_MATCH');
+    expect(after.body[0].readAt).toBeNull();
+  });
+
+  it('der Trip-Ersteller selbst wird nicht benachrichtigt', async () => {
+    const travelerNotifs = await request(http())
+      .get('/notifications')
+      .set(auth(state.travelerToken));
+    expect(travelerNotifs.body.length).toBe(0);
+  });
+
+  it('markiert alle Benachrichtigungen als gelesen', async () => {
+    const res = await request(http()).post('/notifications/read-all').set(auth(state.senderToken));
+    expect(res.body.updated).toBe(1);
+    const unread = await request(http())
+      .get('/notifications?unread=true')
+      .set(auth(state.senderToken));
+    expect(unread.body.length).toBe(0);
+  });
+});

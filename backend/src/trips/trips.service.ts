@@ -1,11 +1,17 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { AlertDispatcherService } from '../alerts/alert-dispatcher.service';
 import { CreateTripDto, SearchTripsDto } from './dto/trip.dto';
 
 @Injectable()
 export class TripsService {
-  constructor(private readonly prisma: PrismaService) {}
+  private readonly logger = new Logger('TripsService');
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly alerts: AlertDispatcherService,
+  ) {}
 
   async create(travelerId: string, dto: CreateTripDto) {
     // Nur verifizierte Nutzer dürfen Trips anbieten (Trust).
@@ -14,7 +20,7 @@ export class TripsService {
       throw new ForbiddenException('KYC-Verifizierung erforderlich, um Trips anzubieten.');
     }
 
-    return this.prisma.trip.create({
+    const trip = await this.prisma.trip.create({
       data: {
         travelerId,
         originAirport: dto.originAirport.toUpperCase(),
@@ -29,6 +35,24 @@ export class TripsService {
         notes: dto.notes,
       },
     });
+
+    // Best-effort: gespeicherte Suchen benachrichtigen (Fehler nicht durchreichen).
+    try {
+      await this.alerts.dispatchForNewTrip({
+        id: trip.id,
+        travelerId,
+        originAirport: trip.originAirport,
+        destinationAirport: trip.destinationAirport,
+        departureAt: trip.departureAt,
+        freeKg: Number(trip.capacityKgTotal) - Number(trip.capacityKgUsed),
+      });
+    } catch (e) {
+      this.logger.warn(
+        `Alert-Dispatch fehlgeschlagen für Trip ${trip.id}: ${(e as Error).message}`,
+      );
+    }
+
+    return trip;
   }
 
   /** Zentraler Match-Query. Nutzt den Composite-Index aus dem Schema. */

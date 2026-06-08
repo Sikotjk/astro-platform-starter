@@ -22,6 +22,7 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **Docker-Compose:** `docker compose up --build` (PostgreSQL + API, Auto-Migration)
 - [x] **Code-Qualität:** ESLint (Flat-Config) + Prettier, als CI-Steps verankert (`npm run lint`, `npm run format:check`)
 - [x] **Dispute-/Mediation-Tooling:** `Dispute`-Modell, Admin-Rolle/Guard, Eröffnen + Admin-Auflösung (`src/disputes/`, E2E verifiziert)
+- [x] **Saved Searches + Match-Alerts:** gespeicherte Suchen lösen bei passenden neuen Trips In-App-Benachrichtigungen aus (`src/alerts/`, E2E verifiziert)
 
 ## Setup
 
@@ -107,6 +108,9 @@ CONFIRMED ──releaseEscrow()──> Transfer itemPrice an Traveler-Connect-Ac
 | `POST /bookings/:id/dispute` | JWT | Streitfall mit Begründung eröffnen → DISPUTED |
 | `GET /admin/disputes` | JWT (ADMIN) | offene Streitfälle auflisten |
 | `POST /admin/disputes/:bookingId/resolve` | JWT (ADMIN) | auflösen: `RELEASE` (Auszahlung) oder `REFUND` (Erstattung) |
+| `POST\|GET /saved-searches` · `DELETE /saved-searches/:id` | JWT | gespeicherte Suchen verwalten |
+| `GET /notifications?unread=true` | JWT | Benachrichtigungen (Match-Alerts) abrufen |
+| `POST /notifications/:id/read` · `POST /notifications/read-all` | JWT | als gelesen markieren |
 | `GET /users/:id/reviews` | – | öffentliches Bewertungsprofil |
 | `POST /trips` | JWT (KYC) | Trip anbieten |
 | `GET /trips` | – | Match-Suche (Route/Datum/freie kg) |
