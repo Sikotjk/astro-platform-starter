@@ -13,6 +13,7 @@ import type { Response } from 'express';
 import { BookingTransitionError } from '../bookings/booking.machine';
 import { BookingNotFoundError, BookingStateError } from '../bookings/booking.service';
 import { CustomsValidationError } from '../customs/customs.service';
+import { KycStateError, KycUserNotFoundError } from '../kyc/kyc.service';
 
 @Catch()
 export class DomainExceptionFilter implements ExceptionFilter {
@@ -34,10 +35,14 @@ export class DomainExceptionFilter implements ExceptionFilter {
   }
 
   private classify(e: unknown): { status: number; message: string } {
-    if (e instanceof BookingNotFoundError) {
+    if (e instanceof BookingNotFoundError || e instanceof KycUserNotFoundError) {
       return { status: HttpStatus.NOT_FOUND, message: e.message };
     }
-    if (e instanceof BookingTransitionError || e instanceof BookingStateError) {
+    if (
+      e instanceof BookingTransitionError ||
+      e instanceof BookingStateError ||
+      e instanceof KycStateError
+    ) {
       // Ungültiger Übergang / Geschäftsregel verletzt -> Konflikt.
       return { status: HttpStatus.CONFLICT, message: e.message };
     }
