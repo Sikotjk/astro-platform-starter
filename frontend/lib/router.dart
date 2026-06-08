@@ -6,8 +6,10 @@ import 'core/providers.dart';
 import 'features/auth/login_screen.dart';
 import 'features/auth/register_screen.dart';
 import 'features/bookings/bookings_screen.dart';
+import 'features/chat/chat_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/kyc/kyc_screen.dart';
+import 'features/notifications/notifications_screen.dart';
 import 'features/trips/trips_search_screen.dart';
 
 /// Router mit Auth-Redirect: nicht angemeldet -> /login, angemeldet -> /home.
@@ -38,6 +40,15 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
       GoRoute(path: '/trips', builder: (_, _) => const TripsSearchScreen()),
       GoRoute(path: '/bookings', builder: (_, _) => const BookingsScreen()),
+      GoRoute(
+        path: '/chat/:id',
+        builder: (_, state) =>
+            ChatScreen(bookingId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/notifications',
+        builder: (_, _) => const NotificationsScreen(),
+      ),
       GoRoute(path: '/kyc', builder: (_, _) => const KycScreen()),
     ],
   );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/providers.dart';
 import '../../models/booking.dart';
@@ -99,6 +100,7 @@ class _BookingList extends StatelessWidget {
             backgroundColor: style.color.withValues(alpha: 0.15),
             labelStyle: TextStyle(color: style.color),
           ),
+          onTap: () => context.push('/chat/${b.id}'),
         );
       },
     );

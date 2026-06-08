@@ -4,13 +4,22 @@ import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
 import '../features/bookings/bookings_controller.dart';
 import '../features/bookings/bookings_repository.dart';
+import '../features/chat/chat_controller.dart';
+import '../features/chat/chat_gateway.dart';
+import '../features/chat/chat_repository.dart';
+import '../features/chat/socket_chat_gateway.dart';
 import '../features/kyc/kyc_controller.dart';
 import '../features/kyc/kyc_repository.dart';
+import '../features/notifications/notifications_controller.dart';
+import '../features/notifications/notifications_repository.dart';
 import '../features/trips/trips_controller.dart';
 import '../features/trips/trips_repository.dart';
 import '../models/booking.dart';
+import '../models/message.dart';
+import '../models/notification.dart';
 import '../models/trip.dart';
 import 'api_client.dart';
+import 'config.dart';
 import 'token_store.dart';
 
 /// Zentrale Provider-Definitionen (Dependency Injection der App).
@@ -56,3 +65,47 @@ final bookingsControllerProvider =
     StateNotifierProvider<BookingsController, AsyncValue<List<BookingSummary>>>(
       (ref) => BookingsController(ref.watch(bookingsRepositoryProvider)),
     );
+
+// ── Benachrichtigungen ───────────────────────────────────────────────────────
+final notificationsRepositoryProvider = Provider<NotificationsRepository>(
+  (ref) => DioNotificationsRepository(ref.watch(apiClientProvider).dio),
+);
+
+final notificationsControllerProvider =
+    StateNotifierProvider<
+      NotificationsController,
+      AsyncValue<List<NotificationItem>>
+    >(
+      (ref) =>
+          NotificationsController(ref.watch(notificationsRepositoryProvider)),
+    );
+
+// ── Chat (REST-Verlauf + Echtzeit-WebSocket) ─────────────────────────────────
+final chatRepositoryProvider = Provider<ChatRepository>(
+  (ref) => DioChatRepository(ref.watch(apiClientProvider).dio),
+);
+
+final chatGatewayProvider = Provider<ChatGateway>((ref) {
+  final token = ref.watch(authControllerProvider).session?.accessToken ?? '';
+  final gateway = SocketChatGateway(
+    baseUrl: AppConfig.apiBaseUrl,
+    token: token,
+  );
+  ref.onDispose(gateway.dispose);
+  return gateway;
+});
+
+final chatControllerProvider =
+    StateNotifierProvider.family<
+      ChatController,
+      AsyncValue<List<Message>>,
+      String
+    >((ref, bookingId) {
+      final controller = ChatController(
+        ref.watch(chatRepositoryProvider),
+        ref.watch(chatGatewayProvider),
+        bookingId,
+      );
+      controller.init();
+      return controller;
+    });

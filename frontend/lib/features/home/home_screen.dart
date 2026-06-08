@@ -39,6 +39,12 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
+              onPressed: () => context.push('/notifications'),
+              icon: const Icon(Icons.notifications),
+              label: const Text('Benachrichtigungen'),
+            ),
+            const SizedBox(height: 12),
+            OutlinedButton.icon(
               onPressed: () => context.push('/kyc'),
               icon: const Icon(Icons.verified_user),
               label: const Text('Identität verifizieren'),
