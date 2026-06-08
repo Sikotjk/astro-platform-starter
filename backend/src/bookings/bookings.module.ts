@@ -21,5 +21,6 @@ const domainBookingProvider: Provider = {
   imports: [PaymentsModule, AuthModule],
   controllers: [BookingsController, StripeWebhookController],
   providers: [BookingsService, PrismaBookingRepository, domainBookingProvider],
+  exports: [BookingService], // wird vom DisputesModule für Admin-Übergänge genutzt
 })
 export class BookingsModule {}

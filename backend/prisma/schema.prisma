@@ -222,6 +222,7 @@ model Booking {
   messages     Message[]
   statusEvents BookingStatusEvent[]
   reviews      Review[]
+  dispute      Dispute?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -229,6 +230,33 @@ model Booking {
   @@index([status])
   @@index([senderId])
   @@index([travelerId])
+}
+
+enum DisputeStatus {
+  OPEN
+  RESOLVED_RELEASE // zugunsten des Travelers -> Escrow ausgezahlt
+  RESOLVED_REFUND // zugunsten des Senders -> erstattet
+}
+
+// Streitfall zu einer Buchung (Admin-/Mediations-Tooling).
+model Dispute {
+  id        String  @id @default(cuid())
+  bookingId String  @unique
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  openedById String // userId (Sender oder Traveler)
+  reason     String
+  status     DisputeStatus @default(OPEN)
+
+  // Auflösung durch einen Admin.
+  resolutionNote String?
+  resolvedById   String?
+  resolvedAt     DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
 }
 
 // Append-only Audit-Log jedes Statuswechsels (wichtig bei Disputes/Zoll)

@@ -10,6 +10,7 @@ import { KycModule } from './kyc/kyc.module';
 import { ManifestPdfModule } from './manifest-pdf/manifest-pdf.module';
 import { ChatModule } from './chat/chat.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { DisputesModule } from './disputes/disputes.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ReviewsModule } from './reviews/reviews.module';
     ManifestPdfModule,
     ChatModule,
     ReviewsModule,
+    DisputesModule,
   ],
 })
 export class AppModule {}

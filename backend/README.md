@@ -21,6 +21,7 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **CI-Pipeline:** GitHub Actions (`.github/workflows/backend-ci.yml`) — typecheck/build/unit/e2e, live grün
 - [x] **Docker-Compose:** `docker compose up --build` (PostgreSQL + API, Auto-Migration)
 - [x] **Code-Qualität:** ESLint (Flat-Config) + Prettier, als CI-Steps verankert (`npm run lint`, `npm run format:check`)
+- [x] **Dispute-/Mediation-Tooling:** `Dispute`-Modell, Admin-Rolle/Guard, Eröffnen + Admin-Auflösung (`src/disputes/`, E2E verifiziert)
 
 ## Setup
 
@@ -103,6 +104,9 @@ CONFIRMED ──releaseEscrow()──> Transfer itemPrice an Traveler-Connect-Ac
 | `GET\|POST /bookings/:id/messages` | JWT | Chat-Verlauf / Nachricht senden (Teilnehmer) |
 | WebSocket `/chat` (`chat:join`, `chat:send`) | JWT (Handshake) | Echtzeit-Chat pro Buchung |
 | `POST /bookings/:id/review` | JWT | Bewertung (nur nach CONFIRMED, 1×/Richtung) |
+| `POST /bookings/:id/dispute` | JWT | Streitfall mit Begründung eröffnen → DISPUTED |
+| `GET /admin/disputes` | JWT (ADMIN) | offene Streitfälle auflisten |
+| `POST /admin/disputes/:bookingId/resolve` | JWT (ADMIN) | auflösen: `RELEASE` (Auszahlung) oder `REFUND` (Erstattung) |
 | `GET /users/:id/reviews` | – | öffentliches Bewertungsprofil |
 | `POST /trips` | JWT (KYC) | Trip anbieten |
 | `GET /trips` | – | Match-Suche (Route/Datum/freie kg) |

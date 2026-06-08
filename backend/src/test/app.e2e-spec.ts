@@ -344,3 +344,128 @@ describe('Reviews', () => {
     expect(profile.body.length).toBe(1);
   });
 });
+
+describe('Dispute & Mediation', () => {
+  it('richtet einen Admin ein und treibt eine 2. Buchung bis DELIVERED', async () => {
+    // Admin registrieren -> Rolle in DB auf ADMIN -> neu einloggen (JWT trägt Rolle)
+    await request(http()).post('/auth/register').send({
+      email: 'admin@e2e.de',
+      password: 'password123',
+      firstName: 'Admin',
+      lastName: 'Mediator',
+    });
+    await prisma.user.update({ where: { email: 'admin@e2e.de' }, data: { role: 'ADMIN' } });
+    const login = await request(http())
+      .post('/auth/login')
+      .send({ email: 'admin@e2e.de', password: 'password123' });
+    state.adminToken = login.body.accessToken;
+
+    const pkg = await request(http())
+      .post('/packages')
+      .set(auth(state.senderToken))
+      .send({
+        title: 'Zweitpaket',
+        weightKg: 2,
+        declaredValueEur: 40,
+        recipientName: 'R',
+        recipientPhone: '+992',
+        recipientCity: 'Dushanbe',
+        items: [
+          {
+            category: 'CLOTHING',
+            description: 'Pullover',
+            quantity: 1,
+            unitValueEur: 40,
+            isSealed: false,
+          },
+        ],
+      });
+    const booking = await request(http()).post('/bookings').set(auth(state.senderToken)).send({
+      tripId: state.tripId,
+      packageId: pkg.body.package.id,
+      agreedWeightKg: 2,
+    });
+    state.bookingId2 = booking.body.id;
+
+    await request(http())
+      .post(`/bookings/${state.bookingId2}/accept`)
+      .set(auth(state.travelerToken))
+      .expect(201);
+    await request(http())
+      .post(`/bookings/${state.bookingId2}/escrow`)
+      .set(auth(state.senderToken))
+      .expect(201);
+    await prisma.booking.update({
+      where: { id: state.bookingId2 },
+      data: { status: 'PAID', paymentStatus: 'ESCROW_HELD' },
+    });
+    await request(http())
+      .post(`/bookings/${state.bookingId2}/accept-terms`)
+      .set(auth(state.travelerToken))
+      .expect(201);
+    await request(http())
+      .post(`/bookings/${state.bookingId2}/handover`)
+      .set(auth(state.senderToken))
+      .expect(201);
+    await request(http())
+      .post(`/bookings/${state.bookingId2}/transit`)
+      .set(auth(state.travelerToken))
+      .expect(201);
+    await request(http())
+      .post(`/bookings/${state.bookingId2}/delivered`)
+      .set(auth(state.travelerToken))
+      .expect(201);
+  });
+
+  it('Sender eröffnet einen Streitfall -> DISPUTED', async () => {
+    const r = await request(http())
+      .post(`/bookings/${state.bookingId2}/dispute`)
+      .set(auth(state.senderToken))
+      .send({ reason: 'Paket wurde nie zugestellt.' });
+    expect(r.status).toBe(201);
+    const b = await prisma.booking.findUniqueOrThrow({ where: { id: state.bookingId2 } });
+    expect(b.status).toBe('DISPUTED');
+  });
+
+  it('Dispute ohne Begründung wird abgelehnt (400)', async () => {
+    // anderer Booking-Kontext nicht nötig: leere Begründung verletzt DTO
+    const r = await request(http())
+      .post(`/bookings/${state.bookingId2}/dispute`)
+      .set(auth(state.senderToken))
+      .send({ reason: 'x' });
+    expect(r.status).toBe(400);
+  });
+
+  it('Nicht-Admin darf die Dispute-Liste nicht sehen (403)', async () => {
+    const r = await request(http()).get('/admin/disputes').set(auth(state.senderToken));
+    expect(r.status).toBe(403);
+  });
+
+  it('Admin sieht offene Streitfälle', async () => {
+    const r = await request(http()).get('/admin/disputes').set(auth(state.adminToken));
+    expect(r.status).toBe(200);
+    expect(r.body.length).toBeGreaterThanOrEqual(1);
+    expect(r.body[0].status).toBe('OPEN');
+  });
+
+  it('Admin löst zugunsten des Travelers auf (RELEASE -> CONFIRMED, Auszahlung)', async () => {
+    const r = await request(http())
+      .post(`/admin/disputes/${state.bookingId2}/resolve`)
+      .set(auth(state.adminToken))
+      .send({ resolution: 'RELEASE', note: 'Zustellnachweis vorgelegt.' });
+    expect(r.status).toBe(201);
+    expect(r.body.status).toBe('RESOLVED_RELEASE');
+
+    const b = await prisma.booking.findUniqueOrThrow({ where: { id: state.bookingId2 } });
+    expect(b.status).toBe('CONFIRMED');
+    expect(b.paymentStatus).toBe('RELEASED');
+  });
+
+  it('erneutes Auflösen wird abgelehnt (409)', async () => {
+    const r = await request(http())
+      .post(`/admin/disputes/${state.bookingId2}/resolve`)
+      .set(auth(state.adminToken))
+      .send({ resolution: 'REFUND' });
+    expect(r.status).toBe(409);
+  });
+});

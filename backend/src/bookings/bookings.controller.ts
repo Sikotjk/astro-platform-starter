@@ -68,8 +68,6 @@ export class BookingsController {
     return this.bookings.transition(u.userId, u.role, id, 'CANCELLED');
   }
 
-  @Post(':id/dispute')
-  dispute(@CurrentUser() u: AuthUser, @Param('id') id: string) {
-    return this.bookings.transition(u.userId, u.role, id, 'DISPUTED');
-  }
+  // Hinweis: POST /bookings/:id/dispute liegt im DisputesController
+  // (erfordert eine Begründung und legt einen Dispute-Datensatz an).
 }
