@@ -1,5 +1,7 @@
 # TJ-Shipping Backend
 
+[![Backend CI](https://github.com/sikotjk/astro-platform-starter/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/sikotjk/astro-platform-starter/actions/workflows/backend-ci.yml)
+
 Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 **Stack:** NestJS · Prisma · PostgreSQL · Stripe Connect/Identity.
 
