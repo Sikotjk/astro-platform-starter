@@ -8,6 +8,13 @@ import 'package:tj_shipping_app/models/booking.dart';
 
 class _FakeBookingsRepo implements BookingsRepository {
   @override
+  Future<String> create({
+    required String tripId,
+    required String packageId,
+    required double agreedWeightKg,
+  }) async => 'bk_new';
+
+  @override
   Future<List<BookingSummary>> list({String? role, String? status}) async => [
     BookingSummary(
       id: 'b1',

@@ -5,12 +5,14 @@ import 'package:go_router/go_router.dart';
 import 'core/providers.dart';
 import 'features/auth/login_screen.dart';
 import 'features/auth/register_screen.dart';
+import 'features/booking_create/create_booking_screen.dart';
 import 'features/bookings/bookings_screen.dart';
 import 'features/chat/chat_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/kyc/kyc_screen.dart';
 import 'features/notifications/notifications_screen.dart';
 import 'features/trips/trips_search_screen.dart';
+import 'models/trip.dart';
 
 /// Router mit Auth-Redirect: nicht angemeldet -> /login, angemeldet -> /home.
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -39,6 +41,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/register', builder: (_, _) => const RegisterScreen()),
       GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
       GoRoute(path: '/trips', builder: (_, _) => const TripsSearchScreen()),
+      GoRoute(
+        path: '/book',
+        builder: (_, state) => CreateBookingScreen(trip: state.extra as Trip),
+      ),
       GoRoute(path: '/bookings', builder: (_, _) => const BookingsScreen()),
       GoRoute(
         path: '/chat/:id',

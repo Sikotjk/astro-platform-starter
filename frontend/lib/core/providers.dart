@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
+import '../features/booking_create/create_booking_controller.dart';
+import '../features/booking_create/packages_repository.dart';
 import '../features/bookings/bookings_controller.dart';
 import '../features/bookings/bookings_repository.dart';
 import '../features/chat/chat_controller.dart';
@@ -64,6 +66,19 @@ final bookingsRepositoryProvider = Provider<BookingsRepository>(
 final bookingsControllerProvider =
     StateNotifierProvider<BookingsController, AsyncValue<List<BookingSummary>>>(
       (ref) => BookingsController(ref.watch(bookingsRepositoryProvider)),
+    );
+
+// ── Buchung anlegen (Paket + Booking) ────────────────────────────────────────
+final packagesRepositoryProvider = Provider<PackagesRepository>(
+  (ref) => DioPackagesRepository(ref.watch(apiClientProvider).dio),
+);
+
+final createBookingControllerProvider =
+    StateNotifierProvider<CreateBookingController, CreateBookingState>(
+      (ref) => CreateBookingController(
+        ref.watch(packagesRepositoryProvider),
+        ref.watch(bookingsRepositoryProvider),
+      ),
     );
 
 // ── Benachrichtigungen ───────────────────────────────────────────────────────
