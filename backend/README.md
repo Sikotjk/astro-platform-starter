@@ -13,6 +13,8 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **DB-Migration + Seed + E2E** gegen echte PostgreSQL verifiziert (Happy-Path REQUESTED..CONFIRMED)
 - [x] **KYC (Stripe Identity):** `IdentityGateway` + `KycService` + idempotenter Identity-Webhook (`src/kyc/`, E2E: KYC-Gate 403→201)
 - [x] **Manifest-PDF:** pdfkit-Renderer mit eingebettetem DejaVu-Font (DE/RU/TG), `GET /bookings/:id/manifest` (`src/manifest-pdf/`, E2E: echtes PDF + Hash-Header)
+- [x] **Chat:** REST-Verlauf + socket.io-Gateway (JWT-Auth, Räume pro Buchung) (`src/chat/`)
+- [x] **Reviews:** Bewertung nach CONFIRMED + Rating-Aggregat-Pflege (`src/reviews/`, E2E: 4,8→4,82 verifiziert)
 
 ## Setup (lokal)
 
@@ -73,6 +75,10 @@ CONFIRMED ──releaseEscrow()──> Transfer itemPrice an Traveler-Connect-Ac
 | `GET /kyc/status` | JWT | aktuellen KYC-Status abfragen |
 | `POST /webhooks/stripe-identity` | Signatur | `…verified` → `kycStatus=VERIFIED` (idempotent) |
 | `GET /bookings/:id/manifest?locale=de\|ru\|tg` | JWT | Zoll-Manifest als PDF (erst nach Traveler-Bestätigung) |
+| `GET\|POST /bookings/:id/messages` | JWT | Chat-Verlauf / Nachricht senden (Teilnehmer) |
+| WebSocket `/chat` (`chat:join`, `chat:send`) | JWT (Handshake) | Echtzeit-Chat pro Buchung |
+| `POST /bookings/:id/review` | JWT | Bewertung (nur nach CONFIRMED, 1×/Richtung) |
+| `GET /users/:id/reviews` | – | öffentliches Bewertungsprofil |
 | `POST /trips` | JWT (KYC) | Trip anbieten |
 | `GET /trips` | – | Match-Suche (Route/Datum/freie kg) |
 | `GET /trips/:id` | – | Trip-Detail |

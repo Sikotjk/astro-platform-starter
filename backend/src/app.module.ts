@@ -8,6 +8,8 @@ import { CustomsModule } from './customs/customs.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { KycModule } from './kyc/kyc.module';
 import { ManifestPdfModule } from './manifest-pdf/manifest-pdf.module';
+import { ChatModule } from './chat/chat.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { ManifestPdfModule } from './manifest-pdf/manifest-pdf.module';
     BookingsModule,
     KycModule,
     ManifestPdfModule,
+    ChatModule,
+    ReviewsModule,
   ],
 })
 export class AppModule {}

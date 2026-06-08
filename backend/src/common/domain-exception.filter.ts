@@ -14,6 +14,8 @@ import { BookingTransitionError } from '../bookings/booking.machine';
 import { BookingNotFoundError, BookingStateError } from '../bookings/booking.service';
 import { CustomsValidationError } from '../customs/customs.service';
 import { KycStateError, KycUserNotFoundError } from '../kyc/kyc.service';
+import { ChatAuthError } from '../chat/chat.rules';
+import { ReviewError } from '../reviews/reviews.rules';
 
 @Catch()
 export class DomainExceptionFilter implements ExceptionFilter {
@@ -41,10 +43,14 @@ export class DomainExceptionFilter implements ExceptionFilter {
     if (
       e instanceof BookingTransitionError ||
       e instanceof BookingStateError ||
-      e instanceof KycStateError
+      e instanceof KycStateError ||
+      e instanceof ReviewError
     ) {
       // Ungültiger Übergang / Geschäftsregel verletzt -> Konflikt.
       return { status: HttpStatus.CONFLICT, message: e.message };
+    }
+    if (e instanceof ChatAuthError) {
+      return { status: HttpStatus.FORBIDDEN, message: e.message };
     }
     if (e instanceof CustomsValidationError) {
       return { status: HttpStatus.BAD_REQUEST, message: e.message };
