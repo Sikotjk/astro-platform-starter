@@ -14,9 +14,9 @@ describe('buildBookingListWhere', () => {
   });
 
   it('ergänzt den Statusfilter', () => {
-    expect(buildBookingListWhere('u1', { role: 'SENDER', statuses: ['PAID', 'DELIVERED'] })).toEqual(
-      { senderId: 'u1', status: { in: ['PAID', 'DELIVERED'] } },
-    );
+    expect(
+      buildBookingListWhere('u1', { role: 'SENDER', statuses: ['PAID', 'DELIVERED'] }),
+    ).toEqual({ senderId: 'u1', status: { in: ['PAID', 'DELIVERED'] } });
   });
 
   it('leere Statusliste fügt keinen Filter hinzu', () => {
