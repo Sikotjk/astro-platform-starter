@@ -2,6 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
+import '../features/trips/trips_controller.dart';
+import '../features/trips/trips_repository.dart';
+import '../models/trip.dart';
 import 'api_client.dart';
 import 'token_store.dart';
 
@@ -22,3 +25,12 @@ final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
     ref.watch(tokenStoreProvider),
   ),
 );
+
+final tripsRepositoryProvider = Provider<TripsRepository>(
+  (ref) => DioTripsRepository(ref.watch(apiClientProvider).dio),
+);
+
+final tripsControllerProvider =
+    StateNotifierProvider<TripsController, AsyncValue<List<Trip>>>(
+      (ref) => TripsController(ref.watch(tripsRepositoryProvider)),
+    );

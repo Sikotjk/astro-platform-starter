@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'core/providers.dart';
 import 'features/auth/login_screen.dart';
 import 'features/home/home_screen.dart';
+import 'features/trips/trips_search_screen.dart';
 
 /// Router mit Auth-Redirect: nicht angemeldet -> /login, angemeldet -> /home.
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -30,6 +31,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
       GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
+      GoRoute(path: '/trips', builder: (_, _) => const TripsSearchScreen()),
     ],
   );
 });
