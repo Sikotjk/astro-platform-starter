@@ -15,6 +15,7 @@ Backend für die P2P-Crowdshipping-Plattform (Tadschikistan-Route).
 - [x] **Manifest-PDF:** pdfkit-Renderer mit eingebettetem DejaVu-Font (DE/RU/TG), `GET /bookings/:id/manifest` (`src/manifest-pdf/`, E2E: echtes PDF + Hash-Header)
 - [x] **Chat:** REST-Verlauf + socket.io-Gateway (JWT-Auth, Räume pro Buchung) (`src/chat/`)
 - [x] **Reviews:** Bewertung nach CONFIRMED + Rating-Aggregat-Pflege (`src/reviews/`, E2E: 4,8→4,82 verifiziert)
+- [x] **Automatisierte E2E-Tests:** 18 supertest-Integrationstests gegen echte App+DB (`src/test/app.e2e-spec.ts`)
 
 ## Setup (lokal)
 
@@ -25,8 +26,16 @@ npm install
 npm run prisma:generate
 npm run prisma:migrate -- --name init
 npm run prisma:studio       # DB-Browser
-npm test                    # Unit-Tests (State Machine)
+npm test                    # Unit-Tests (schnell, ohne DB)
+npm run test:e2e            # E2E gegen echte DB (DATABASE_URL nötig)
 ```
+
+## Tests
+
+| Befehl | Umfang |
+| --- | --- |
+| `npm test` | 63 Unit-Tests — pure Domänenlogik (State Machine, Escrow, Zoll, KYC, Chat/Review-Regeln, PDF), ohne DB/Netz |
+| `npm run test:e2e` | 18 Integrationstests — bootet die echte Nest-App (supertest) gegen PostgreSQL: Auth, KYC-Gate, Zoll, kompletter Buchungs-Lebenszyklus inkl. Escrow-Release, Audit-Log, Chat, Reviews. Reset per `TRUNCATE`, idempotent. SWC-Transform liefert Decorator-Metadaten für die NestJS-DI. |
 
 ## Datenmodell — Kernidee
 
