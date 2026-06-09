@@ -7,8 +7,10 @@ import 'package:tj_shipping_app/models/auth.dart';
 import 'package:tj_shipping_app/models/review.dart';
 
 class _FakeAuthRepo implements AuthRepository {
-  _FakeAuthRepo({this.fail = false});
+  _FakeAuthRepo({this.fail = false, this.updateFail = false});
   bool fail;
+  bool updateFail;
+  Map<String, String?>? lastUpdate;
 
   @override
   Future<UserProfile> me() async {
@@ -20,6 +22,31 @@ class _FakeAuthRepo implements AuthRepository {
       lastName: 'Iva',
       role: 'TRAVELER',
       preferredLocale: 'de',
+      kycStatus: 'VERIFIED',
+      ratingAvg: 4.5,
+      ratingCount: 2,
+    );
+  }
+
+  @override
+  Future<UserProfile> updateMe({
+    String? firstName,
+    String? lastName,
+    String? preferredLocale,
+  }) async {
+    if (updateFail) throw Exception('400');
+    lastUpdate = {
+      'firstName': firstName,
+      'lastName': lastName,
+      'preferredLocale': preferredLocale,
+    };
+    return UserProfile(
+      id: 'u1',
+      email: 'a@b.de',
+      firstName: firstName ?? 'Anna',
+      lastName: lastName ?? 'Iva',
+      role: 'TRAVELER',
+      preferredLocale: preferredLocale ?? 'de',
       kycStatus: 'VERIFIED',
       ratingAvg: 4.5,
       ratingCount: 2,
@@ -86,5 +113,40 @@ void main() {
     await c.load();
 
     expect(c.state, isA<AsyncError<ProfileData>>());
+  });
+
+  test('update speichert Felder und übernimmt sie in den State', () async {
+    final auth = _FakeAuthRepo();
+    final c = ProfileController(auth, _FakeReviewsRepo());
+    await c.load();
+
+    final err = await c.update(
+      firstName: 'Anya',
+      lastName: 'Ivanova',
+      preferredLocale: 'ru',
+    );
+
+    expect(err, isNull);
+    expect(auth.lastUpdate, {
+      'firstName': 'Anya',
+      'lastName': 'Ivanova',
+      'preferredLocale': 'ru',
+    });
+    expect(c.state.value!.profile.firstName, 'Anya');
+    expect(c.state.value!.profile.preferredLocale, 'ru');
+    // Bewertungen bleiben erhalten (kein erneutes Laden).
+    expect(c.state.value!.reviews, hasLength(1));
+  });
+
+  test('update gibt bei Fehler die Meldung zurück', () async {
+    final c = ProfileController(
+      _FakeAuthRepo(updateFail: true),
+      _FakeReviewsRepo(),
+    );
+    await c.load();
+
+    final err = await c.update(firstName: 'X');
+
+    expect(err, isNotNull);
   });
 }

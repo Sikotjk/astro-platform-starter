@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
@@ -38,8 +39,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final l10n = context.l10n;
     final state = ref.watch(profileControllerProvider);
 
+    final profile = state.value?.profile;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.profileTitle)),
+      appBar: AppBar(
+        title: Text(l10n.profileTitle),
+        actions: [
+          if (profile != null)
+            IconButton(
+              icon: const Icon(Icons.edit),
+              tooltip: l10n.editProfile,
+              onPressed: () => context.push('/profile/edit', extra: profile),
+            ),
+        ],
+      ),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text(e.toString())),

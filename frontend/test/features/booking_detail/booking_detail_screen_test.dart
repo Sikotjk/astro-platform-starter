@@ -64,6 +64,12 @@ class _NoRepo implements AuthRepository {
   }) => throw UnimplementedError();
   @override
   Future<UserProfile> me() => throw UnimplementedError();
+  @override
+  Future<UserProfile> updateMe({
+    String? firstName,
+    String? lastName,
+    String? preferredLocale,
+  }) => throw UnimplementedError();
 }
 
 class _FakeAuth extends AuthController {

@@ -379,6 +379,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get profileTitle => 'Mein Profil';
 
   @override
+  String get editProfile => 'Profil bearbeiten';
+
+  @override
+  String get save => 'Speichern';
+
+  @override
+  String get profileSaved => 'Profil gespeichert.';
+
+  @override
   String reviewsCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

@@ -13,8 +13,10 @@ import 'features/home/home_screen.dart';
 import 'features/kyc/kyc_screen.dart';
 import 'features/manifest/manifest_screen.dart';
 import 'features/notifications/notifications_screen.dart';
+import 'features/profile/profile_edit_screen.dart';
 import 'features/profile/profile_screen.dart';
 import 'features/trips/trips_search_screen.dart';
+import 'models/auth.dart';
 import 'models/trip.dart';
 
 /// Router mit Auth-Redirect: nicht angemeldet -> /login, angemeldet -> /home.
@@ -70,6 +72,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: '/kyc', builder: (_, _) => const KycScreen()),
       GoRoute(path: '/profile', builder: (_, _) => const ProfileScreen()),
+      GoRoute(
+        path: '/profile/edit',
+        builder: (_, state) =>
+            ProfileEditScreen(profile: state.extra as UserProfile),
+      ),
     ],
   );
 });

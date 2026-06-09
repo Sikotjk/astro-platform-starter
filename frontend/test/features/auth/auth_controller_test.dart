@@ -43,6 +43,13 @@ class _FakeAuthRepo implements AuthRepository {
       ratingCount: 0,
     );
   }
+
+  @override
+  Future<UserProfile> updateMe({
+    String? firstName,
+    String? lastName,
+    String? preferredLocale,
+  }) => throw UnimplementedError();
 }
 
 void main() {

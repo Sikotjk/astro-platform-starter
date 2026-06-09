@@ -378,6 +378,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileTitle => 'Мой профиль';
 
   @override
+  String get editProfile => 'Редактировать профиль';
+
+  @override
+  String get save => 'Сохранить';
+
+  @override
+  String get profileSaved => 'Профиль сохранён.';
+
+  @override
   String reviewsCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

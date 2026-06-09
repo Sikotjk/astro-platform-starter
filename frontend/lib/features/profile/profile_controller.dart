@@ -32,4 +32,27 @@ class ProfileController extends StateNotifier<AsyncValue<ProfileData>> {
       state = AsyncValue.error(apiErrorMessage(e), st);
     }
   }
+
+  /// Speichert geänderte Profilfelder und aktualisiert den State, ohne die
+  /// Bewertungen neu zu laden. Gibt `null` bei Erfolg, sonst die Fehlermeldung.
+  Future<String?> update({
+    String? firstName,
+    String? lastName,
+    String? preferredLocale,
+  }) async {
+    try {
+      final updated = await _authRepo.updateMe(
+        firstName: firstName,
+        lastName: lastName,
+        preferredLocale: preferredLocale,
+      );
+      final current = state.value;
+      state = AsyncValue.data(
+        ProfileData(profile: updated, reviews: current?.reviews ?? const []),
+      );
+      return null;
+    } catch (e) {
+      return apiErrorMessage(e);
+    }
+  }
 }

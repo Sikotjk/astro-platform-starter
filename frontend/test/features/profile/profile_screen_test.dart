@@ -16,6 +16,13 @@ class _FakeAuthRepo implements AuthRepository {
   Future<UserProfile> me() async => profile;
 
   @override
+  Future<UserProfile> updateMe({
+    String? firstName,
+    String? lastName,
+    String? preferredLocale,
+  }) async => profile;
+
+  @override
   Future<AuthSession> login({
     required String email,
     required String password,

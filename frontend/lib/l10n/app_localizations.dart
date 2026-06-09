@@ -814,6 +814,24 @@ abstract class AppLocalizations {
   /// **'Mein Profil'**
   String get profileTitle;
 
+  /// No description provided for @editProfile.
+  ///
+  /// In de, this message translates to:
+  /// **'Profil bearbeiten'**
+  String get editProfile;
+
+  /// No description provided for @save.
+  ///
+  /// In de, this message translates to:
+  /// **'Speichern'**
+  String get save;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In de, this message translates to:
+  /// **'Profil gespeichert.'**
+  String get profileSaved;
+
   /// No description provided for @reviewsCount.
   ///
   /// In de, this message translates to:

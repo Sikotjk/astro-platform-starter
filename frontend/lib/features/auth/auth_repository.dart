@@ -14,6 +14,14 @@ abstract class AuthRepository {
   });
 
   Future<UserProfile> me();
+
+  /// Aktualisiert das eigene Profil (PATCH /me). Nur gesetzte Felder werden
+  /// übertragen. Liefert das aktualisierte Profil.
+  Future<UserProfile> updateMe({
+    String? firstName,
+    String? lastName,
+    String? preferredLocale,
+  });
 }
 
 class DioAuthRepository implements AuthRepository {
@@ -57,6 +65,20 @@ class DioAuthRepository implements AuthRepository {
   @override
   Future<UserProfile> me() async {
     final res = await _dio.get<Map<String, dynamic>>('/me');
+    return UserProfile.fromJson(res.data!);
+  }
+
+  @override
+  Future<UserProfile> updateMe({
+    String? firstName,
+    String? lastName,
+    String? preferredLocale,
+  }) async {
+    final data = <String, dynamic>{};
+    if (firstName != null) data['firstName'] = firstName;
+    if (lastName != null) data['lastName'] = lastName;
+    if (preferredLocale != null) data['preferredLocale'] = preferredLocale;
+    final res = await _dio.patch<Map<String, dynamic>>('/me', data: data);
     return UserProfile.fromJson(res.data!);
   }
 }

@@ -379,6 +379,15 @@ class AppLocalizationsTg extends AppLocalizations {
   String get profileTitle => 'Профили ман';
 
   @override
+  String get editProfile => 'Профилро таҳрир кардан';
+
+  @override
+  String get save => 'Захира кардан';
+
+  @override
+  String get profileSaved => 'Профил захира шуд.';
+
+  @override
   String reviewsCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

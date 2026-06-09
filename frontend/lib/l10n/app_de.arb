@@ -124,6 +124,9 @@
   "disputeSubmit": "Streitfall einreichen",
   "disputeSuccess": "Streitfall eröffnet. Ein Vermittler meldet sich.",
   "profileTitle": "Mein Profil",
+  "editProfile": "Profil bearbeiten",
+  "save": "Speichern",
+  "profileSaved": "Profil gespeichert.",
   "reviewsCount": "{count, plural, =1{1 Bewertung} other{{count} Bewertungen}}",
   "@reviewsCount": { "placeholders": { "count": { "type": "int" } } }
 }
