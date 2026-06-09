@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/package.dart';
 import '../../models/trip.dart';
@@ -74,25 +75,27 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
   }
 
   String? _required(String? v) =>
-      (v == null || v.trim().isEmpty) ? 'Pflichtfeld' : null;
-  String? _number(String? v) =>
-      (double.tryParse((v ?? '').trim()) ?? 0) > 0 ? null : 'Zahl > 0 eingeben';
+      (v == null || v.trim().isEmpty) ? context.l10n.validRequired : null;
+  String? _number(String? v) => (double.tryParse((v ?? '').trim()) ?? 0) > 0
+      ? null
+      : context.l10n.validNumber;
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(createBookingControllerProvider);
+    final l10n = context.l10n;
 
     ref.listen<CreateBookingState>(createBookingControllerProvider, (_, next) {
       if (next.status == CreateStatus.success) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('Buchung angefragt!')));
+        ).showSnackBar(SnackBar(content: Text(l10n.bookingRequested)));
         context.go('/bookings');
       }
     });
 
     return Scaffold(
-      appBar: AppBar(title: Text('Buchen · ${widget.trip.route}')),
+      appBar: AppBar(title: Text(l10n.bookTitle(widget.trip.route))),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -101,59 +104,66 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Abflug ${widget.trip.departureDate} · ${widget.trip.pricePerKg.toStringAsFixed(2)} ${widget.trip.currency}/kg',
+                l10n.bookTripInfo(
+                  widget.trip.departureDate,
+                  widget.trip.pricePerKg.toStringAsFixed(2),
+                  widget.trip.currency,
+                ),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const Divider(height: 24),
               TextFormField(
                 key: const Key('title'),
                 controller: _title,
-                decoration: const InputDecoration(labelText: 'Pakettitel'),
+                decoration: InputDecoration(labelText: l10n.fieldPackageTitle),
                 validator: _required,
               ),
               TextFormField(
                 key: const Key('weight'),
                 controller: _weight,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Gewicht (kg)'),
+                decoration: InputDecoration(labelText: l10n.fieldWeightKg),
                 validator: _number,
               ),
               TextFormField(
                 key: const Key('value'),
                 controller: _value,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Warenwert (EUR)'),
+                decoration: InputDecoration(labelText: l10n.fieldDeclaredValue),
                 validator: _number,
               ),
               const SizedBox(height: 12),
-              Text('Empfänger', style: Theme.of(context).textTheme.titleSmall),
+              Text(
+                l10n.recipientSection,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
               TextFormField(
                 key: const Key('recipientName'),
                 controller: _recipientName,
-                decoration: const InputDecoration(labelText: 'Name'),
+                decoration: InputDecoration(labelText: l10n.fieldName),
                 validator: _required,
               ),
               TextFormField(
                 key: const Key('recipientPhone'),
                 controller: _recipientPhone,
-                decoration: const InputDecoration(labelText: 'Telefon'),
+                decoration: InputDecoration(labelText: l10n.fieldPhone),
                 validator: _required,
               ),
               TextFormField(
                 key: const Key('recipientCity'),
                 controller: _recipientCity,
-                decoration: const InputDecoration(labelText: 'Stadt'),
+                decoration: InputDecoration(labelText: l10n.fieldCity),
                 validator: _required,
               ),
               const SizedBox(height: 12),
               Text(
-                'Inhalt (Zoll-Deklaration)',
+                l10n.contentSection,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               DropdownButtonFormField<String>(
                 key: const Key('category'),
                 initialValue: _category,
-                decoration: const InputDecoration(labelText: 'Kategorie'),
+                decoration: InputDecoration(labelText: l10n.fieldCategory),
                 items: [
                   for (final c in customsCategories)
                     DropdownMenuItem(value: c, child: Text(c)),
@@ -163,10 +173,9 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
               TextFormField(
                 key: const Key('itemDescription'),
                 controller: _itemDescription,
-                decoration: const InputDecoration(labelText: 'Beschreibung'),
-                validator: (v) => (v == null || v.trim().length < 3)
-                    ? 'Mind. 3 Zeichen'
-                    : null,
+                decoration: InputDecoration(labelText: l10n.fieldDescription),
+                validator: (v) =>
+                    (v == null || v.trim().length < 3) ? l10n.validMin3 : null,
               ),
               const SizedBox(height: 24),
               if (state.status == CreateStatus.error && state.error != null)
@@ -187,7 +196,7 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
                         width: 20,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Buchung anfragen'),
+                    : Text(l10n.bookButton),
               ),
             ],
           ),

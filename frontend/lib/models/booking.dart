@@ -51,20 +51,20 @@ class BookingSummary {
   }
 }
 
-/// Deutsche Beschriftung + Farbe je Buchungsstatus (für UI-Chips).
-({String label, Color color}) bookingStatusStyle(String status) {
+/// Farbe je Buchungsstatus (für UI-Chips). Die Beschriftung kommt aus l10n.
+Color bookingStatusColor(String status) {
   return switch (status) {
-    'REQUESTED' => (label: 'Angefragt', color: Colors.blueGrey),
-    'ACCEPTED' => (label: 'Akzeptiert', color: Colors.indigo),
-    'PAID' => (label: 'Bezahlt', color: Colors.teal),
-    'HANDED_OVER' => (label: 'Übergeben', color: Colors.purple),
-    'IN_TRANSIT' => (label: 'Im Transit', color: Colors.orange),
-    'DELIVERED' => (label: 'Zugestellt', color: Colors.lightGreen),
-    'CONFIRMED' => (label: 'Abgeschlossen', color: Colors.green),
-    'DISPUTED' => (label: 'Streitfall', color: Colors.red),
-    'REFUNDED' => (label: 'Erstattet', color: Colors.brown),
-    'CANCELLED' => (label: 'Storniert', color: Colors.grey),
-    'REJECTED' => (label: 'Abgelehnt', color: Colors.grey),
-    _ => (label: status, color: Colors.grey),
+    'REQUESTED' => Colors.blueGrey,
+    'ACCEPTED' => Colors.indigo,
+    'PAID' => Colors.teal,
+    'HANDED_OVER' => Colors.purple,
+    'IN_TRANSIT' => Colors.orange,
+    'DELIVERED' => Colors.lightGreen,
+    'CONFIRMED' => Colors.green,
+    'DISPUTED' => Colors.red,
+    'REFUNDED' => Colors.brown,
+    'CANCELLED' => Colors.grey,
+    'REJECTED' => Colors.grey,
+    _ => Colors.grey,
   };
 }

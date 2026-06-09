@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/message.dart';
 
@@ -35,7 +36,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final myId = ref.watch(authControllerProvider).session?.userId;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Chat')),
+      appBar: AppBar(title: Text(context.l10n.chatTitle)),
       body: Column(
         children: [
           Expanded(
@@ -54,9 +55,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   child: TextField(
                     key: const Key('messageInput'),
                     controller: _input,
-                    decoration: const InputDecoration(
-                      hintText: 'Nachricht …',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      hintText: context.l10n.messageHint,
+                      border: const OutlineInputBorder(),
                       isDense: true,
                     ),
                     onSubmitted: (_) => _send(),
@@ -85,7 +86,7 @@ class _MessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (messages.isEmpty) {
-      return const Center(child: Text('Noch keine Nachrichten.'));
+      return Center(child: Text(context.l10n.noMessages));
     }
     final scheme = Theme.of(context).colorScheme;
     return ListView.builder(

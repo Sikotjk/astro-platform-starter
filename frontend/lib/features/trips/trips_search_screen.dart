@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/trip.dart';
 
@@ -40,9 +41,10 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
   @override
   Widget build(BuildContext context) {
     final result = ref.watch(tripsControllerProvider);
+    final l10n = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Trips suchen')),
+      appBar: AppBar(title: Text(l10n.tripsTitle)),
       body: Column(
         children: [
           Padding(
@@ -56,8 +58,8 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
                         key: const Key('origin'),
                         controller: _origin,
                         textCapitalization: TextCapitalization.characters,
-                        decoration: const InputDecoration(
-                          labelText: 'Von (IATA)',
+                        decoration: InputDecoration(
+                          labelText: l10n.fieldFrom,
                           hintText: 'FRA',
                         ),
                       ),
@@ -68,8 +70,8 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
                         key: const Key('destination'),
                         controller: _destination,
                         textCapitalization: TextCapitalization.characters,
-                        decoration: const InputDecoration(
-                          labelText: 'Nach (IATA)',
+                        decoration: InputDecoration(
+                          labelText: l10n.fieldTo,
                           hintText: 'DYU',
                         ),
                       ),
@@ -84,16 +86,14 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
                         key: const Key('minKg'),
                         controller: _minKg,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Min. freie kg',
-                        ),
+                        decoration: InputDecoration(labelText: l10n.fieldMinKg),
                       ),
                     ),
                     const SizedBox(width: 12),
                     FilledButton.icon(
                       onPressed: _search,
                       icon: const Icon(Icons.search),
-                      label: const Text('Suchen'),
+                      label: Text(l10n.searchButton),
                     ),
                   ],
                 ),
@@ -121,8 +121,9 @@ class _TripList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     if (trips.isEmpty) {
-      return const Center(child: Text('Keine Trips gefunden.'));
+      return Center(child: Text(l10n.noTrips));
     }
     return ListView.separated(
       itemCount: trips.length,
@@ -135,8 +136,12 @@ class _TripList extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(
-            'Abflug ${t.departureDate} · ${t.freeKg.toStringAsFixed(1)} kg frei · '
-            '${t.pricePerKg.toStringAsFixed(2)} ${t.currency}/kg',
+            l10n.tripSubtitle(
+              t.departureDate,
+              t.freeKg.toStringAsFixed(1),
+              t.pricePerKg.toStringAsFixed(2),
+              t.currency,
+            ),
           ),
           trailing: t.traveler == null
               ? null

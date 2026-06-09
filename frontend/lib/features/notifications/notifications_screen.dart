@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/notification.dart';
 
@@ -27,13 +28,13 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Benachrichtigungen'),
+        title: Text(context.l10n.notificationsTitle),
         actions: [
           TextButton(
             onPressed: () => ref
                 .read(notificationsControllerProvider.notifier)
                 .markAllRead(),
-            child: const Text('Alle gelesen'),
+            child: Text(context.l10n.markAllRead),
           ),
         ],
       ),
@@ -54,7 +55,7 @@ class _NotificationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return const Center(child: Text('Keine Benachrichtigungen.'));
+      return Center(child: Text(context.l10n.noNotifications));
     }
     return ListView.separated(
       itemCount: items.length,

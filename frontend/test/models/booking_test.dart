@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/models/booking.dart';
 
@@ -36,9 +37,9 @@ void main() {
     expect(b.route, '??? → ???');
   });
 
-  test('bookingStatusStyle liefert deutsche Labels', () {
-    expect(bookingStatusStyle('CONFIRMED').label, 'Abgeschlossen');
-    expect(bookingStatusStyle('DISPUTED').label, 'Streitfall');
-    expect(bookingStatusStyle('UNKNOWN').label, 'UNKNOWN');
+  test('bookingStatusColor liefert sinnvolle Farben', () {
+    expect(bookingStatusColor('CONFIRMED'), Colors.green);
+    expect(bookingStatusColor('DISPUTED'), Colors.red);
+    expect(bookingStatusColor('UNKNOWN'), Colors.grey);
   });
 }

@@ -261,6 +261,330 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Tadschikisch'**
   String get langTj;
+
+  /// No description provided for @refresh.
+  ///
+  /// In de, this message translates to:
+  /// **'Aktualisieren'**
+  String get refresh;
+
+  /// No description provided for @tripsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Trips suchen'**
+  String get tripsTitle;
+
+  /// No description provided for @fieldFrom.
+  ///
+  /// In de, this message translates to:
+  /// **'Von (IATA)'**
+  String get fieldFrom;
+
+  /// No description provided for @fieldTo.
+  ///
+  /// In de, this message translates to:
+  /// **'Nach (IATA)'**
+  String get fieldTo;
+
+  /// No description provided for @fieldMinKg.
+  ///
+  /// In de, this message translates to:
+  /// **'Min. freie kg'**
+  String get fieldMinKg;
+
+  /// No description provided for @searchButton.
+  ///
+  /// In de, this message translates to:
+  /// **'Suchen'**
+  String get searchButton;
+
+  /// No description provided for @noTrips.
+  ///
+  /// In de, this message translates to:
+  /// **'Keine Trips gefunden.'**
+  String get noTrips;
+
+  /// No description provided for @tripSubtitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Abflug {date} · {kg} kg frei · {price} {currency}/kg'**
+  String tripSubtitle(Object date, Object kg, Object price, Object currency);
+
+  /// No description provided for @bookingsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Meine Buchungen'**
+  String get bookingsTitle;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In de, this message translates to:
+  /// **'Alle'**
+  String get filterAll;
+
+  /// No description provided for @filterAsSender.
+  ///
+  /// In de, this message translates to:
+  /// **'Als Sender'**
+  String get filterAsSender;
+
+  /// No description provided for @filterAsTraveler.
+  ///
+  /// In de, this message translates to:
+  /// **'Als Traveler'**
+  String get filterAsTraveler;
+
+  /// No description provided for @noBookings.
+  ///
+  /// In de, this message translates to:
+  /// **'Noch keine Buchungen.'**
+  String get noBookings;
+
+  /// No description provided for @statusRequested.
+  ///
+  /// In de, this message translates to:
+  /// **'Angefragt'**
+  String get statusRequested;
+
+  /// No description provided for @statusAccepted.
+  ///
+  /// In de, this message translates to:
+  /// **'Akzeptiert'**
+  String get statusAccepted;
+
+  /// No description provided for @statusPaid.
+  ///
+  /// In de, this message translates to:
+  /// **'Bezahlt'**
+  String get statusPaid;
+
+  /// No description provided for @statusHandedOver.
+  ///
+  /// In de, this message translates to:
+  /// **'Übergeben'**
+  String get statusHandedOver;
+
+  /// No description provided for @statusInTransit.
+  ///
+  /// In de, this message translates to:
+  /// **'Im Transit'**
+  String get statusInTransit;
+
+  /// No description provided for @statusDelivered.
+  ///
+  /// In de, this message translates to:
+  /// **'Zugestellt'**
+  String get statusDelivered;
+
+  /// No description provided for @statusConfirmed.
+  ///
+  /// In de, this message translates to:
+  /// **'Abgeschlossen'**
+  String get statusConfirmed;
+
+  /// No description provided for @statusDisputed.
+  ///
+  /// In de, this message translates to:
+  /// **'Streitfall'**
+  String get statusDisputed;
+
+  /// No description provided for @statusRefunded.
+  ///
+  /// In de, this message translates to:
+  /// **'Erstattet'**
+  String get statusRefunded;
+
+  /// No description provided for @statusCancelled.
+  ///
+  /// In de, this message translates to:
+  /// **'Storniert'**
+  String get statusCancelled;
+
+  /// No description provided for @statusRejected.
+  ///
+  /// In de, this message translates to:
+  /// **'Abgelehnt'**
+  String get statusRejected;
+
+  /// No description provided for @chatTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Chat'**
+  String get chatTitle;
+
+  /// No description provided for @messageHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Nachricht …'**
+  String get messageHint;
+
+  /// No description provided for @noMessages.
+  ///
+  /// In de, this message translates to:
+  /// **'Noch keine Nachrichten.'**
+  String get noMessages;
+
+  /// No description provided for @kycTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Identitätsprüfung'**
+  String get kycTitle;
+
+  /// No description provided for @kycVerified.
+  ///
+  /// In de, this message translates to:
+  /// **'Verifiziert'**
+  String get kycVerified;
+
+  /// No description provided for @kycPending.
+  ///
+  /// In de, this message translates to:
+  /// **'In Prüfung'**
+  String get kycPending;
+
+  /// No description provided for @kycRejected.
+  ///
+  /// In de, this message translates to:
+  /// **'Abgelehnt'**
+  String get kycRejected;
+
+  /// No description provided for @kycNotStarted.
+  ///
+  /// In de, this message translates to:
+  /// **'Nicht gestartet'**
+  String get kycNotStarted;
+
+  /// No description provided for @kycHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Zum Anbieten von Trips ist eine einmalige Identitätsprüfung nötig.'**
+  String get kycHint;
+
+  /// No description provided for @kycStart.
+  ///
+  /// In de, this message translates to:
+  /// **'Verifizierung starten'**
+  String get kycStart;
+
+  /// No description provided for @kycRestart.
+  ///
+  /// In de, this message translates to:
+  /// **'Erneut starten'**
+  String get kycRestart;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Benachrichtigungen'**
+  String get notificationsTitle;
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In de, this message translates to:
+  /// **'Alle gelesen'**
+  String get markAllRead;
+
+  /// No description provided for @noNotifications.
+  ///
+  /// In de, this message translates to:
+  /// **'Keine Benachrichtigungen.'**
+  String get noNotifications;
+
+  /// No description provided for @bookTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Buchen · {route}'**
+  String bookTitle(Object route);
+
+  /// No description provided for @bookTripInfo.
+  ///
+  /// In de, this message translates to:
+  /// **'Abflug {date} · {price} {currency}/kg'**
+  String bookTripInfo(Object date, Object price, Object currency);
+
+  /// No description provided for @fieldPackageTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Pakettitel'**
+  String get fieldPackageTitle;
+
+  /// No description provided for @fieldWeightKg.
+  ///
+  /// In de, this message translates to:
+  /// **'Gewicht (kg)'**
+  String get fieldWeightKg;
+
+  /// No description provided for @fieldDeclaredValue.
+  ///
+  /// In de, this message translates to:
+  /// **'Warenwert (EUR)'**
+  String get fieldDeclaredValue;
+
+  /// No description provided for @recipientSection.
+  ///
+  /// In de, this message translates to:
+  /// **'Empfänger'**
+  String get recipientSection;
+
+  /// No description provided for @fieldName.
+  ///
+  /// In de, this message translates to:
+  /// **'Name'**
+  String get fieldName;
+
+  /// No description provided for @fieldPhone.
+  ///
+  /// In de, this message translates to:
+  /// **'Telefon'**
+  String get fieldPhone;
+
+  /// No description provided for @fieldCity.
+  ///
+  /// In de, this message translates to:
+  /// **'Stadt'**
+  String get fieldCity;
+
+  /// No description provided for @contentSection.
+  ///
+  /// In de, this message translates to:
+  /// **'Inhalt (Zoll-Deklaration)'**
+  String get contentSection;
+
+  /// No description provided for @fieldCategory.
+  ///
+  /// In de, this message translates to:
+  /// **'Kategorie'**
+  String get fieldCategory;
+
+  /// No description provided for @fieldDescription.
+  ///
+  /// In de, this message translates to:
+  /// **'Beschreibung'**
+  String get fieldDescription;
+
+  /// No description provided for @bookButton.
+  ///
+  /// In de, this message translates to:
+  /// **'Buchung anfragen'**
+  String get bookButton;
+
+  /// No description provided for @validNumber.
+  ///
+  /// In de, this message translates to:
+  /// **'Zahl > 0 eingeben'**
+  String get validNumber;
+
+  /// No description provided for @validMin3.
+  ///
+  /// In de, this message translates to:
+  /// **'Mind. 3 Zeichen'**
+  String get validMin3;
+
+  /// No description provided for @bookingRequested.
+  ///
+  /// In de, this message translates to:
+  /// **'Buchung angefragt!'**
+  String get bookingRequested;
 }
 
 class _AppLocalizationsDelegate

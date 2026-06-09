@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/core/providers.dart';
 import 'package:tj_shipping_app/features/kyc/kyc_repository.dart';
 import 'package:tj_shipping_app/features/kyc/kyc_screen.dart';
 import 'package:tj_shipping_app/models/kyc.dart';
+
+import '../../support/localized_app.dart';
 
 class _FakeKycRepo implements KycRepository {
   _FakeKycRepo(this._status);
@@ -20,9 +21,9 @@ class _FakeKycRepo implements KycRepository {
   }
 }
 
-Widget _wrap(String status) => ProviderScope(
+Widget _wrap(String status) => localizedApp(
+  const KycScreen(),
   overrides: [kycRepositoryProvider.overrideWithValue(_FakeKycRepo(status))],
-  child: const MaterialApp(home: KycScreen()),
 );
 
 void main() {

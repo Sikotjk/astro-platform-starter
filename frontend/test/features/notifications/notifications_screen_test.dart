@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/core/providers.dart';
 import 'package:tj_shipping_app/features/notifications/notifications_repository.dart';
 import 'package:tj_shipping_app/features/notifications/notifications_screen.dart';
 import 'package:tj_shipping_app/models/notification.dart';
+
+import '../../support/localized_app.dart';
 
 class _FakeNotifRepo implements NotificationsRepository {
   @override
@@ -28,11 +28,11 @@ class _FakeNotifRepo implements NotificationsRepository {
 void main() {
   testWidgets('zeigt geladene Benachrichtigungen', (tester) async {
     await tester.pumpWidget(
-      ProviderScope(
+      localizedApp(
+        const NotificationsScreen(),
         overrides: [
           notificationsRepositoryProvider.overrideWithValue(_FakeNotifRepo()),
         ],
-        child: const MaterialApp(home: NotificationsScreen()),
       ),
     );
     await tester.pumpAndSettle();

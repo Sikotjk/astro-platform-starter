@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/core/providers.dart';
 import 'package:tj_shipping_app/features/chat/chat_gateway.dart';
 import 'package:tj_shipping_app/features/chat/chat_repository.dart';
 import 'package:tj_shipping_app/features/chat/chat_screen.dart';
 import 'package:tj_shipping_app/models/message.dart';
+
+import '../../support/localized_app.dart';
 
 class _FakeChatRepo implements ChatRepository {
   final List<Message> sent = [];
@@ -38,12 +39,12 @@ class _FakeChatRepo implements ChatRepository {
 void main() {
   testWidgets('zeigt Verlauf und sendet eine Nachricht', (tester) async {
     await tester.pumpWidget(
-      ProviderScope(
+      localizedApp(
+        const ChatScreen(bookingId: 'b1'),
         overrides: [
           chatRepositoryProvider.overrideWithValue(_FakeChatRepo()),
           chatGatewayProvider.overrideWithValue(FakeChatGateway()),
         ],
-        child: const MaterialApp(home: ChatScreen(bookingId: 'b1')),
       ),
     );
     await tester.pumpAndSettle();

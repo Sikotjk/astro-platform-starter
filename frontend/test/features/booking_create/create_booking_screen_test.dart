@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/features/booking_create/create_booking_screen.dart';
 import 'package:tj_shipping_app/models/trip.dart';
+
+import '../../support/localized_app.dart';
 
 Trip _trip() => Trip(
   id: 't1',
@@ -16,11 +17,7 @@ Trip _trip() => Trip(
 
 void main() {
   testWidgets('zeigt Paket-Formular für den gewählten Trip', (tester) async {
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp(home: CreateBookingScreen(trip: _trip())),
-      ),
-    );
+    await tester.pumpWidget(localizedApp(CreateBookingScreen(trip: _trip())));
 
     expect(find.byKey(const Key('title')), findsOneWidget);
     expect(find.byKey(const Key('weight')), findsOneWidget);
@@ -30,11 +27,7 @@ void main() {
   });
 
   testWidgets('Validierung blockt leeres Formular', (tester) async {
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp(home: CreateBookingScreen(trip: _trip())),
-      ),
-    );
+    await tester.pumpWidget(localizedApp(CreateBookingScreen(trip: _trip())));
 
     await tester.ensureVisible(find.text('Buchung anfragen'));
     await tester.tap(find.text('Buchung anfragen'));

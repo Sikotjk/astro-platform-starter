@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/core/providers.dart';
 import 'package:tj_shipping_app/features/bookings/bookings_repository.dart';
 import 'package:tj_shipping_app/features/bookings/bookings_screen.dart';
 import 'package:tj_shipping_app/models/booking.dart';
+
+import '../../support/localized_app.dart';
 
 class _FakeBookingsRepo implements BookingsRepository {
   @override
@@ -35,11 +35,11 @@ class _FakeBookingsRepo implements BookingsRepository {
 void main() {
   testWidgets('zeigt geladene Buchungen mit Status-Chip', (tester) async {
     await tester.pumpWidget(
-      ProviderScope(
+      localizedApp(
+        const BookingsScreen(),
         overrides: [
           bookingsRepositoryProvider.overrideWithValue(_FakeBookingsRepo()),
         ],
-        child: const MaterialApp(home: BookingsScreen()),
       ),
     );
     await tester.pumpAndSettle();

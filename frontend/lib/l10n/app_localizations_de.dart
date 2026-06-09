@@ -88,4 +88,173 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get langTj => 'Tadschikisch';
+
+  @override
+  String get refresh => 'Aktualisieren';
+
+  @override
+  String get tripsTitle => 'Trips suchen';
+
+  @override
+  String get fieldFrom => 'Von (IATA)';
+
+  @override
+  String get fieldTo => 'Nach (IATA)';
+
+  @override
+  String get fieldMinKg => 'Min. freie kg';
+
+  @override
+  String get searchButton => 'Suchen';
+
+  @override
+  String get noTrips => 'Keine Trips gefunden.';
+
+  @override
+  String tripSubtitle(Object date, Object kg, Object price, Object currency) {
+    return 'Abflug $date · $kg kg frei · $price $currency/kg';
+  }
+
+  @override
+  String get bookingsTitle => 'Meine Buchungen';
+
+  @override
+  String get filterAll => 'Alle';
+
+  @override
+  String get filterAsSender => 'Als Sender';
+
+  @override
+  String get filterAsTraveler => 'Als Traveler';
+
+  @override
+  String get noBookings => 'Noch keine Buchungen.';
+
+  @override
+  String get statusRequested => 'Angefragt';
+
+  @override
+  String get statusAccepted => 'Akzeptiert';
+
+  @override
+  String get statusPaid => 'Bezahlt';
+
+  @override
+  String get statusHandedOver => 'Übergeben';
+
+  @override
+  String get statusInTransit => 'Im Transit';
+
+  @override
+  String get statusDelivered => 'Zugestellt';
+
+  @override
+  String get statusConfirmed => 'Abgeschlossen';
+
+  @override
+  String get statusDisputed => 'Streitfall';
+
+  @override
+  String get statusRefunded => 'Erstattet';
+
+  @override
+  String get statusCancelled => 'Storniert';
+
+  @override
+  String get statusRejected => 'Abgelehnt';
+
+  @override
+  String get chatTitle => 'Chat';
+
+  @override
+  String get messageHint => 'Nachricht …';
+
+  @override
+  String get noMessages => 'Noch keine Nachrichten.';
+
+  @override
+  String get kycTitle => 'Identitätsprüfung';
+
+  @override
+  String get kycVerified => 'Verifiziert';
+
+  @override
+  String get kycPending => 'In Prüfung';
+
+  @override
+  String get kycRejected => 'Abgelehnt';
+
+  @override
+  String get kycNotStarted => 'Nicht gestartet';
+
+  @override
+  String get kycHint =>
+      'Zum Anbieten von Trips ist eine einmalige Identitätsprüfung nötig.';
+
+  @override
+  String get kycStart => 'Verifizierung starten';
+
+  @override
+  String get kycRestart => 'Erneut starten';
+
+  @override
+  String get notificationsTitle => 'Benachrichtigungen';
+
+  @override
+  String get markAllRead => 'Alle gelesen';
+
+  @override
+  String get noNotifications => 'Keine Benachrichtigungen.';
+
+  @override
+  String bookTitle(Object route) {
+    return 'Buchen · $route';
+  }
+
+  @override
+  String bookTripInfo(Object date, Object price, Object currency) {
+    return 'Abflug $date · $price $currency/kg';
+  }
+
+  @override
+  String get fieldPackageTitle => 'Pakettitel';
+
+  @override
+  String get fieldWeightKg => 'Gewicht (kg)';
+
+  @override
+  String get fieldDeclaredValue => 'Warenwert (EUR)';
+
+  @override
+  String get recipientSection => 'Empfänger';
+
+  @override
+  String get fieldName => 'Name';
+
+  @override
+  String get fieldPhone => 'Telefon';
+
+  @override
+  String get fieldCity => 'Stadt';
+
+  @override
+  String get contentSection => 'Inhalt (Zoll-Deklaration)';
+
+  @override
+  String get fieldCategory => 'Kategorie';
+
+  @override
+  String get fieldDescription => 'Beschreibung';
+
+  @override
+  String get bookButton => 'Buchung anfragen';
+
+  @override
+  String get validNumber => 'Zahl > 0 eingeben';
+
+  @override
+  String get validMin3 => 'Mind. 3 Zeichen';
+
+  @override
+  String get bookingRequested => 'Buchung angefragt!';
 }

@@ -88,4 +88,173 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get langTj => 'Таджикский';
+
+  @override
+  String get refresh => 'Обновить';
+
+  @override
+  String get tripsTitle => 'Поиск рейсов';
+
+  @override
+  String get fieldFrom => 'Откуда (IATA)';
+
+  @override
+  String get fieldTo => 'Куда (IATA)';
+
+  @override
+  String get fieldMinKg => 'Мин. свободно кг';
+
+  @override
+  String get searchButton => 'Искать';
+
+  @override
+  String get noTrips => 'Рейсы не найдены.';
+
+  @override
+  String tripSubtitle(Object date, Object kg, Object price, Object currency) {
+    return 'Вылет $date · $kg кг свободно · $price $currency/кг';
+  }
+
+  @override
+  String get bookingsTitle => 'Мои бронирования';
+
+  @override
+  String get filterAll => 'Все';
+
+  @override
+  String get filterAsSender => 'Как отправитель';
+
+  @override
+  String get filterAsTraveler => 'Как путешественник';
+
+  @override
+  String get noBookings => 'Пока нет бронирований.';
+
+  @override
+  String get statusRequested => 'Запрошено';
+
+  @override
+  String get statusAccepted => 'Принято';
+
+  @override
+  String get statusPaid => 'Оплачено';
+
+  @override
+  String get statusHandedOver => 'Передано';
+
+  @override
+  String get statusInTransit => 'В пути';
+
+  @override
+  String get statusDelivered => 'Доставлено';
+
+  @override
+  String get statusConfirmed => 'Завершено';
+
+  @override
+  String get statusDisputed => 'Спор';
+
+  @override
+  String get statusRefunded => 'Возвращено';
+
+  @override
+  String get statusCancelled => 'Отменено';
+
+  @override
+  String get statusRejected => 'Отклонено';
+
+  @override
+  String get chatTitle => 'Чат';
+
+  @override
+  String get messageHint => 'Сообщение …';
+
+  @override
+  String get noMessages => 'Пока нет сообщений.';
+
+  @override
+  String get kycTitle => 'Проверка личности';
+
+  @override
+  String get kycVerified => 'Подтверждено';
+
+  @override
+  String get kycPending => 'На проверке';
+
+  @override
+  String get kycRejected => 'Отклонено';
+
+  @override
+  String get kycNotStarted => 'Не начато';
+
+  @override
+  String get kycHint =>
+      'Для предложения рейсов нужна однократная проверка личности.';
+
+  @override
+  String get kycStart => 'Начать проверку';
+
+  @override
+  String get kycRestart => 'Начать заново';
+
+  @override
+  String get notificationsTitle => 'Уведомления';
+
+  @override
+  String get markAllRead => 'Прочитать все';
+
+  @override
+  String get noNotifications => 'Нет уведомлений.';
+
+  @override
+  String bookTitle(Object route) {
+    return 'Бронь · $route';
+  }
+
+  @override
+  String bookTripInfo(Object date, Object price, Object currency) {
+    return 'Вылет $date · $price $currency/кг';
+  }
+
+  @override
+  String get fieldPackageTitle => 'Название посылки';
+
+  @override
+  String get fieldWeightKg => 'Вес (кг)';
+
+  @override
+  String get fieldDeclaredValue => 'Стоимость (EUR)';
+
+  @override
+  String get recipientSection => 'Получатель';
+
+  @override
+  String get fieldName => 'Имя';
+
+  @override
+  String get fieldPhone => 'Телефон';
+
+  @override
+  String get fieldCity => 'Город';
+
+  @override
+  String get contentSection => 'Содержимое (таможенная декларация)';
+
+  @override
+  String get fieldCategory => 'Категория';
+
+  @override
+  String get fieldDescription => 'Описание';
+
+  @override
+  String get bookButton => 'Запросить бронь';
+
+  @override
+  String get validNumber => 'Введите число > 0';
+
+  @override
+  String get validMin3 => 'Минимум 3 символа';
+
+  @override
+  String get bookingRequested => 'Бронь запрошена!';
 }

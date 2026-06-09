@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 
 class KycScreen extends ConsumerStatefulWidget {
@@ -19,21 +20,23 @@ class _KycScreenState extends ConsumerState<KycScreen> {
 
   (Color, String) _statusStyle(BuildContext context, String status) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
     return switch (status) {
-      'VERIFIED' => (Colors.green, 'Verifiziert'),
-      'PENDING' => (Colors.orange, 'In Prüfung'),
-      'REJECTED' => (scheme.error, 'Abgelehnt'),
-      _ => (scheme.outline, 'Nicht gestartet'),
+      'VERIFIED' => (Colors.green, l10n.kycVerified),
+      'PENDING' => (Colors.orange, l10n.kycPending),
+      'REJECTED' => (scheme.error, l10n.kycRejected),
+      _ => (scheme.outline, l10n.kycNotStarted),
     };
   }
 
   @override
   Widget build(BuildContext context) {
     final kyc = ref.watch(kycControllerProvider);
+    final l10n = context.l10n;
     final (color, label) = _statusStyle(context, kyc.status);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Identitätsprüfung')),
+      appBar: AppBar(title: Text(l10n.kycTitle)),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
@@ -50,10 +53,7 @@ class _KycScreenState extends ConsumerState<KycScreen> {
                   backgroundColor: color.withValues(alpha: 0.15),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Zum Anbieten von Trips ist eine einmalige Identitätsprüfung nötig.',
-                  textAlign: TextAlign.center,
-                ),
+                Text(l10n.kycHint, textAlign: TextAlign.center),
                 const SizedBox(height: 24),
                 if (kyc.error != null)
                   Padding(
@@ -81,9 +81,7 @@ class _KycScreenState extends ConsumerState<KycScreen> {
                               child: CircularProgressIndicator(strokeWidth: 2),
                             )
                           : Text(
-                              kyc.isPending
-                                  ? 'Erneut starten'
-                                  : 'Verifizierung starten',
+                              kyc.isPending ? l10n.kycRestart : l10n.kycStart,
                             ),
                     ),
                   ),
