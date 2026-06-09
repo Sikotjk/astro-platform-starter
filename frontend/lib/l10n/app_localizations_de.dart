@@ -189,6 +189,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get filterAsTraveler => 'Als Traveler';
 
   @override
+  String get filterUnread => 'Ungelesen';
+
+  @override
   String get noBookings => 'Noch keine Buchungen.';
 
   @override

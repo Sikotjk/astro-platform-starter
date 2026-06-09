@@ -406,6 +406,12 @@ abstract class AppLocalizations {
   /// **'Als Traveler'**
   String get filterAsTraveler;
 
+  /// No description provided for @filterUnread.
+  ///
+  /// In de, this message translates to:
+  /// **'Ungelesen'**
+  String get filterUnread;
+
   /// No description provided for @noBookings.
   ///
   /// In de, this message translates to:

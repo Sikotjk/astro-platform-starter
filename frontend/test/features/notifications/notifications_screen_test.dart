@@ -17,10 +17,13 @@ class _FakeNotifRepo implements NotificationsRepository {
   _FakeNotifRepo(this._items);
   final List<NotificationItem> _items;
   final List<String> readIds = [];
+  bool? lastUnreadOnly;
 
   @override
-  Future<List<NotificationItem>> list({bool unreadOnly = false}) async =>
-      List.of(_items);
+  Future<List<NotificationItem>> list({bool unreadOnly = false}) async {
+    lastUnreadOnly = unreadOnly;
+    return List.of(_items);
+  }
 
   @override
   Future<void> markAllRead() async {}
@@ -78,6 +81,23 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repo.readIds, ['n1']);
+  });
+
+  testWidgets('Filter "Ungelesen" lädt mit unreadOnly neu', (tester) async {
+    final repo = _FakeNotifRepo([_notif()]);
+    await tester.pumpWidget(
+      localizedApp(
+        const NotificationsScreen(),
+        overrides: [notificationsRepositoryProvider.overrideWithValue(repo)],
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(repo.lastUnreadOnly, isFalse); // initial: alle
+
+    await tester.tap(find.text('Ungelesen'));
+    await tester.pumpAndSettle();
+
+    expect(repo.lastUnreadOnly, isTrue);
   });
 
   testWidgets('Trip-Treffer mit tripId navigiert zur Buchungsansicht', (

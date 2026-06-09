@@ -56,6 +56,7 @@
   "filterAll": "Alle",
   "filterAsSender": "Als Sender",
   "filterAsTraveler": "Als Traveler",
+  "filterUnread": "Ungelesen",
   "noBookings": "Noch keine Buchungen.",
   "statusRequested": "Angefragt",
   "statusAccepted": "Akzeptiert",

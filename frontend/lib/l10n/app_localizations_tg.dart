@@ -187,6 +187,9 @@ class AppLocalizationsTg extends AppLocalizations {
   String get filterAsTraveler => 'Ҳамчун мусофир';
 
   @override
+  String get filterUnread => 'Хонданашуда';
+
+  @override
   String get noBookings => 'Ҳоло фармоиш нест.';
 
   @override

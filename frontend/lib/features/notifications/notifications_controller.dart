@@ -10,10 +10,10 @@ class NotificationsController
 
   final NotificationsRepository _repo;
 
-  Future<void> load() async {
+  Future<void> load({bool unreadOnly = false}) async {
     state = const AsyncValue.loading();
     try {
-      state = AsyncValue.data(await _repo.list());
+      state = AsyncValue.data(await _repo.list(unreadOnly: unreadOnly));
     } catch (e, st) {
       state = AsyncValue.error(apiErrorMessage(e), st);
     }

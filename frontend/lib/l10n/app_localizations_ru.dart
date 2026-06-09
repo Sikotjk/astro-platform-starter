@@ -191,6 +191,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get filterAsTraveler => 'Как путешественник';
 
   @override
+  String get filterUnread => 'Непрочитанные';
+
+  @override
   String get noBookings => 'Пока нет бронирований.';
 
   @override

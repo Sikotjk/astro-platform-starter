@@ -18,6 +18,8 @@ class NotificationsScreen extends ConsumerStatefulWidget {
 }
 
 class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
+  bool _unreadOnly = false;
+
   @override
   void initState() {
     super.initState();
@@ -26,8 +28,9 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     );
   }
 
-  Future<void> _refresh() =>
-      ref.read(notificationsControllerProvider.notifier).load();
+  Future<void> _refresh() => ref
+      .read(notificationsControllerProvider.notifier)
+      .load(unreadOnly: _unreadOnly);
 
   /// Markiert die Benachrichtigung als gelesen und springt bei einem
   /// Trip-Treffer direkt zur Buchungsansicht des passenden Trips.
@@ -63,17 +66,47 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
           ),
         ],
       ),
-      body: state.when(
-        data: (items) => RefreshIndicator(
-          onRefresh: _refresh,
-          child: _NotificationList(items: items, onTap: _open),
-        ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => ErrorRetry(
-          message: e.toString(),
-          onRetry: () =>
-              ref.read(notificationsControllerProvider.notifier).load(),
-        ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: SegmentedButton<bool>(
+              segments: [
+                ButtonSegment(
+                  value: false,
+                  label: Text(context.l10n.filterAll),
+                ),
+                ButtonSegment(
+                  value: true,
+                  label: Text(context.l10n.filterUnread),
+                ),
+              ],
+              selected: {_unreadOnly},
+              onSelectionChanged: (s) {
+                setState(() => _unreadOnly = s.first);
+                ref
+                    .read(notificationsControllerProvider.notifier)
+                    .load(unreadOnly: _unreadOnly);
+              },
+            ),
+          ),
+          const Divider(height: 1),
+          Expanded(
+            child: state.when(
+              data: (items) => RefreshIndicator(
+                onRefresh: _refresh,
+                child: _NotificationList(items: items, onTap: _open),
+              ),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) => ErrorRetry(
+                message: e.toString(),
+                onRetry: () => ref
+                    .read(notificationsControllerProvider.notifier)
+                    .load(unreadOnly: _unreadOnly),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

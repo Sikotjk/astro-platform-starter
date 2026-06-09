@@ -51,6 +51,7 @@
   "filterAll": "Все",
   "filterAsSender": "Как отправитель",
   "filterAsTraveler": "Как путешественник",
+  "filterUnread": "Непрочитанные",
   "noBookings": "Пока нет бронирований.",
   "statusRequested": "Запрошено",
   "statusAccepted": "Принято",
