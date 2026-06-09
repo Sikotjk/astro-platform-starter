@@ -760,6 +760,36 @@ abstract class AppLocalizations {
   /// **'Betrag'**
   String get amountLabel;
 
+  /// No description provided for @payStatusPending.
+  ///
+  /// In de, this message translates to:
+  /// **'Zahlung ausstehend'**
+  String get payStatusPending;
+
+  /// No description provided for @payStatusEscrowHeld.
+  ///
+  /// In de, this message translates to:
+  /// **'Treuhand gehalten'**
+  String get payStatusEscrowHeld;
+
+  /// No description provided for @payStatusReleased.
+  ///
+  /// In de, this message translates to:
+  /// **'Ausgezahlt'**
+  String get payStatusReleased;
+
+  /// No description provided for @payStatusRefunded.
+  ///
+  /// In de, this message translates to:
+  /// **'Erstattet'**
+  String get payStatusRefunded;
+
+  /// No description provided for @payStatusFailed.
+  ///
+  /// In de, this message translates to:
+  /// **'Zahlung fehlgeschlagen'**
+  String get payStatusFailed;
+
   /// No description provided for @noEvents.
   ///
   /// In de, this message translates to:

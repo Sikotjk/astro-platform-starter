@@ -120,6 +120,8 @@ void main() {
     expect(find.text('Buch'), findsOneWidget);
     expect(find.textContaining('30.00 EUR'), findsOneWidget);
     expect(find.text('Angefragt'), findsWidgets);
+    // Zahlungsstatus (PENDING) lokalisiert.
+    expect(find.text('Zahlung ausstehend'), findsOneWidget);
     // Sender sieht die Reputation der Gegenpartei (Traveler Karim).
     expect(find.text('Karim'), findsOneWidget);
     expect(find.textContaining('10 Bewertungen'), findsOneWidget);

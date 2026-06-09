@@ -373,6 +373,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get amountLabel => 'Betrag';
 
   @override
+  String get payStatusPending => 'Zahlung ausstehend';
+
+  @override
+  String get payStatusEscrowHeld => 'Treuhand gehalten';
+
+  @override
+  String get payStatusReleased => 'Ausgezahlt';
+
+  @override
+  String get payStatusRefunded => 'Erstattet';
+
+  @override
+  String get payStatusFailed => 'Zahlung fehlgeschlagen';
+
+  @override
   String get noEvents => 'Noch keine Statusänderungen.';
 
   @override

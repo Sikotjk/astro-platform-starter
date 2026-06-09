@@ -68,3 +68,14 @@ Color bookingStatusColor(String status) {
     _ => Colors.grey,
   };
 }
+
+/// Icon je Zahlungsstatus (für UI). Beschriftung kommt aus l10n.
+IconData paymentStatusIcon(String paymentStatus) {
+  return switch (paymentStatus) {
+    'ESCROW_HELD' => Icons.lock_outline,
+    'RELEASED' => Icons.check_circle_outline,
+    'REFUNDED' => Icons.undo,
+    'FAILED' => Icons.error_outline,
+    _ => Icons.schedule, // PENDING
+  };
+}

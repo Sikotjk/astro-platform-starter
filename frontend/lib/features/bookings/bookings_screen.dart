@@ -26,6 +26,17 @@ String bookingStatusLabel(AppLocalizations l10n, String status) {
   };
 }
 
+/// Lokalisierte Beschriftung je Zahlungsstatus.
+String paymentStatusLabel(AppLocalizations l10n, String paymentStatus) {
+  return switch (paymentStatus) {
+    'ESCROW_HELD' => l10n.payStatusEscrowHeld,
+    'RELEASED' => l10n.payStatusReleased,
+    'REFUNDED' => l10n.payStatusRefunded,
+    'FAILED' => l10n.payStatusFailed,
+    _ => l10n.payStatusPending,
+  };
+}
+
 class BookingsScreen extends ConsumerStatefulWidget {
   const BookingsScreen({super.key});
 

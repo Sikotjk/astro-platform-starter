@@ -205,6 +205,21 @@ class _DetailBody extends StatelessWidget {
           '${l10n.amountLabel}: ${booking.totalAmount.toStringAsFixed(2)} ${booking.currency}',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
+        const SizedBox(height: 6),
+        Row(
+          children: [
+            Icon(
+              paymentStatusIcon(booking.paymentStatus),
+              size: 18,
+              color: Theme.of(context).colorScheme.outline,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              paymentStatusLabel(l10n, booking.paymentStatus),
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
+        ),
         if (partner != null) ...[
           const SizedBox(height: 12),
           _PartnerCard(party: partner),

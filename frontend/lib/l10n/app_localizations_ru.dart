@@ -375,6 +375,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get amountLabel => 'Сумма';
 
   @override
+  String get payStatusPending => 'Ожидает оплаты';
+
+  @override
+  String get payStatusEscrowHeld => 'На эскроу-счёте';
+
+  @override
+  String get payStatusReleased => 'Выплачено';
+
+  @override
+  String get payStatusRefunded => 'Возвращено';
+
+  @override
+  String get payStatusFailed => 'Платёж не прошёл';
+
+  @override
   String get noEvents => 'Изменений статуса пока нет.';
 
   @override

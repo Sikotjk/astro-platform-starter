@@ -371,6 +371,21 @@ class AppLocalizationsTg extends AppLocalizations {
   String get amountLabel => 'Маблағ';
 
   @override
+  String get payStatusPending => 'Дар интизори пардохт';
+
+  @override
+  String get payStatusEscrowHeld => 'Дар эскроу нигоҳ дошта мешавад';
+
+  @override
+  String get payStatusReleased => 'Пардохт шуд';
+
+  @override
+  String get payStatusRefunded => 'Баргардонида шуд';
+
+  @override
+  String get payStatusFailed => 'Пардохт ноком шуд';
+
+  @override
   String get noEvents => 'Ҳоло тағйироти ҳолат нест.';
 
   @override
