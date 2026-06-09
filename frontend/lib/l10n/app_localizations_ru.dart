@@ -303,6 +303,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get actionPay => 'Оплатить';
 
   @override
+  String get paymentSuccess =>
+      'Платёж отправлен. Статус обновится в ближайшее время.';
+
+  @override
+  String get paymentNotConfigured =>
+      'Платежи не активированы в этой версии приложения.';
+
+  @override
   String get actionAcceptTerms => 'Подтвердить содержимое';
 
   @override

@@ -41,6 +41,7 @@ dependencies:
   flutter_secure_storage: ^9.2.2 # JWT sicher ablegen
   socket_io_client: ^3.0.2 # Echtzeit-Chat (WebSocket)
   printing: ^5.13.4 # PDF anzeigen/teilen (Zoll-Manifest)
+  flutter_stripe: ^13.0.0
 
 dev_dependencies:
   flutter_test:

@@ -303,6 +303,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get actionPay => 'Bezahlen';
 
   @override
+  String get paymentSuccess =>
+      'Zahlung übermittelt. Status aktualisiert sich in Kürze.';
+
+  @override
+  String get paymentNotConfigured =>
+      'Zahlungen sind in dieser App-Version nicht aktiviert.';
+
+  @override
   String get actionAcceptTerms => 'Inhalt bestätigen';
 
   @override

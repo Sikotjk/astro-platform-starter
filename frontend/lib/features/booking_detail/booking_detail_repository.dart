@@ -8,6 +8,10 @@ abstract class BookingDetailRepository {
 
   /// Löst einen Status-Übergang aus (`POST /bookings/:id/<path>`).
   Future<void> act(String id, String path);
+
+  /// Erzeugt den Stripe-PaymentIntent und liefert dessen clientSecret zurück
+  /// (`POST /bookings/:id/escrow`).
+  Future<String> createEscrow(String id);
 }
 
 class DioBookingDetailRepository implements BookingDetailRepository {
@@ -24,5 +28,11 @@ class DioBookingDetailRepository implements BookingDetailRepository {
   @override
   Future<void> act(String id, String path) async {
     await _dio.post<void>('/bookings/$id/$path');
+  }
+
+  @override
+  Future<String> createEscrow(String id) async {
+    final res = await _dio.post<Map<String, dynamic>>('/bookings/$id/escrow');
+    return res.data!['clientSecret'] as String;
   }
 }

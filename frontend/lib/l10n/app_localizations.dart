@@ -670,6 +670,18 @@ abstract class AppLocalizations {
   /// **'Bezahlen'**
   String get actionPay;
 
+  /// No description provided for @paymentSuccess.
+  ///
+  /// In de, this message translates to:
+  /// **'Zahlung übermittelt. Status aktualisiert sich in Kürze.'**
+  String get paymentSuccess;
+
+  /// No description provided for @paymentNotConfigured.
+  ///
+  /// In de, this message translates to:
+  /// **'Zahlungen sind in dieser App-Version nicht aktiviert.'**
+  String get paymentNotConfigured;
+
   /// No description provided for @actionAcceptTerms.
   ///
   /// In de, this message translates to:

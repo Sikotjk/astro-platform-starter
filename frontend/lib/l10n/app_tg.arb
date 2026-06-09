@@ -95,6 +95,8 @@
   "actionAccept": "Қабул кардан",
   "actionReject": "Рад кардан",
   "actionPay": "Пардохт",
+  "paymentSuccess": "Пардохт фиристода шуд. Ҳолат ба зудӣ нав мешавад.",
+  "paymentNotConfigured": "Пардохтҳо дар ин версияи барнома фаъол нестанд.",
   "actionAcceptTerms": "Тасдиқи мӯҳтаво",
   "actionHandover": "Супоридан",
   "actionTransit": "Дар парвоз",

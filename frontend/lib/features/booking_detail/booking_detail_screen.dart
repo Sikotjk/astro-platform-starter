@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/config.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -12,6 +13,7 @@ import '../disputes/dispute_dialog.dart';
 import '../disputes/dispute_rules.dart';
 import '../reviews/review_dialog.dart';
 import 'booking_actions.dart';
+import 'booking_detail_controller.dart';
 
 /// Lokalisierte Beschriftung je Aktion.
 String bookingActionLabel(AppLocalizations l10n, BookingAction action) {
@@ -38,6 +40,10 @@ class BookingDetailScreen extends ConsumerWidget {
     WidgetRef ref,
     BookingAction action,
   ) async {
+    if (action == BookingAction.pay) {
+      await _pay(context, ref);
+      return;
+    }
     final error = await ref
         .read(bookingDetailControllerProvider(bookingId).notifier)
         .act(action);
@@ -45,6 +51,30 @@ class BookingDetailScreen extends ConsumerWidget {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(error)));
+    }
+  }
+
+  Future<void> _pay(BuildContext context, WidgetRef ref) async {
+    if (!AppConfig.isStripeConfigured) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.paymentNotConfigured)),
+      );
+      return;
+    }
+    final gateway = ref.read(paymentGatewayProvider);
+    final outcome = await ref
+        .read(bookingDetailControllerProvider(bookingId).notifier)
+        .pay(gateway);
+    if (!context.mounted) return;
+    final message = switch (outcome.status) {
+      PaymentStatus.success => context.l10n.paymentSuccess,
+      PaymentStatus.failed => outcome.error ?? context.l10n.paymentSuccess,
+      PaymentStatus.cancelled => null,
+    };
+    if (message != null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
     }
   }
 

@@ -95,6 +95,8 @@
   "actionAccept": "Принять",
   "actionReject": "Отклонить",
   "actionPay": "Оплатить",
+  "paymentSuccess": "Платёж отправлен. Статус обновится в ближайшее время.",
+  "paymentNotConfigured": "Платежи не активированы в этой версии приложения.",
   "actionAcceptTerms": "Подтвердить содержимое",
   "actionHandover": "Передать",
   "actionTransit": "В пути",

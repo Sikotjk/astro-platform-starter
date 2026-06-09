@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
+import 'core/config.dart';
 import 'core/locale_controller.dart';
 import 'core/localization_delegates.dart';
 import 'core/providers.dart';
@@ -8,6 +10,11 @@ import 'l10n/app_localizations.dart';
 import 'router.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Stripe nur initialisieren, wenn ein Publishable-Key konfiguriert ist.
+  if (AppConfig.isStripeConfigured) {
+    Stripe.publishableKey = AppConfig.stripePublishableKey;
+  }
   runApp(const ProviderScope(child: TjShippingApp()));
 }
 

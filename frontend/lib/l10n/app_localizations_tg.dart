@@ -303,6 +303,14 @@ class AppLocalizationsTg extends AppLocalizations {
   String get actionPay => 'Пардохт';
 
   @override
+  String get paymentSuccess =>
+      'Пардохт фиристода шуд. Ҳолат ба зудӣ нав мешавад.';
+
+  @override
+  String get paymentNotConfigured =>
+      'Пардохтҳо дар ин версияи барнома фаъол нестанд.';
+
+  @override
   String get actionAcceptTerms => 'Тасдиқи мӯҳтаво';
 
   @override

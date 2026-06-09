@@ -8,6 +8,8 @@ import '../features/booking_detail/booking_detail_controller.dart';
 import '../features/booking_detail/booking_detail_repository.dart';
 import '../features/disputes/dispute_controller.dart';
 import '../features/disputes/disputes_repository.dart';
+import '../features/payments/payment_gateway.dart';
+import '../features/payments/stripe_payment_gateway.dart';
 import '../features/bookings/bookings_controller.dart';
 import '../features/bookings/bookings_repository.dart';
 import '../features/chat/chat_controller.dart';
@@ -85,6 +87,11 @@ final bookingsControllerProvider =
     StateNotifierProvider<BookingsController, AsyncValue<List<BookingSummary>>>(
       (ref) => BookingsController(ref.watch(bookingsRepositoryProvider)),
     );
+
+// ── Zahlungen (Stripe) ───────────────────────────────────────────────────────
+final paymentGatewayProvider = Provider<PaymentGateway>(
+  (ref) => const StripePaymentGateway(),
+);
 
 // ── Buchungs-Detailsicht (Status-Verlauf + Aktionen) ─────────────────────────
 final bookingDetailRepositoryProvider = Provider<BookingDetailRepository>(

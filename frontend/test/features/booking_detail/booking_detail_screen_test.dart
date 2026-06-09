@@ -43,6 +43,9 @@ class _FakeRepo implements BookingDetailRepository {
     actedPaths.add(path);
     status = 'REJECTED';
   }
+
+  @override
+  Future<String> createEscrow(String id) async => 'pi_secret_$id';
 }
 
 class _NoRepo implements AuthRepository {

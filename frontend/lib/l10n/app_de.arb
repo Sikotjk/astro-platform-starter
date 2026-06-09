@@ -100,6 +100,8 @@
   "actionAccept": "Annehmen",
   "actionReject": "Ablehnen",
   "actionPay": "Bezahlen",
+  "paymentSuccess": "Zahlung übermittelt. Status aktualisiert sich in Kürze.",
+  "paymentNotConfigured": "Zahlungen sind in dieser App-Version nicht aktiviert.",
   "actionAcceptTerms": "Inhalt bestätigen",
   "actionHandover": "Übergeben",
   "actionTransit": "Im Flug",

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/api_client.dart';
 import '../../models/booking_detail.dart';
+import '../payments/payment_gateway.dart';
 import 'booking_actions.dart';
 import 'booking_detail_repository.dart';
 
@@ -33,4 +34,36 @@ class BookingDetailController extends StateNotifier<AsyncValue<BookingDetail>> {
       return apiErrorMessage(e);
     }
   }
+
+  /// Bezahlt die Buchung: erstellt den PaymentIntent, bestätigt ihn über das
+  /// [gateway] und lädt danach neu. Der Wechsel auf PAID erfolgt server-seitig
+  /// (Stripe-Webhook), kann beim sofortigen Neuladen also noch ausstehen.
+  ///
+  /// Liefert das Ergebnis: erfolgreich, vom Nutzer abgebrochen oder mit Fehler.
+  Future<PaymentOutcome> pay(PaymentGateway gateway) async {
+    try {
+      final clientSecret = await _repo.createEscrow(_id);
+      await gateway.confirmPayment(clientSecret);
+      await load();
+      return const PaymentOutcome.success();
+    } on PaymentCancelled {
+      return const PaymentOutcome.cancelled();
+    } catch (e) {
+      return PaymentOutcome.failed(apiErrorMessage(e));
+    }
+  }
 }
+
+/// Ergebnis eines Bezahlversuchs.
+class PaymentOutcome {
+  const PaymentOutcome._(this.status, this.error);
+  const PaymentOutcome.success() : this._(PaymentStatus.success, null);
+  const PaymentOutcome.cancelled() : this._(PaymentStatus.cancelled, null);
+  const PaymentOutcome.failed(String error)
+    : this._(PaymentStatus.failed, error);
+
+  final PaymentStatus status;
+  final String? error;
+}
+
+enum PaymentStatus { success, cancelled, failed }
