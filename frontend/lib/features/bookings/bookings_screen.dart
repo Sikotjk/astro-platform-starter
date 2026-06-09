@@ -147,9 +147,30 @@ class _BookingList extends StatelessWidget {
             b.route,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: Text(
-            '${b.packageTitle} · ${b.totalAmount.toStringAsFixed(2)} ${b.currency}',
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${b.packageTitle} · ${b.totalAmount.toStringAsFixed(2)} ${b.currency}',
+              ),
+              const SizedBox(height: 2),
+              Row(
+                children: [
+                  Icon(
+                    paymentStatusIcon(b.paymentStatus),
+                    size: 14,
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    paymentStatusLabel(l10n, b.paymentStatus),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ],
           ),
+          isThreeLine: true,
           trailing: Chip(
             label: Text(bookingStatusLabel(l10n, b.status)),
             backgroundColor: color.withValues(alpha: 0.15),

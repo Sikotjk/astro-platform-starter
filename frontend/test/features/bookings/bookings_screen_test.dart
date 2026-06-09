@@ -93,6 +93,7 @@ void main() {
     expect(find.text('FRA → DYU'), findsOneWidget);
     expect(find.text('Abgeschlossen'), findsOneWidget);
     expect(find.text('Als Sender'), findsOneWidget); // Filter vorhanden
+    expect(find.text('Ausgezahlt'), findsOneWidget); // Zahlungsstatus RELEASED
   });
 
   testWidgets('Pull-to-Refresh lädt die Liste neu', (tester) async {
