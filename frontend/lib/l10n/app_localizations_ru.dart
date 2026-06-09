@@ -271,4 +271,49 @@ class AppLocalizationsRu extends AppLocalizations {
   String manifestSize(Object kb) {
     return '$kb КБ';
   }
+
+  @override
+  String get detailTitle => 'Детали бронирования';
+
+  @override
+  String get timelineTitle => 'История статусов';
+
+  @override
+  String get actionsTitle => 'Действия';
+
+  @override
+  String get openChat => 'Открыть чат';
+
+  @override
+  String get amountLabel => 'Сумма';
+
+  @override
+  String get noEvents => 'Изменений статуса пока нет.';
+
+  @override
+  String get actionAccept => 'Принять';
+
+  @override
+  String get actionReject => 'Отклонить';
+
+  @override
+  String get actionPay => 'Оплатить';
+
+  @override
+  String get actionAcceptTerms => 'Подтвердить содержимое';
+
+  @override
+  String get actionHandover => 'Передать';
+
+  @override
+  String get actionTransit => 'В пути';
+
+  @override
+  String get actionDelivered => 'Доставлено';
+
+  @override
+  String get actionConfirm => 'Подтвердить получение';
+
+  @override
+  String get actionCancel => 'Отменить';
 }

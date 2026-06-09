@@ -84,5 +84,20 @@
   "manifestTitle": "Манифести гумрукӣ",
   "manifestOpen": "Кушодани манифест",
   "manifestHashLabel": "Ҳэши яклухтӣ",
-  "manifestSize": "{kb} КБ"
+  "manifestSize": "{kb} КБ",
+  "detailTitle": "Тафсилоти фармоиш",
+  "timelineTitle": "Таърихи ҳолат",
+  "actionsTitle": "Амалҳо",
+  "openChat": "Кушодани чат",
+  "amountLabel": "Маблағ",
+  "noEvents": "Ҳоло тағйироти ҳолат нест.",
+  "actionAccept": "Қабул кардан",
+  "actionReject": "Рад кардан",
+  "actionPay": "Пардохт",
+  "actionAcceptTerms": "Тасдиқи мӯҳтаво",
+  "actionHandover": "Супоридан",
+  "actionTransit": "Дар парвоз",
+  "actionDelivered": "Расонида шуд",
+  "actionConfirm": "Тасдиқи қабул",
+  "actionCancel": "Бекор кардан"
 }

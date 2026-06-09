@@ -84,5 +84,20 @@
   "manifestTitle": "Таможенный манифест",
   "manifestOpen": "Открыть манифест",
   "manifestHashLabel": "Хеш целостности",
-  "manifestSize": "{kb} КБ"
+  "manifestSize": "{kb} КБ",
+  "detailTitle": "Детали бронирования",
+  "timelineTitle": "История статусов",
+  "actionsTitle": "Действия",
+  "openChat": "Открыть чат",
+  "amountLabel": "Сумма",
+  "noEvents": "Изменений статуса пока нет.",
+  "actionAccept": "Принять",
+  "actionReject": "Отклонить",
+  "actionPay": "Оплатить",
+  "actionAcceptTerms": "Подтвердить содержимое",
+  "actionHandover": "Передать",
+  "actionTransit": "В пути",
+  "actionDelivered": "Доставлено",
+  "actionConfirm": "Подтвердить получение",
+  "actionCancel": "Отменить"
 }

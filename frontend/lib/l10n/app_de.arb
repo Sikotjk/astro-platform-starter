@@ -89,5 +89,20 @@
   "manifestOpen": "Manifest öffnen",
   "manifestHashLabel": "Integritäts-Hash",
   "manifestSize": "{kb} KB",
-  "@manifestSize": { "placeholders": { "kb": {} } }
+  "@manifestSize": { "placeholders": { "kb": {} } },
+  "detailTitle": "Buchungsdetails",
+  "timelineTitle": "Statusverlauf",
+  "actionsTitle": "Aktionen",
+  "openChat": "Chat öffnen",
+  "amountLabel": "Betrag",
+  "noEvents": "Noch keine Statusänderungen.",
+  "actionAccept": "Annehmen",
+  "actionReject": "Ablehnen",
+  "actionPay": "Bezahlen",
+  "actionAcceptTerms": "Inhalt bestätigen",
+  "actionHandover": "Übergeben",
+  "actionTransit": "Im Flug",
+  "actionDelivered": "Zugestellt",
+  "actionConfirm": "Empfang bestätigen",
+  "actionCancel": "Stornieren"
 }

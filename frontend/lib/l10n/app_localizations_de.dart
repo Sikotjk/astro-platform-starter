@@ -271,4 +271,49 @@ class AppLocalizationsDe extends AppLocalizations {
   String manifestSize(Object kb) {
     return '$kb KB';
   }
+
+  @override
+  String get detailTitle => 'Buchungsdetails';
+
+  @override
+  String get timelineTitle => 'Statusverlauf';
+
+  @override
+  String get actionsTitle => 'Aktionen';
+
+  @override
+  String get openChat => 'Chat öffnen';
+
+  @override
+  String get amountLabel => 'Betrag';
+
+  @override
+  String get noEvents => 'Noch keine Statusänderungen.';
+
+  @override
+  String get actionAccept => 'Annehmen';
+
+  @override
+  String get actionReject => 'Ablehnen';
+
+  @override
+  String get actionPay => 'Bezahlen';
+
+  @override
+  String get actionAcceptTerms => 'Inhalt bestätigen';
+
+  @override
+  String get actionHandover => 'Übergeben';
+
+  @override
+  String get actionTransit => 'Im Flug';
+
+  @override
+  String get actionDelivered => 'Zugestellt';
+
+  @override
+  String get actionConfirm => 'Empfang bestätigen';
+
+  @override
+  String get actionCancel => 'Stornieren';
 }

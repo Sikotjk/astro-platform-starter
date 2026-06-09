@@ -4,6 +4,8 @@ import '../features/auth/auth_controller.dart';
 import '../features/auth/auth_repository.dart';
 import '../features/booking_create/create_booking_controller.dart';
 import '../features/booking_create/packages_repository.dart';
+import '../features/booking_detail/booking_detail_controller.dart';
+import '../features/booking_detail/booking_detail_repository.dart';
 import '../features/bookings/bookings_controller.dart';
 import '../features/bookings/bookings_repository.dart';
 import '../features/chat/chat_controller.dart';
@@ -21,6 +23,7 @@ import '../features/notifications/notifications_repository.dart';
 import '../features/trips/trips_controller.dart';
 import '../features/trips/trips_repository.dart';
 import '../models/booking.dart';
+import '../models/booking_detail.dart';
 import '../models/message.dart';
 import '../models/notification.dart';
 import '../models/trip.dart';
@@ -77,6 +80,25 @@ final bookingsControllerProvider =
     StateNotifierProvider<BookingsController, AsyncValue<List<BookingSummary>>>(
       (ref) => BookingsController(ref.watch(bookingsRepositoryProvider)),
     );
+
+// ── Buchungs-Detailsicht (Status-Verlauf + Aktionen) ─────────────────────────
+final bookingDetailRepositoryProvider = Provider<BookingDetailRepository>(
+  (ref) => DioBookingDetailRepository(ref.watch(apiClientProvider).dio),
+);
+
+final bookingDetailControllerProvider =
+    StateNotifierProvider.family<
+      BookingDetailController,
+      AsyncValue<BookingDetail>,
+      String
+    >((ref, bookingId) {
+      final controller = BookingDetailController(
+        ref.watch(bookingDetailRepositoryProvider),
+        bookingId,
+      );
+      controller.load();
+      return controller;
+    });
 
 // ── Buchung anlegen (Paket + Booking) ────────────────────────────────────────
 final packagesRepositoryProvider = Provider<PackagesRepository>(

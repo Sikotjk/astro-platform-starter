@@ -271,4 +271,49 @@ class AppLocalizationsTg extends AppLocalizations {
   String manifestSize(Object kb) {
     return '$kb КБ';
   }
+
+  @override
+  String get detailTitle => 'Тафсилоти фармоиш';
+
+  @override
+  String get timelineTitle => 'Таърихи ҳолат';
+
+  @override
+  String get actionsTitle => 'Амалҳо';
+
+  @override
+  String get openChat => 'Кушодани чат';
+
+  @override
+  String get amountLabel => 'Маблағ';
+
+  @override
+  String get noEvents => 'Ҳоло тағйироти ҳолат нест.';
+
+  @override
+  String get actionAccept => 'Қабул кардан';
+
+  @override
+  String get actionReject => 'Рад кардан';
+
+  @override
+  String get actionPay => 'Пардохт';
+
+  @override
+  String get actionAcceptTerms => 'Тасдиқи мӯҳтаво';
+
+  @override
+  String get actionHandover => 'Супоридан';
+
+  @override
+  String get actionTransit => 'Дар парвоз';
+
+  @override
+  String get actionDelivered => 'Расонида шуд';
+
+  @override
+  String get actionConfirm => 'Тасдиқи қабул';
+
+  @override
+  String get actionCancel => 'Бекор кардан';
 }

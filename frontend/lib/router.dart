@@ -6,6 +6,7 @@ import 'core/providers.dart';
 import 'features/auth/login_screen.dart';
 import 'features/auth/register_screen.dart';
 import 'features/booking_create/create_booking_screen.dart';
+import 'features/booking_detail/booking_detail_screen.dart';
 import 'features/bookings/bookings_screen.dart';
 import 'features/chat/chat_screen.dart';
 import 'features/home/home_screen.dart';
@@ -47,6 +48,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         builder: (_, state) => CreateBookingScreen(trip: state.extra as Trip),
       ),
       GoRoute(path: '/bookings', builder: (_, _) => const BookingsScreen()),
+      GoRoute(
+        path: '/booking/:id',
+        builder: (_, state) =>
+            BookingDetailScreen(bookingId: state.pathParameters['id']!),
+      ),
       GoRoute(
         path: '/chat/:id',
         builder: (_, state) =>

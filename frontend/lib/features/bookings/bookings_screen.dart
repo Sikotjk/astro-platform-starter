@@ -128,7 +128,7 @@ class _BookingList extends StatelessWidget {
             backgroundColor: color.withValues(alpha: 0.15),
             labelStyle: TextStyle(color: color),
           ),
-          onTap: () => context.push('/chat/${b.id}'),
+          onTap: () => context.push('/booking/${b.id}'),
         );
       },
     );

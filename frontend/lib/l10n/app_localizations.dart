@@ -609,6 +609,96 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'{kb} KB'**
   String manifestSize(Object kb);
+
+  /// No description provided for @detailTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Buchungsdetails'**
+  String get detailTitle;
+
+  /// No description provided for @timelineTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Statusverlauf'**
+  String get timelineTitle;
+
+  /// No description provided for @actionsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Aktionen'**
+  String get actionsTitle;
+
+  /// No description provided for @openChat.
+  ///
+  /// In de, this message translates to:
+  /// **'Chat öffnen'**
+  String get openChat;
+
+  /// No description provided for @amountLabel.
+  ///
+  /// In de, this message translates to:
+  /// **'Betrag'**
+  String get amountLabel;
+
+  /// No description provided for @noEvents.
+  ///
+  /// In de, this message translates to:
+  /// **'Noch keine Statusänderungen.'**
+  String get noEvents;
+
+  /// No description provided for @actionAccept.
+  ///
+  /// In de, this message translates to:
+  /// **'Annehmen'**
+  String get actionAccept;
+
+  /// No description provided for @actionReject.
+  ///
+  /// In de, this message translates to:
+  /// **'Ablehnen'**
+  String get actionReject;
+
+  /// No description provided for @actionPay.
+  ///
+  /// In de, this message translates to:
+  /// **'Bezahlen'**
+  String get actionPay;
+
+  /// No description provided for @actionAcceptTerms.
+  ///
+  /// In de, this message translates to:
+  /// **'Inhalt bestätigen'**
+  String get actionAcceptTerms;
+
+  /// No description provided for @actionHandover.
+  ///
+  /// In de, this message translates to:
+  /// **'Übergeben'**
+  String get actionHandover;
+
+  /// No description provided for @actionTransit.
+  ///
+  /// In de, this message translates to:
+  /// **'Im Flug'**
+  String get actionTransit;
+
+  /// No description provided for @actionDelivered.
+  ///
+  /// In de, this message translates to:
+  /// **'Zugestellt'**
+  String get actionDelivered;
+
+  /// No description provided for @actionConfirm.
+  ///
+  /// In de, this message translates to:
+  /// **'Empfang bestätigen'**
+  String get actionConfirm;
+
+  /// No description provided for @actionCancel.
+  ///
+  /// In de, this message translates to:
+  /// **'Stornieren'**
+  String get actionCancel;
 }
 
 class _AppLocalizationsDelegate
