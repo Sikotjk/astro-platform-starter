@@ -35,6 +35,7 @@
   "fieldMinKg": "Min. freie kg",
   "searchButton": "Suchen",
   "noTrips": "Keine Trips gefunden.",
+  "newTraveler": "Neu",
   "tripSubtitle": "Abflug {date} · {kg} kg frei · {price} {currency}/kg",
   "@tripSubtitle": { "placeholders": { "date": {}, "kg": {}, "price": {}, "currency": {} } },
   "bookingsTitle": "Meine Buchungen",

@@ -111,6 +111,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noTrips => 'Keine Trips gefunden.';
 
   @override
+  String get newTraveler => 'Neu';
+
+  @override
   String tripSubtitle(Object date, Object kg, Object price, Object currency) {
     return 'Abflug $date · $kg kg frei · $price $currency/kg';
   }

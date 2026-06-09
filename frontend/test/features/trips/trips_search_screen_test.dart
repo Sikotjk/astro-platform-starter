@@ -18,6 +18,11 @@ class _FakeTripsRepo implements TripsRepository {
       freeKg: 10,
       pricePerKg: 8,
       currency: 'EUR',
+      traveler: const TripTraveler(
+        firstName: 'Karim',
+        ratingAvg: 4.5,
+        ratingCount: 12,
+      ),
     ),
   ];
 }
@@ -47,5 +52,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('FRA → DYU'), findsOneWidget);
+    expect(find.text('Karim'), findsOneWidget);
+    expect(find.textContaining('(12)'), findsOneWidget);
   });
 }

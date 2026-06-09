@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/trip.dart';
+import '../../widgets/traveler_reputation.dart';
 
 class TripsSearchScreen extends ConsumerStatefulWidget {
   const TripsSearchScreen({super.key});
@@ -145,13 +146,7 @@ class _TripList extends StatelessWidget {
           ),
           trailing: t.traveler == null
               ? null
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(t.traveler!.firstName),
-                    Text('★ ${t.traveler!.ratingAvg.toStringAsFixed(1)}'),
-                  ],
-                ),
+              : TravelerReputation(traveler: t.traveler!),
           onTap: () => context.push('/book', extra: t),
         );
       },

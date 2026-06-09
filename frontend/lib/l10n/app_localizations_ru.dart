@@ -111,6 +111,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noTrips => 'Рейсы не найдены.';
 
   @override
+  String get newTraveler => 'Новый';
+
+  @override
   String tripSubtitle(Object date, Object kg, Object price, Object currency) {
     return 'Вылет $date · $kg кг свободно · $price $currency/кг';
   }

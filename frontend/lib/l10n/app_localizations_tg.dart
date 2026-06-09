@@ -111,6 +111,9 @@ class AppLocalizationsTg extends AppLocalizations {
   String get noTrips => 'Парвоз ёфт нашуд.';
 
   @override
+  String get newTraveler => 'Нав';
+
+  @override
   String tripSubtitle(Object date, Object kg, Object price, Object currency) {
     return 'Парвоз $date · $kg кг озод · $price $currency/кг';
   }

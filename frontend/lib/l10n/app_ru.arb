@@ -34,6 +34,7 @@
   "fieldMinKg": "Мин. свободно кг",
   "searchButton": "Искать",
   "noTrips": "Рейсы не найдены.",
+  "newTraveler": "Новый",
   "tripSubtitle": "Вылет {date} · {kg} кг свободно · {price} {currency}/кг",
   "bookingsTitle": "Мои бронирования",
   "filterAll": "Все",

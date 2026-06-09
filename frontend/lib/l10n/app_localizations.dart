@@ -304,6 +304,12 @@ abstract class AppLocalizations {
   /// **'Keine Trips gefunden.'**
   String get noTrips;
 
+  /// No description provided for @newTraveler.
+  ///
+  /// In de, this message translates to:
+  /// **'Neu'**
+  String get newTraveler;
+
   /// No description provided for @tripSubtitle.
   ///
   /// In de, this message translates to:
