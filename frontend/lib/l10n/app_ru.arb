@@ -109,6 +109,13 @@
   "reviewSuccess": "Спасибо за ваш отзыв!",
   "reviewsTitle": "Отзывы",
   "noReviews": "Отзывов пока нет.",
+  "disputeAction": "Открыть спор",
+  "disputeTitle": "Открыть спор",
+  "disputeHint": "Опишите проблему. Посредник рассмотрит дело и переведёт деньги или вернёт их.",
+  "disputeReasonHint": "Причина (мин. 5 символов)",
+  "disputeReasonTooShort": "Укажите не менее 5 символов.",
+  "disputeSubmit": "Отправить спор",
+  "disputeSuccess": "Спор открыт. Посредник свяжется с вами.",
   "profileTitle": "Мой профиль",
   "reviewsCount": "{count, plural, =1{1 отзыв} few{{count} отзыва} other{{count} отзывов}}"
 }

@@ -135,6 +135,25 @@ void main() {
     expect(find.byKey(const Key('action_review')), findsOneWidget);
   });
 
+  testWidgets('IN_TRANSIT: Beteiligter sieht den Streitfall-Button', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      localizedApp(
+        const BookingDetailScreen(bookingId: 'b1'),
+        overrides: [
+          bookingDetailRepositoryProvider.overrideWithValue(
+            _FakeRepo('IN_TRANSIT'),
+          ),
+          authControllerProvider.overrideWith((ref) => _FakeAuth('s1')),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('action_dispute')), findsOneWidget);
+  });
+
   testWidgets('Fremder Nutzer sieht keine Aktionen', (tester) async {
     await tester.pumpWidget(
       localizedApp(

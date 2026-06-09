@@ -345,6 +345,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noReviews => 'Noch keine Bewertungen.';
 
   @override
+  String get disputeAction => 'Streitfall eröffnen';
+
+  @override
+  String get disputeTitle => 'Streitfall eröffnen';
+
+  @override
+  String get disputeHint =>
+      'Beschreibe das Problem. Ein Vermittler prüft den Fall und gibt das Geld frei oder erstattet es.';
+
+  @override
+  String get disputeReasonHint => 'Begründung (mind. 5 Zeichen)';
+
+  @override
+  String get disputeReasonTooShort => 'Bitte mindestens 5 Zeichen angeben.';
+
+  @override
+  String get disputeSubmit => 'Streitfall einreichen';
+
+  @override
+  String get disputeSuccess =>
+      'Streitfall eröffnet. Ein Vermittler meldet sich.';
+
+  @override
   String get profileTitle => 'Mein Profil';
 
   @override

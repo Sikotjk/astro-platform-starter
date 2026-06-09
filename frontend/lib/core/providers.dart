@@ -6,6 +6,8 @@ import '../features/booking_create/create_booking_controller.dart';
 import '../features/booking_create/packages_repository.dart';
 import '../features/booking_detail/booking_detail_controller.dart';
 import '../features/booking_detail/booking_detail_repository.dart';
+import '../features/disputes/dispute_controller.dart';
+import '../features/disputes/disputes_repository.dart';
 import '../features/bookings/bookings_controller.dart';
 import '../features/bookings/bookings_repository.dart';
 import '../features/chat/chat_controller.dart';
@@ -102,6 +104,17 @@ final bookingDetailControllerProvider =
       controller.load();
       return controller;
     });
+
+// ── Streitfälle (Disputes) ───────────────────────────────────────────────────
+final disputesRepositoryProvider = Provider<DisputesRepository>(
+  (ref) => DioDisputesRepository(ref.watch(apiClientProvider).dio),
+);
+
+final disputeControllerProvider =
+    StateNotifierProvider.family<DisputeController, AsyncValue<void>, String>(
+      (ref, bookingId) =>
+          DisputeController(ref.watch(disputesRepositoryProvider), bookingId),
+    );
 
 // ── Buchung anlegen (Paket + Booking) ────────────────────────────────────────
 final packagesRepositoryProvider = Provider<PackagesRepository>(

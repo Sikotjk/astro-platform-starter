@@ -754,6 +754,48 @@ abstract class AppLocalizations {
   /// **'Noch keine Bewertungen.'**
   String get noReviews;
 
+  /// No description provided for @disputeAction.
+  ///
+  /// In de, this message translates to:
+  /// **'Streitfall eröffnen'**
+  String get disputeAction;
+
+  /// No description provided for @disputeTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Streitfall eröffnen'**
+  String get disputeTitle;
+
+  /// No description provided for @disputeHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Beschreibe das Problem. Ein Vermittler prüft den Fall und gibt das Geld frei oder erstattet es.'**
+  String get disputeHint;
+
+  /// No description provided for @disputeReasonHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Begründung (mind. 5 Zeichen)'**
+  String get disputeReasonHint;
+
+  /// No description provided for @disputeReasonTooShort.
+  ///
+  /// In de, this message translates to:
+  /// **'Bitte mindestens 5 Zeichen angeben.'**
+  String get disputeReasonTooShort;
+
+  /// No description provided for @disputeSubmit.
+  ///
+  /// In de, this message translates to:
+  /// **'Streitfall einreichen'**
+  String get disputeSubmit;
+
+  /// No description provided for @disputeSuccess.
+  ///
+  /// In de, this message translates to:
+  /// **'Streitfall eröffnet. Ein Vermittler meldet sich.'**
+  String get disputeSuccess;
+
   /// No description provided for @profileTitle.
   ///
   /// In de, this message translates to:

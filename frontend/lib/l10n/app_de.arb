@@ -114,6 +114,13 @@
   "reviewSuccess": "Danke für deine Bewertung!",
   "reviewsTitle": "Bewertungen",
   "noReviews": "Noch keine Bewertungen.",
+  "disputeAction": "Streitfall eröffnen",
+  "disputeTitle": "Streitfall eröffnen",
+  "disputeHint": "Beschreibe das Problem. Ein Vermittler prüft den Fall und gibt das Geld frei oder erstattet es.",
+  "disputeReasonHint": "Begründung (mind. 5 Zeichen)",
+  "disputeReasonTooShort": "Bitte mindestens 5 Zeichen angeben.",
+  "disputeSubmit": "Streitfall einreichen",
+  "disputeSuccess": "Streitfall eröffnet. Ein Vermittler meldet sich.",
   "profileTitle": "Mein Profil",
   "reviewsCount": "{count, plural, =1{1 Bewertung} other{{count} Bewertungen}}",
   "@reviewsCount": { "placeholders": { "count": { "type": "int" } } }

@@ -8,6 +8,8 @@ import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
 import '../../models/booking_detail.dart';
 import '../bookings/bookings_screen.dart';
+import '../disputes/dispute_dialog.dart';
+import '../disputes/dispute_rules.dart';
 import '../reviews/review_dialog.dart';
 import 'booking_actions.dart';
 
@@ -55,6 +57,20 @@ class BookingDetailScreen extends ConsumerWidget {
     }
   }
 
+  Future<void> _dispute(BuildContext context, WidgetRef ref) async {
+    final ok = await showDisputeDialog(context, bookingId);
+    if (ok == true) {
+      await ref
+          .read(bookingDetailControllerProvider(bookingId).notifier)
+          .load();
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.l10n.disputeSuccess)));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -85,6 +101,7 @@ class BookingDetailScreen extends ConsumerWidget {
           myId: myId,
           onAction: (a) => _run(context, ref, a),
           onReview: () => _review(context),
+          onDispute: () => _dispute(context, ref),
         ),
       ),
     );
@@ -97,12 +114,14 @@ class _DetailBody extends StatelessWidget {
     required this.myId,
     required this.onAction,
     required this.onReview,
+    required this.onDispute,
   });
 
   final BookingDetail booking;
   final String? myId;
   final void Function(BookingAction) onAction;
   final VoidCallback onReview;
+  final VoidCallback onDispute;
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +136,11 @@ class _DetailBody extends StatelessWidget {
     );
     final color = bookingStatusColor(booking.status);
     final canReview = booking.status == 'CONFIRMED' && (isSender || isTraveler);
+    final canDispute = canOpenDispute(
+      status: booking.status,
+      isSender: isSender,
+      isTraveler: isTraveler,
+    );
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -160,6 +184,16 @@ class _DetailBody extends StatelessWidget {
                 onPressed: onReview,
                 icon: const Icon(Icons.star_outline, size: 18),
                 label: Text(l10n.reviewAction),
+              ),
+            if (canDispute)
+              OutlinedButton.icon(
+                key: const Key('action_dispute'),
+                onPressed: onDispute,
+                icon: const Icon(Icons.gavel, size: 18),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.error,
+                ),
+                label: Text(l10n.disputeAction),
               ),
           ],
         ),

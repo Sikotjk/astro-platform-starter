@@ -109,6 +109,13 @@
   "reviewSuccess": "Ташаккур барои баҳои шумо!",
   "reviewsTitle": "Баҳоҳо",
   "noReviews": "Ҳоло баҳо нест.",
+  "disputeAction": "Кушодани баҳс",
+  "disputeTitle": "Кушодани баҳс",
+  "disputeHint": "Мушкилотро тавсиф кунед. Миёнарав парвандаро баррасӣ карда, пулро озод мекунад ё бармегардонад.",
+  "disputeReasonHint": "Сабаб (ҳадди ақал 5 аломат)",
+  "disputeReasonTooShort": "Лутфан ҳадди ақал 5 аломат нависед.",
+  "disputeSubmit": "Фиристодани баҳс",
+  "disputeSuccess": "Баҳс кушода шуд. Миёнарав бо шумо тамос мегирад.",
   "profileTitle": "Профили ман",
   "reviewsCount": "{count, plural, =1{1 баҳо} other{{count} баҳо}}"
 }

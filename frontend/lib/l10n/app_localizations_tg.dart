@@ -345,6 +345,29 @@ class AppLocalizationsTg extends AppLocalizations {
   String get noReviews => 'Ҳоло баҳо нест.';
 
   @override
+  String get disputeAction => 'Кушодани баҳс';
+
+  @override
+  String get disputeTitle => 'Кушодани баҳс';
+
+  @override
+  String get disputeHint =>
+      'Мушкилотро тавсиф кунед. Миёнарав парвандаро баррасӣ карда, пулро озод мекунад ё бармегардонад.';
+
+  @override
+  String get disputeReasonHint => 'Сабаб (ҳадди ақал 5 аломат)';
+
+  @override
+  String get disputeReasonTooShort => 'Лутфан ҳадди ақал 5 аломат нависед.';
+
+  @override
+  String get disputeSubmit => 'Фиристодани баҳс';
+
+  @override
+  String get disputeSuccess =>
+      'Баҳс кушода шуд. Миёнарав бо шумо тамос мегирад.';
+
+  @override
   String get profileTitle => 'Профили ман';
 
   @override

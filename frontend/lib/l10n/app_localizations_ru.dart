@@ -345,6 +345,28 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noReviews => 'Отзывов пока нет.';
 
   @override
+  String get disputeAction => 'Открыть спор';
+
+  @override
+  String get disputeTitle => 'Открыть спор';
+
+  @override
+  String get disputeHint =>
+      'Опишите проблему. Посредник рассмотрит дело и переведёт деньги или вернёт их.';
+
+  @override
+  String get disputeReasonHint => 'Причина (мин. 5 символов)';
+
+  @override
+  String get disputeReasonTooShort => 'Укажите не менее 5 символов.';
+
+  @override
+  String get disputeSubmit => 'Отправить спор';
+
+  @override
+  String get disputeSuccess => 'Спор открыт. Посредник свяжется с вами.';
+
+  @override
   String get profileTitle => 'Мой профиль';
 
   @override
