@@ -11,6 +11,7 @@ import '../../models/review.dart';
 import '../../widgets/confirm_dialog.dart';
 import '../../widgets/error_retry.dart';
 import '../../widgets/star_rating.dart';
+import '../../widgets/user_avatar.dart';
 import 'profile_controller.dart';
 
 /// Lokalisierte Rollenbezeichnung.
@@ -122,14 +123,7 @@ class _Header extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CircleAvatar(
-          radius: 32,
-          child: Text(
-            (profile.firstName.isNotEmpty ? profile.firstName[0] : '?')
-                .toUpperCase(),
-            style: const TextStyle(fontSize: 24),
-          ),
-        ),
+        UserAvatar(name: profile.firstName, url: profile.avatarUrl, radius: 32),
         const SizedBox(width: 16),
         Expanded(
           child: Column(

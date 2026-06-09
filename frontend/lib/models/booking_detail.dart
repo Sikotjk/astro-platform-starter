@@ -28,12 +28,14 @@ class BookingParty {
     required this.firstName,
     required this.ratingAvg,
     required this.ratingCount,
+    this.avatarUrl,
   });
 
   final String id;
   final String firstName;
   final double ratingAvg;
   final int ratingCount;
+  final String? avatarUrl;
 
   factory BookingParty.fromJson(Map<String, dynamic> json) {
     return BookingParty(
@@ -41,6 +43,7 @@ class BookingParty {
       firstName: json['firstName'] as String? ?? '',
       ratingAvg: (json['ratingAvg'] as num?)?.toDouble() ?? 0,
       ratingCount: json['ratingCount'] as int? ?? 0,
+      avatarUrl: json['avatarUrl'] as String?,
     );
   }
 }

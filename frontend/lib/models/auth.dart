@@ -25,6 +25,7 @@ class UserProfile {
     required this.kycStatus,
     required this.ratingAvg,
     required this.ratingCount,
+    this.avatarUrl,
   });
 
   final String id;
@@ -36,6 +37,7 @@ class UserProfile {
   final String kycStatus;
   final double ratingAvg;
   final int ratingCount;
+  final String? avatarUrl;
 
   bool get isKycVerified => kycStatus == 'VERIFIED';
 
@@ -50,6 +52,7 @@ class UserProfile {
       kycStatus: json['kycStatus'] as String? ?? 'NOT_STARTED',
       ratingAvg: (json['ratingAvg'] as num?)?.toDouble() ?? 0,
       ratingCount: json['ratingCount'] as int? ?? 0,
+      avatarUrl: json['avatarUrl'] as String?,
     );
   }
 }

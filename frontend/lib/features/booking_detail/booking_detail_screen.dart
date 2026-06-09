@@ -12,6 +12,7 @@ import '../../models/booking.dart';
 import '../../models/booking_detail.dart';
 import '../../widgets/error_retry.dart';
 import '../../widgets/star_rating.dart';
+import '../../widgets/user_avatar.dart';
 import '../bookings/bookings_screen.dart';
 import '../disputes/dispute_dialog.dart';
 import '../disputes/dispute_rules.dart';
@@ -319,12 +320,7 @@ class _PartnerCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.zero,
       child: ListTile(
-        leading: CircleAvatar(
-          child: Text(
-            (party.firstName.isNotEmpty ? party.firstName[0] : '?')
-                .toUpperCase(),
-          ),
-        ),
+        leading: UserAvatar(name: party.firstName, url: party.avatarUrl),
         title: Text(
           party.firstName.isEmpty ? l10n.bookingPartner : party.firstName,
         ),
