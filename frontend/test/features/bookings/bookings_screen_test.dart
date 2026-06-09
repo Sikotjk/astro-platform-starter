@@ -8,6 +8,8 @@ import 'package:tj_shipping_app/models/booking.dart';
 import '../../support/localized_app.dart';
 
 class _FakeBookingsRepo implements BookingsRepository {
+  int calls = 0;
+
   @override
   Future<String> create({
     required String tripId,
@@ -16,21 +18,24 @@ class _FakeBookingsRepo implements BookingsRepository {
   }) async => 'bk_new';
 
   @override
-  Future<List<BookingSummary>> list({String? role, String? status}) async => [
-    BookingSummary(
-      id: 'b1',
-      status: 'CONFIRMED',
-      paymentStatus: 'RELEASED',
-      totalAmount: 27.6,
-      currency: 'EUR',
-      senderId: 's',
-      travelerId: 't',
-      packageTitle: 'Geschenke',
-      originAirport: 'FRA',
-      destinationAirport: 'DYU',
-      departureAt: DateTime.parse('2026-09-01T10:00:00Z'),
-    ),
-  ];
+  Future<List<BookingSummary>> list({String? role, String? status}) async {
+    calls++;
+    return [
+      BookingSummary(
+        id: 'b1',
+        status: 'CONFIRMED',
+        paymentStatus: 'RELEASED',
+        totalAmount: 27.6,
+        currency: 'EUR',
+        senderId: 's',
+        travelerId: 't',
+        packageTitle: 'Geschenke',
+        originAirport: 'FRA',
+        destinationAirport: 'DYU',
+        departureAt: DateTime.parse('2026-09-01T10:00:00Z'),
+      ),
+    ];
+  }
 }
 
 class _FlakyBookingsRepo implements BookingsRepository {
@@ -88,5 +93,22 @@ void main() {
     expect(find.text('FRA → DYU'), findsOneWidget);
     expect(find.text('Abgeschlossen'), findsOneWidget);
     expect(find.text('Als Sender'), findsOneWidget); // Filter vorhanden
+  });
+
+  testWidgets('Pull-to-Refresh lädt die Liste neu', (tester) async {
+    final repo = _FakeBookingsRepo();
+    await tester.pumpWidget(
+      localizedApp(
+        const BookingsScreen(),
+        overrides: [bookingsRepositoryProvider.overrideWithValue(repo)],
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(repo.calls, 1); // initialer Ladevorgang
+
+    await tester.fling(find.text('FRA → DYU'), const Offset(0, 400), 1000);
+    await tester.pumpAndSettle();
+
+    expect(repo.calls, 2); // Refresh hat erneut geladen
   });
 }

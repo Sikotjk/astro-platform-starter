@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/core/providers.dart';
+import 'package:tj_shipping_app/core/token_store.dart';
 import 'package:tj_shipping_app/features/auth/auth_repository.dart';
 import 'package:tj_shipping_app/features/profile/profile_screen.dart';
 import 'package:tj_shipping_app/features/reviews/reviews_repository.dart';
@@ -126,5 +128,27 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Noch keine Bewertungen.'), findsWidgets);
+  });
+
+  testWidgets('Logout-Button verwirft das Token', (tester) async {
+    final store = InMemoryTokenStore()..write('tok_x');
+    await tester.pumpWidget(
+      localizedApp(
+        const ProfileScreen(),
+        overrides: [
+          tokenStoreProvider.overrideWithValue(store),
+          authRepositoryProvider.overrideWithValue(_FakeAuthRepo(_profile)),
+          reviewsRepositoryProvider.overrideWithValue(
+            _FakeReviewsRepo(const []),
+          ),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.logout));
+    await tester.pumpAndSettle();
+
+    expect(await store.read(), isNull);
   });
 }

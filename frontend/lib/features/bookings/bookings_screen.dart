@@ -46,6 +46,9 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
     ref.read(bookingsControllerProvider.notifier).load(role: _role);
   }
 
+  Future<void> _refresh() =>
+      ref.read(bookingsControllerProvider.notifier).load(role: _role);
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(bookingsControllerProvider);
@@ -88,7 +91,10 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
           const Divider(height: 1),
           Expanded(
             child: state.when(
-              data: (bookings) => _BookingList(bookings: bookings),
+              data: (bookings) => RefreshIndicator(
+                onRefresh: _refresh,
+                child: _BookingList(bookings: bookings),
+              ),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) =>
                   ErrorRetry(message: e.toString(), onRetry: _reload),
@@ -109,9 +115,17 @@ class _BookingList extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     if (bookings.isEmpty) {
-      return Center(child: Text(l10n.noBookings));
+      // Scrollbar halten, damit Pull-to-Refresh auch im Leerzustand greift.
+      return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: [
+          const SizedBox(height: 120),
+          Center(child: Text(l10n.noBookings)),
+        ],
+      );
     }
     return ListView.separated(
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: bookings.length,
       separatorBuilder: (_, _) => const Divider(height: 1),
       itemBuilder: (context, i) {

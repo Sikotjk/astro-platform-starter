@@ -23,6 +23,9 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     );
   }
 
+  Future<void> _refresh() =>
+      ref.read(notificationsControllerProvider.notifier).load();
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(notificationsControllerProvider);
@@ -40,7 +43,10 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
         ],
       ),
       body: state.when(
-        data: (items) => _NotificationList(items: items),
+        data: (items) => RefreshIndicator(
+          onRefresh: _refresh,
+          child: _NotificationList(items: items),
+        ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => ErrorRetry(
           message: e.toString(),
@@ -60,9 +66,16 @@ class _NotificationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return Center(child: Text(context.l10n.noNotifications));
+      return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: [
+          const SizedBox(height: 120),
+          Center(child: Text(context.l10n.noNotifications)),
+        ],
+      );
     }
     return ListView.separated(
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: items.length,
       separatorBuilder: (_, _) => const Divider(height: 1),
       itemBuilder: (context, i) {
