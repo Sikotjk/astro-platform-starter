@@ -302,6 +302,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get fieldCategory => 'Kategorie';
 
   @override
+  String get categoryDocuments => 'Dokumente';
+
+  @override
+  String get categoryClothing => 'Kleidung';
+
+  @override
+  String get categoryFoodDry => 'Lebensmittel (trocken)';
+
+  @override
+  String get categoryElectronics => 'Elektronik';
+
+  @override
+  String get categoryMedicine => 'Medikamente';
+
+  @override
+  String get categoryGifts => 'Geschenke';
+
+  @override
+  String get categoryCosmetics => 'Kosmetik';
+
+  @override
+  String get categoryOther => 'Sonstiges';
+
+  @override
   String get fieldDescription => 'Beschreibung';
 
   @override

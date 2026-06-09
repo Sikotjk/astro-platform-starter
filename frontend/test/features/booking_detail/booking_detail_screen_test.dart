@@ -123,9 +123,9 @@ void main() {
     // Sender sieht die Reputation der Gegenpartei (Traveler Karim).
     expect(find.text('Karim'), findsOneWidget);
     expect(find.textContaining('10 Bewertungen'), findsOneWidget);
-    // Deklarierter Inhalt wird angezeigt.
+    // Deklarierter Inhalt wird angezeigt (Kategorie lokalisiert).
     expect(find.text('Winterjacke'), findsOneWidget);
-    expect(find.textContaining('CLOTHING'), findsOneWidget);
+    expect(find.textContaining('Kleidung'), findsOneWidget);
   });
 
   testWidgets('Traveler sieht die Reputation des Senders', (tester) async {

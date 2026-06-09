@@ -622,6 +622,54 @@ abstract class AppLocalizations {
   /// **'Kategorie'**
   String get fieldCategory;
 
+  /// No description provided for @categoryDocuments.
+  ///
+  /// In de, this message translates to:
+  /// **'Dokumente'**
+  String get categoryDocuments;
+
+  /// No description provided for @categoryClothing.
+  ///
+  /// In de, this message translates to:
+  /// **'Kleidung'**
+  String get categoryClothing;
+
+  /// No description provided for @categoryFoodDry.
+  ///
+  /// In de, this message translates to:
+  /// **'Lebensmittel (trocken)'**
+  String get categoryFoodDry;
+
+  /// No description provided for @categoryElectronics.
+  ///
+  /// In de, this message translates to:
+  /// **'Elektronik'**
+  String get categoryElectronics;
+
+  /// No description provided for @categoryMedicine.
+  ///
+  /// In de, this message translates to:
+  /// **'Medikamente'**
+  String get categoryMedicine;
+
+  /// No description provided for @categoryGifts.
+  ///
+  /// In de, this message translates to:
+  /// **'Geschenke'**
+  String get categoryGifts;
+
+  /// No description provided for @categoryCosmetics.
+  ///
+  /// In de, this message translates to:
+  /// **'Kosmetik'**
+  String get categoryCosmetics;
+
+  /// No description provided for @categoryOther.
+  ///
+  /// In de, this message translates to:
+  /// **'Sonstiges'**
+  String get categoryOther;
+
   /// No description provided for @fieldDescription.
   ///
   /// In de, this message translates to:

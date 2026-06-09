@@ -300,6 +300,30 @@ class AppLocalizationsTg extends AppLocalizations {
   String get fieldCategory => 'Категория';
 
   @override
+  String get categoryDocuments => 'Ҳуҷҷатҳо';
+
+  @override
+  String get categoryClothing => 'Сару либос';
+
+  @override
+  String get categoryFoodDry => 'Озуқа (хушк)';
+
+  @override
+  String get categoryElectronics => 'Электроника';
+
+  @override
+  String get categoryMedicine => 'Доруҳо';
+
+  @override
+  String get categoryGifts => 'Тӯҳфаҳо';
+
+  @override
+  String get categoryCosmetics => 'Косметика';
+
+  @override
+  String get categoryOther => 'Дигар';
+
+  @override
   String get fieldDescription => 'Тавсиф';
 
   @override

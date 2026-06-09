@@ -304,6 +304,30 @@ class AppLocalizationsRu extends AppLocalizations {
   String get fieldCategory => 'Категория';
 
   @override
+  String get categoryDocuments => 'Документы';
+
+  @override
+  String get categoryClothing => 'Одежда';
+
+  @override
+  String get categoryFoodDry => 'Продукты (сухие)';
+
+  @override
+  String get categoryElectronics => 'Электроника';
+
+  @override
+  String get categoryMedicine => 'Лекарства';
+
+  @override
+  String get categoryGifts => 'Подарки';
+
+  @override
+  String get categoryCosmetics => 'Косметика';
+
+  @override
+  String get categoryOther => 'Прочее';
+
+  @override
   String get fieldDescription => 'Описание';
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/config.dart';
+import '../../core/customs.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
@@ -272,6 +273,8 @@ class _ContentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final category = customsCategoryLabel(l10n, item.category);
     return ListTile(
       dense: true,
       contentPadding: EdgeInsets.zero,
@@ -279,9 +282,9 @@ class _ContentTile extends StatelessWidget {
         item.isSealed ? Icons.lock_outline : Icons.inventory_2_outlined,
         size: 20,
       ),
-      title: Text(item.description.isEmpty ? item.category : item.description),
+      title: Text(item.description.isEmpty ? category : item.description),
       subtitle: Text(
-        '${item.category} · ${item.quantity}× · '
+        '$category · ${item.quantity}× · '
         '${item.unitValueEur.toStringAsFixed(2)} €',
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/customs.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
@@ -167,7 +168,10 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
                 decoration: InputDecoration(labelText: l10n.fieldCategory),
                 items: [
                   for (final c in customsCategories)
-                    DropdownMenuItem(value: c, child: Text(c)),
+                    DropdownMenuItem(
+                      value: c,
+                      child: Text(customsCategoryLabel(l10n, c)),
+                    ),
                 ],
                 onChanged: (v) => setState(() => _category = v ?? 'OTHER'),
               ),
