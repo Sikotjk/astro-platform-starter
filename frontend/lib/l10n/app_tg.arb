@@ -52,6 +52,8 @@
   "filterAsSender": "Ҳамчун фиристанда",
   "filterAsTraveler": "Ҳамчун мусофир",
   "filterUnread": "Хонданашуда",
+  "filterActive": "Фаъол",
+  "filterDone": "Анҷомёфта",
   "noBookings": "Ҳоло фармоиш нест.",
   "statusRequested": "Дархостшуда",
   "statusAccepted": "Қабулшуда",

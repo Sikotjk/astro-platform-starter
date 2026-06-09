@@ -44,8 +44,14 @@ class BookingsScreen extends ConsumerStatefulWidget {
   ConsumerState<BookingsScreen> createState() => _BookingsScreenState();
 }
 
+/// Statusgruppen für den Grobfilter (kommagetrennt, wie vom Backend erwartet).
+const _activeStatuses =
+    'REQUESTED,ACCEPTED,PAID,HANDED_OVER,IN_TRANSIT,DELIVERED,DISPUTED';
+const _doneStatuses = 'CONFIRMED,CANCELLED,REJECTED,REFUNDED';
+
 class _BookingsScreenState extends ConsumerState<BookingsScreen> {
   String? _role; // null = alle, 'SENDER', 'TRAVELER'
+  String? _statusGroup; // null = alle, 'active', 'done'
 
   @override
   void initState() {
@@ -53,12 +59,21 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
     Future.microtask(_reload);
   }
 
+  String? get _statusFilter => switch (_statusGroup) {
+    'active' => _activeStatuses,
+    'done' => _doneStatuses,
+    _ => null,
+  };
+
   void _reload() {
-    ref.read(bookingsControllerProvider.notifier).load(role: _role);
+    ref
+        .read(bookingsControllerProvider.notifier)
+        .load(role: _role, status: _statusFilter);
   }
 
-  Future<void> _refresh() =>
-      ref.read(bookingsControllerProvider.notifier).load(role: _role);
+  Future<void> _refresh() => ref
+      .read(bookingsControllerProvider.notifier)
+      .load(role: _role, status: _statusFilter);
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +114,22 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SegmentedButton<String?>(
+              segments: [
+                ButtonSegment(value: null, label: Text(l10n.filterAll)),
+                ButtonSegment(value: 'active', label: Text(l10n.filterActive)),
+                ButtonSegment(value: 'done', label: Text(l10n.filterDone)),
+              ],
+              selected: {_statusGroup},
+              onSelectionChanged: (s) {
+                setState(() => _statusGroup = s.first);
+                _reload();
+              },
+            ),
+          ),
+          const SizedBox(height: 8),
           const Divider(height: 1),
           Expanded(
             child: state.when(

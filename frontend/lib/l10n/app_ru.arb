@@ -52,6 +52,8 @@
   "filterAsSender": "Как отправитель",
   "filterAsTraveler": "Как путешественник",
   "filterUnread": "Непрочитанные",
+  "filterActive": "Активные",
+  "filterDone": "Завершённые",
   "noBookings": "Пока нет бронирований.",
   "statusRequested": "Запрошено",
   "statusAccepted": "Принято",

@@ -190,6 +190,12 @@ class AppLocalizationsTg extends AppLocalizations {
   String get filterUnread => 'Хонданашуда';
 
   @override
+  String get filterActive => 'Фаъол';
+
+  @override
+  String get filterDone => 'Анҷомёфта';
+
+  @override
   String get noBookings => 'Ҳоло фармоиш нест.';
 
   @override

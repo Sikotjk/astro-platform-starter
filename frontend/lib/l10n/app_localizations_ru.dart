@@ -194,6 +194,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get filterUnread => 'Непрочитанные';
 
   @override
+  String get filterActive => 'Активные';
+
+  @override
+  String get filterDone => 'Завершённые';
+
+  @override
   String get noBookings => 'Пока нет бронирований.';
 
   @override

@@ -412,6 +412,18 @@ abstract class AppLocalizations {
   /// **'Ungelesen'**
   String get filterUnread;
 
+  /// No description provided for @filterActive.
+  ///
+  /// In de, this message translates to:
+  /// **'Aktiv'**
+  String get filterActive;
+
+  /// No description provided for @filterDone.
+  ///
+  /// In de, this message translates to:
+  /// **'Erledigt'**
+  String get filterDone;
+
   /// No description provided for @noBookings.
   ///
   /// In de, this message translates to:

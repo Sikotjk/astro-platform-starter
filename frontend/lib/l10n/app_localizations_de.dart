@@ -192,6 +192,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get filterUnread => 'Ungelesen';
 
   @override
+  String get filterActive => 'Aktiv';
+
+  @override
+  String get filterDone => 'Erledigt';
+
+  @override
   String get noBookings => 'Noch keine Buchungen.';
 
   @override

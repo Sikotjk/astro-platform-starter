@@ -9,6 +9,7 @@ import '../../support/localized_app.dart';
 
 class _FakeBookingsRepo implements BookingsRepository {
   int calls = 0;
+  String? lastStatus;
 
   @override
   Future<String> create({
@@ -20,6 +21,7 @@ class _FakeBookingsRepo implements BookingsRepository {
   @override
   Future<List<BookingSummary>> list({String? role, String? status}) async {
     calls++;
+    lastStatus = status;
     return [
       BookingSummary(
         id: 'b1',
@@ -94,6 +96,24 @@ void main() {
     expect(find.text('Abgeschlossen'), findsOneWidget);
     expect(find.text('Als Sender'), findsOneWidget); // Filter vorhanden
     expect(find.text('Ausgezahlt'), findsOneWidget); // Zahlungsstatus RELEASED
+  });
+
+  testWidgets('Statusfilter "Aktiv" lädt mit aktiven Status', (tester) async {
+    final repo = _FakeBookingsRepo();
+    await tester.pumpWidget(
+      localizedApp(
+        const BookingsScreen(),
+        overrides: [bookingsRepositoryProvider.overrideWithValue(repo)],
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(repo.lastStatus, isNull); // initial: alle
+
+    await tester.tap(find.text('Aktiv'));
+    await tester.pumpAndSettle();
+
+    expect(repo.lastStatus, contains('IN_TRANSIT'));
+    expect(repo.lastStatus, isNot(contains('CONFIRMED')));
   });
 
   testWidgets('Pull-to-Refresh lädt die Liste neu', (tester) async {
