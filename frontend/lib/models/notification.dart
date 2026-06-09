@@ -20,6 +20,16 @@ class NotificationItem {
 
   bool get isRead => readAt != null;
 
+  NotificationItem markedRead() => NotificationItem(
+    id: id,
+    type: type,
+    title: title,
+    body: body,
+    createdAt: createdAt,
+    tripId: tripId,
+    readAt: readAt ?? DateTime.now(),
+  );
+
   factory NotificationItem.fromJson(Map<String, dynamic> json) {
     return NotificationItem(
       id: json['id'] as String,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../core/api_client.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/notification.dart';
@@ -26,6 +28,24 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   Future<void> _refresh() =>
       ref.read(notificationsControllerProvider.notifier).load();
 
+  /// Markiert die Benachrichtigung als gelesen und springt bei einem
+  /// Trip-Treffer direkt zur Buchungsansicht des passenden Trips.
+  Future<void> _open(NotificationItem n) async {
+    ref.read(notificationsControllerProvider.notifier).markRead(n.id);
+    if (n.type == 'TRIP_MATCH' && n.tripId != null) {
+      try {
+        final trip = await ref.read(tripsRepositoryProvider).findOne(n.tripId!);
+        if (mounted) context.push('/book', extra: trip);
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(apiErrorMessage(e))));
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(notificationsControllerProvider);
@@ -45,7 +65,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
       body: state.when(
         data: (items) => RefreshIndicator(
           onRefresh: _refresh,
-          child: _NotificationList(items: items),
+          child: _NotificationList(items: items, onTap: _open),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => ErrorRetry(
@@ -59,9 +79,10 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
 }
 
 class _NotificationList extends StatelessWidget {
-  const _NotificationList({required this.items});
+  const _NotificationList({required this.items, required this.onTap});
 
   final List<NotificationItem> items;
+  final void Function(NotificationItem) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +101,7 @@ class _NotificationList extends StatelessWidget {
       separatorBuilder: (_, _) => const Divider(height: 1),
       itemBuilder: (context, i) {
         final n = items[i];
+        final isTripMatch = n.type == 'TRIP_MATCH' && n.tripId != null;
         return ListTile(
           leading: Icon(
             n.isRead ? Icons.notifications_none : Icons.notifications_active,
@@ -94,6 +116,8 @@ class _NotificationList extends StatelessWidget {
             ),
           ),
           subtitle: Text(n.body),
+          trailing: isTripMatch ? const Icon(Icons.chevron_right) : null,
+          onTap: () => onTap(n),
         );
       },
     );

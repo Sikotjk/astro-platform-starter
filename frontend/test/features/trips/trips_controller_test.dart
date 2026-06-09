@@ -25,6 +25,9 @@ class _FakeTripsRepo implements TripsRepository {
       ),
     ];
   }
+
+  @override
+  Future<Trip> findOne(String id) => throw UnimplementedError();
 }
 
 void main() {

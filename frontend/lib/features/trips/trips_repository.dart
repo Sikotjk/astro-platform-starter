@@ -4,6 +4,9 @@ import '../../models/trip.dart';
 
 abstract class TripsRepository {
   Future<List<Trip>> search(TripSearchQuery query);
+
+  /// Lädt einen einzelnen Trip (GET /trips/:id).
+  Future<Trip> findOne(String id);
 }
 
 class DioTripsRepository implements TripsRepository {
@@ -20,5 +23,11 @@ class DioTripsRepository implements TripsRepository {
     return (res.data ?? [])
         .map((e) => Trip.fromJson(e as Map<String, dynamic>))
         .toList(growable: false);
+  }
+
+  @override
+  Future<Trip> findOne(String id) async {
+    final res = await _dio.get<Map<String, dynamic>>('/trips/$id');
+    return Trip.fromJson(res.data!);
   }
 }

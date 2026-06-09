@@ -24,6 +24,21 @@ class NotificationsController
     await load();
   }
 
+  /// Markiert eine einzelne Benachrichtigung optimistisch als gelesen.
+  Future<void> markRead(String id) async {
+    final items = state.value;
+    if (items != null) {
+      state = AsyncValue.data([
+        for (final n in items) n.id == id ? n.markedRead() : n,
+      ]);
+    }
+    try {
+      await _repo.markRead(id);
+    } catch (_) {
+      // Wird beim nächsten Laden ohnehin neu synchronisiert.
+    }
+  }
+
   /// Anzahl ungelesener Benachrichtigungen (für Badges).
   int get unreadCount => state.maybeWhen(
     data: (items) => items.where((n) => !n.isRead).length,
