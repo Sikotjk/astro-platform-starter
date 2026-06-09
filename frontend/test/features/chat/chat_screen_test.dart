@@ -50,6 +50,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Hallo aus dem Verlauf'), findsOneWidget);
+    // Zeitstempel pro Nachricht (DateTime(2026) -> absolutes Datum).
+    expect(find.textContaining('2026'), findsWidgets);
 
     await tester.enterText(
       find.byKey(const Key('messageInput')),
