@@ -10,7 +10,11 @@ class ApiClient {
 
   final Dio dio;
 
-  factory ApiClient.create(TokenStore tokenStore, {String? baseUrl}) {
+  factory ApiClient.create(
+    TokenStore tokenStore, {
+    String? baseUrl,
+    void Function()? onUnauthorized,
+  }) {
     final dio = Dio(
       BaseOptions(
         baseUrl: baseUrl ?? AppConfig.apiBaseUrl,
@@ -28,6 +32,13 @@ class ApiClient {
             options.headers['Authorization'] = 'Bearer $token';
           }
           handler.next(options);
+        },
+        onError: (e, handler) {
+          // Abgelaufene/ungültige Session -> Logout-Hook auslösen.
+          if (e.response?.statusCode == 401) {
+            onUnauthorized?.call();
+          }
+          handler.next(e);
         },
       ),
     );

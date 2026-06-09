@@ -86,6 +86,33 @@ void main() {
     expect(await store.read(), isNull);
   });
 
+  group('handleSessionExpired (401)', () {
+    test('angemeldet -> abgemeldet + Token gelöscht', () async {
+      final store = InMemoryTokenStore();
+      final controller = AuthController(_FakeAuthRepo(), store);
+      await controller.login(email: 'a@b.de', password: 'password123');
+
+      await controller.handleSessionExpired();
+
+      expect(controller.state.status, AuthStatus.unauthenticated);
+      expect(await store.read(), isNull);
+    });
+
+    test('nicht angemeldet -> No-op (stört keinen Login-Versuch)', () async {
+      final controller = AuthController(
+        _FakeAuthRepo()..shouldFail = true,
+        InMemoryTokenStore(),
+      );
+      await controller.login(email: 'a@b.de', password: 'wrong');
+      expect(controller.state.status, AuthStatus.error);
+
+      await controller.handleSessionExpired();
+
+      // Bleibt im Fehlerzustand, wird nicht überschrieben.
+      expect(controller.state.status, AuthStatus.error);
+    });
+  });
+
   group('restoreSession (Auto-Login)', () {
     test('gültiges Token -> authenticated', () async {
       final store = InMemoryTokenStore()..write('tok_saved');

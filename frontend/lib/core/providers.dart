@@ -42,8 +42,16 @@ import 'token_store.dart';
 /// Zentrale Provider-Definitionen (Dependency Injection der App).
 final tokenStoreProvider = Provider<TokenStore>((ref) => SecureTokenStore());
 
+/// Zählt 401-Antworten. Entkoppelt den ApiClient vom AuthController (sonst
+/// entstünde ein Provider-Zyklus apiClient→authController→authRepository).
+/// Die App lauscht darauf und meldet die Session ab.
+final sessionExpiredProvider = StateProvider<int>((ref) => 0);
+
 final apiClientProvider = Provider<ApiClient>(
-  (ref) => ApiClient.create(ref.watch(tokenStoreProvider)),
+  (ref) => ApiClient.create(
+    ref.watch(tokenStoreProvider),
+    onUnauthorized: () => ref.read(sessionExpiredProvider.notifier).state++,
+  ),
 );
 
 final authRepositoryProvider = Provider<AuthRepository>(

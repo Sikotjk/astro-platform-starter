@@ -26,6 +26,11 @@ class TjShippingApp extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     final bootstrap = ref.watch(appBootstrapProvider);
 
+    // Bei abgelaufener Session (401) abmelden -> Router leitet zu /login.
+    ref.listen(sessionExpiredProvider, (_, _) {
+      ref.read(authControllerProvider.notifier).handleSessionExpired();
+    });
+
     final theme = ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1E88E5)),
       useMaterial3: true,

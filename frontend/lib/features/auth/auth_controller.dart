@@ -54,6 +54,14 @@ class AuthController extends StateNotifier<AuthState> {
     state = const AuthState.unauthenticated();
   }
 
+  /// Wird bei einer 401-Antwort ausgelöst (Token abgelaufen/ungültig).
+  /// Nur wirksam, wenn aktuell angemeldet – stört so keinen Login-Versuch.
+  Future<void> handleSessionExpired() async {
+    if (state.status != AuthStatus.authenticated) return;
+    await _tokenStore.clear();
+    state = const AuthState.unauthenticated();
+  }
+
   /// Auto-Login beim App-Start: vorhandenes Token validieren (über /me).
   /// Bei Erfolg -> authenticated, sonst Token verwerfen.
   Future<void> restoreSession() async {
