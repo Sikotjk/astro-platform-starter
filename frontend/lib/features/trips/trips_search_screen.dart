@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,6 +10,23 @@ import '../../models/saved_search.dart';
 import '../../models/trip.dart';
 import '../../widgets/error_retry.dart';
 import '../../widgets/traveler_reputation.dart';
+
+/// Erzwingt Großbuchstaben (IATA-Codes sind immer großgeschrieben).
+class _UpperCaseFormatter extends TextInputFormatter {
+  const _UpperCaseFormatter();
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) => newValue.copyWith(text: newValue.text.toUpperCase());
+}
+
+/// IATA-Eingabe: nur Buchstaben, max. 3, großgeschrieben.
+final _iataFormatters = <TextInputFormatter>[
+  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+  LengthLimitingTextInputFormatter(3),
+  const _UpperCaseFormatter(),
+];
 
 class TripsSearchScreen extends ConsumerStatefulWidget {
   const TripsSearchScreen({super.key});
@@ -101,6 +119,7 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
                         key: const Key('origin'),
                         controller: _origin,
                         textCapitalization: TextCapitalization.characters,
+                        inputFormatters: _iataFormatters,
                         decoration: InputDecoration(
                           labelText: l10n.fieldFrom,
                           hintText: 'FRA',
@@ -113,6 +132,7 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
                         key: const Key('destination'),
                         controller: _destination,
                         textCapitalization: TextCapitalization.characters,
+                        inputFormatters: _iataFormatters,
                         decoration: InputDecoration(
                           labelText: l10n.fieldTo,
                           hintText: 'DYU',
@@ -129,6 +149,9 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
                         key: const Key('minKg'),
                         controller: _minKg,
                         keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                        ],
                         decoration: InputDecoration(labelText: l10n.fieldMinKg),
                       ),
                     ),

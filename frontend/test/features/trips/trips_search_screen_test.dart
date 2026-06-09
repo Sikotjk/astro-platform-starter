@@ -75,6 +75,19 @@ void main() {
     expect(find.text('Keine Trips gefunden.'), findsOneWidget);
   });
 
+  testWidgets('IATA-Felder: nur Buchstaben, max. 3, großgeschrieben', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_wrap());
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('origin')), 'fra12xyz');
+    await tester.pump();
+
+    final field = tester.widget<TextField>(find.byKey(const Key('origin')));
+    expect(field.controller!.text, 'FRA');
+  });
+
   testWidgets('Suche zeigt Ergebnisse aus dem Repository', (tester) async {
     await tester.pumpWidget(_wrap());
     await tester.pumpAndSettle();
@@ -98,7 +111,8 @@ void main() {
     await tester.tap(find.byKey(const Key('saveSearch')));
     await tester.pumpAndSettle();
 
-    expect(saved.created, {'origin': 'fra', 'dest': 'dyu'});
+    // IATA-Formatter erzwingt Großschreibung.
+    expect(saved.created, {'origin': 'FRA', 'dest': 'DYU'});
     expect(find.textContaining('gespeichert'), findsOneWidget); // SnackBar
   });
 }
