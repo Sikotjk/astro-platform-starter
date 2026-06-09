@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'core/config.dart';
 import 'core/locale_controller.dart';
@@ -9,8 +10,10 @@ import 'core/providers.dart';
 import 'l10n/app_localizations.dart';
 import 'router.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Datumsformate für alle Sprachen laden (de/ru, tg fällt auf ru zurück).
+  await initializeDateFormatting();
   // Stripe nur initialisieren, wenn ein Publishable-Key konfiguriert ist.
   if (AppConfig.isStripeConfigured) {
     Stripe.publishableKey = AppConfig.stripePublishableKey;

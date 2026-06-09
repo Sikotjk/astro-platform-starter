@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/saved_search.dart';
@@ -180,7 +181,7 @@ class _TripList extends StatelessWidget {
           ),
           subtitle: Text(
             l10n.tripSubtitle(
-              t.departureDate,
+              context.formatDate(t.departureAt),
               t.freeKg.toStringAsFixed(1),
               t.pricePerKg.toStringAsFixed(2),
               t.currency,

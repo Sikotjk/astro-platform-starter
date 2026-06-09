@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -181,9 +182,6 @@ class _ReviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final d = review.createdAt.toLocal();
-    final date =
-        '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -194,7 +192,7 @@ class _ReviewTile extends StatelessWidget {
               StarRating(value: review.rating, size: 16),
               const Spacer(),
               Text(
-                '${review.authorName} · $date',
+                '${review.authorName} · ${context.formatDate(review.createdAt)}',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],

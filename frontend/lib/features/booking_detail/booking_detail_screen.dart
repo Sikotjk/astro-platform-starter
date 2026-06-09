@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/config.dart';
+import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -303,15 +304,11 @@ class _TimelineTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = bookingStatusColor(event.toStatus);
-    final d = event.createdAt.toLocal();
-    final date =
-        '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')} '
-        '${d.hour.toString().padLeft(2, '0')}:${d.minute.toString().padLeft(2, '0')}';
     return ListTile(
       dense: true,
       leading: Icon(Icons.circle, size: 14, color: color),
       title: Text(bookingStatusLabel(l10n, event.toStatus)),
-      subtitle: Text(date),
+      subtitle: Text(context.formatDateTime(event.createdAt)),
     );
   }
 }

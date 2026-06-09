@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/package.dart';
@@ -105,7 +106,7 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
             children: [
               Text(
                 l10n.bookTripInfo(
-                  widget.trip.departureDate,
+                  context.formatDate(widget.trip.departureAt),
                   widget.trip.pricePerKg.toStringAsFixed(2),
                   widget.trip.currency,
                 ),
