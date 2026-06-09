@@ -83,6 +83,35 @@ void main() {
     expect(repo.readIds, ['n1']);
   });
 
+  testWidgets('"Alle gelesen" ist deaktiviert, wenn nichts ungelesen ist', (
+    tester,
+  ) async {
+    final read = NotificationItem(
+      id: 'n9',
+      type: 'TRIP_MATCH',
+      title: 'Gelesen',
+      body: 'b',
+      createdAt: DateTime(2026),
+      readAt: DateTime(2026),
+    );
+    await tester.pumpWidget(
+      localizedApp(
+        const NotificationsScreen(),
+        overrides: [
+          notificationsRepositoryProvider.overrideWithValue(
+            _FakeNotifRepo([read]),
+          ),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final button = tester.widget<TextButton>(
+      find.widgetWithText(TextButton, 'Alle gelesen'),
+    );
+    expect(button.onPressed, isNull); // deaktiviert
+  });
+
   testWidgets('Filter "Ungelesen" lädt mit unreadOnly neu', (tester) async {
     final repo = _FakeNotifRepo([_notif()]);
     await tester.pumpWidget(

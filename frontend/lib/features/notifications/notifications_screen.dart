@@ -53,15 +53,21 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(notificationsControllerProvider);
+    final hasUnread = state.maybeWhen(
+      data: (items) => items.any((n) => !n.isRead),
+      orElse: () => false,
+    );
 
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n.notificationsTitle),
         actions: [
           TextButton(
-            onPressed: () => ref
-                .read(notificationsControllerProvider.notifier)
-                .markAllRead(),
+            onPressed: hasUnread
+                ? () => ref
+                      .read(notificationsControllerProvider.notifier)
+                      .markAllRead()
+                : null,
             child: Text(context.l10n.markAllRead),
           ),
         ],
