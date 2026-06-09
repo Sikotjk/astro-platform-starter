@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/message.dart';
+import '../../widgets/error_retry.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({super.key, required this.bookingId});
@@ -53,7 +54,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             child: state.when(
               data: (messages) => _MessageList(messages: messages, myId: myId),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text(e.toString())),
+              error: (e, _) => ErrorRetry(
+                message: e.toString(),
+                onRetry: () => ref
+                    .read(chatControllerProvider(widget.bookingId).notifier)
+                    .init(),
+              ),
             ),
           ),
           const Divider(height: 1),

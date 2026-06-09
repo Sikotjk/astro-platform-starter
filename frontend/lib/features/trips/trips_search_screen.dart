@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/trip.dart';
+import '../../widgets/error_retry.dart';
 import '../../widgets/traveler_reputation.dart';
 
 class TripsSearchScreen extends ConsumerStatefulWidget {
@@ -106,7 +107,8 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
             child: result.when(
               data: (trips) => _TripList(trips: trips),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text(e.toString())),
+              error: (e, _) =>
+                  ErrorRetry(message: e.toString(), onRetry: _search),
             ),
           ),
         ],

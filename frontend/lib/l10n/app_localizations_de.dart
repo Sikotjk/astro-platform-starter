@@ -93,6 +93,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get refresh => 'Aktualisieren';
 
   @override
+  String get retry => 'Erneut versuchen';
+
+  @override
   String get tripsTitle => 'Trips suchen';
 
   @override

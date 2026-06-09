@@ -93,6 +93,9 @@ class AppLocalizationsTg extends AppLocalizations {
   String get refresh => 'Навсозӣ';
 
   @override
+  String get retry => 'Аз нав кӯшиш кардан';
+
+  @override
   String get tripsTitle => 'Ҷустуҷӯи парвозҳо';
 
   @override

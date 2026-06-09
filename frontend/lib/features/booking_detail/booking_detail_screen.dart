@@ -8,6 +8,7 @@ import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
 import '../../models/booking_detail.dart';
+import '../../widgets/error_retry.dart';
 import '../bookings/bookings_screen.dart';
 import '../disputes/dispute_dialog.dart';
 import '../disputes/dispute_rules.dart';
@@ -125,7 +126,12 @@ class BookingDetailScreen extends ConsumerWidget {
       ),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(e.toString())),
+        error: (e, _) => ErrorRetry(
+          message: e.toString(),
+          onRetry: () => ref
+              .read(bookingDetailControllerProvider(bookingId).notifier)
+              .load(),
+        ),
         data: (booking) => _DetailBody(
           booking: booking,
           myId: myId,

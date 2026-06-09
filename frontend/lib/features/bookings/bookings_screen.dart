@@ -6,6 +6,7 @@ import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
+import '../../widgets/error_retry.dart';
 
 /// Lokalisierte Beschriftung je Buchungsstatus.
 String bookingStatusLabel(AppLocalizations l10n, String status) {
@@ -89,7 +90,8 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
             child: state.when(
               data: (bookings) => _BookingList(bookings: bookings),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text(e.toString())),
+              error: (e, _) =>
+                  ErrorRetry(message: e.toString(), onRetry: _reload),
             ),
           ),
         ],

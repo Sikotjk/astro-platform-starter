@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/notification.dart';
+import '../../widgets/error_retry.dart';
 
 class NotificationsScreen extends ConsumerStatefulWidget {
   const NotificationsScreen({super.key});
@@ -41,7 +42,11 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
       body: state.when(
         data: (items) => _NotificationList(items: items),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(e.toString())),
+        error: (e, _) => ErrorRetry(
+          message: e.toString(),
+          onRetry: () =>
+              ref.read(notificationsControllerProvider.notifier).load(),
+        ),
       ),
     );
   }

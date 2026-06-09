@@ -268,6 +268,12 @@ abstract class AppLocalizations {
   /// **'Aktualisieren'**
   String get refresh;
 
+  /// No description provided for @retry.
+  ///
+  /// In de, this message translates to:
+  /// **'Erneut versuchen'**
+  String get retry;
+
   /// No description provided for @tripsTitle.
   ///
   /// In de, this message translates to:

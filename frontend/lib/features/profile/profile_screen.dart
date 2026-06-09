@@ -7,6 +7,7 @@ import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/auth.dart';
 import '../../models/review.dart';
+import '../../widgets/error_retry.dart';
 import '../../widgets/star_rating.dart';
 import 'profile_controller.dart';
 
@@ -54,7 +55,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ),
       body: state.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(e.toString())),
+        error: (e, _) => ErrorRetry(
+          message: e.toString(),
+          onRetry: () => ref.read(profileControllerProvider.notifier).load(),
+        ),
         data: (data) => _ProfileBody(data: data),
       ),
     );
