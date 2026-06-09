@@ -35,6 +35,15 @@ class _FakeRepo implements BookingDetailRepository {
           createdAt: DateTime(2026, 1, 2, 9, 30),
         ),
       ],
+      items: const [
+        BookingPackageItem(
+          category: 'CLOTHING',
+          description: 'Winterjacke',
+          quantity: 2,
+          unitValueEur: 49.9,
+          isSealed: false,
+        ),
+      ],
       sender: const BookingParty(
         id: 's1',
         firstName: 'Sina',
@@ -114,6 +123,9 @@ void main() {
     // Sender sieht die Reputation der Gegenpartei (Traveler Karim).
     expect(find.text('Karim'), findsOneWidget);
     expect(find.textContaining('10 Bewertungen'), findsOneWidget);
+    // Deklarierter Inhalt wird angezeigt.
+    expect(find.text('Winterjacke'), findsOneWidget);
+    expect(find.textContaining('CLOTHING'), findsOneWidget);
   });
 
   testWidgets('Traveler sieht die Reputation des Senders', (tester) async {

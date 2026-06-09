@@ -208,6 +208,15 @@ class _DetailBody extends StatelessWidget {
           const SizedBox(height: 12),
           _PartnerCard(party: partner),
         ],
+        if (booking.items.isNotEmpty) ...[
+          const Divider(height: 32),
+          Text(
+            l10n.contentSection,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 4),
+          for (final item in booking.items) _ContentTile(item: item),
+        ],
         const Divider(height: 32),
         Text(l10n.actionsTitle, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 8),
@@ -251,6 +260,30 @@ class _DetailBody extends StatelessWidget {
         else
           for (final e in booking.events) _TimelineTile(event: e, l10n: l10n),
       ],
+    );
+  }
+}
+
+/// Ein Posten der Zoll-Deklaration in der Detailansicht.
+class _ContentTile extends StatelessWidget {
+  const _ContentTile({required this.item});
+
+  final BookingPackageItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      dense: true,
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(
+        item.isSealed ? Icons.lock_outline : Icons.inventory_2_outlined,
+        size: 20,
+      ),
+      title: Text(item.description.isEmpty ? item.category : item.description),
+      subtitle: Text(
+        '${item.category} · ${item.quantity}× · '
+        '${item.unitValueEur.toStringAsFixed(2)} €',
+      ),
     );
   }
 }

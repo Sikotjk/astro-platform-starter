@@ -45,6 +45,34 @@ class BookingParty {
   }
 }
 
+/// Ein Posten der Zoll-Deklaration eines Pakets.
+class BookingPackageItem {
+  const BookingPackageItem({
+    required this.category,
+    required this.description,
+    required this.quantity,
+    required this.unitValueEur,
+    required this.isSealed,
+  });
+
+  final String category;
+  final String description;
+  final int quantity;
+  final double unitValueEur;
+  final bool isSealed;
+
+  factory BookingPackageItem.fromJson(Map<String, dynamic> json) {
+    return BookingPackageItem(
+      category: json['category'] as String? ?? 'OTHER',
+      description: json['description'] as String? ?? '',
+      quantity: (json['quantity'] as num?)?.toInt() ?? 1,
+      unitValueEur:
+          double.tryParse(json['unitValueEur']?.toString() ?? '') ?? 0,
+      isSealed: json['isSealed'] as bool? ?? false,
+    );
+  }
+}
+
 /// Detailsicht einer Buchung (GET /bookings/:id).
 class BookingDetail {
   const BookingDetail({
@@ -58,6 +86,7 @@ class BookingDetail {
     required this.packageTitle,
     required this.termsAccepted,
     required this.events,
+    this.items = const [],
     this.sender,
     this.traveler,
   });
@@ -72,6 +101,7 @@ class BookingDetail {
   final String packageTitle;
   final bool termsAccepted;
   final List<BookingStatusEvent> events;
+  final List<BookingPackageItem> items;
   final BookingParty? sender;
   final BookingParty? traveler;
 
@@ -92,6 +122,10 @@ class BookingDetail {
       return raw is Map<String, dynamic> ? BookingParty.fromJson(raw) : null;
     }
 
+    final items = (pkg?['items'] as List<dynamic>? ?? [])
+        .map((e) => BookingPackageItem.fromJson(e as Map<String, dynamic>))
+        .toList(growable: false);
+
     return BookingDetail(
       id: json['id'] as String,
       status: json['status'] as String? ?? 'REQUESTED',
@@ -103,6 +137,7 @@ class BookingDetail {
       packageTitle: pkg?['title'] as String? ?? '—',
       termsAccepted: json['travelerAcceptedTermsAt'] != null,
       events: events,
+      items: items,
       sender: party('sender'),
       traveler: party('traveler'),
     );

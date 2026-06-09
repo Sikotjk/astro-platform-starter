@@ -36,6 +36,40 @@ void main() {
     expect(d.counterparty('x9'), isNull);
   });
 
+  test('fromJson liest die Paket-Items (Zoll-Deklaration)', () {
+    final d = BookingDetail.fromJson({
+      'id': 'b1',
+      'senderId': 's1',
+      'travelerId': 't1',
+      'totalAmount': '0',
+      'package': {
+        'title': 'Geschenke',
+        'items': [
+          {
+            'category': 'CLOTHING',
+            'description': 'Winterjacke',
+            'quantity': 2,
+            'unitValueEur': '49.90',
+            'isSealed': false,
+          },
+          {
+            'category': 'ELECTRONICS',
+            'description': 'Kopfhörer',
+            'quantity': 1,
+            'unitValueEur': '120',
+            'isSealed': true,
+          },
+        ],
+      },
+    });
+
+    expect(d.items, hasLength(2));
+    expect(d.items.first.description, 'Winterjacke');
+    expect(d.items.first.quantity, 2);
+    expect(d.items.first.unitValueEur, 49.90);
+    expect(d.items[1].isSealed, isTrue);
+  });
+
   test('fromJson ohne Parteien -> null', () {
     final d = BookingDetail.fromJson({
       'id': 'b1',
