@@ -77,6 +77,9 @@ void main() {
     // Logout -> zurück zum Login.
     await tester.tap(find.byIcon(Icons.logout));
     await tester.pumpAndSettle();
+    // Logout-Bestätigung.
+    await tester.tap(find.byKey(const Key('confirmButton')));
+    await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('email')), findsOneWidget);
   });

@@ -69,6 +69,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get logout => 'Abmelden';
 
   @override
+  String get logoutConfirm => 'Möchtest du dich wirklich abmelden?';
+
+  @override
   String get validRequired => 'Pflichtfeld';
 
   @override

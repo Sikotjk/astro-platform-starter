@@ -8,6 +8,7 @@ import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/auth.dart';
 import '../../models/review.dart';
+import '../../widgets/confirm_dialog.dart';
 import '../../widgets/error_retry.dart';
 import '../../widgets/star_rating.dart';
 import 'profile_controller.dart';
@@ -36,6 +37,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     Future.microtask(() => ref.read(profileControllerProvider.notifier).load());
   }
 
+  Future<void> _confirmLogout(BuildContext context) async {
+    final ok = await showConfirmDialog(
+      context,
+      title: context.l10n.logout,
+      message: context.l10n.logoutConfirm,
+      confirmLabel: context.l10n.logout,
+      destructive: true,
+    );
+    if (ok) ref.read(authControllerProvider.notifier).logout();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -55,7 +67,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: l10n.logout,
-            onPressed: () => ref.read(authControllerProvider.notifier).logout(),
+            onPressed: () => _confirmLogout(context),
           ),
         ],
       ),

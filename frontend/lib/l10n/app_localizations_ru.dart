@@ -69,6 +69,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get logout => 'Выйти';
 
   @override
+  String get logoutConfirm => 'Вы действительно хотите выйти?';
+
+  @override
   String get validRequired => 'Обязательное поле';
 
   @override

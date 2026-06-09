@@ -21,6 +21,7 @@
   "homeNotifications": "Benachrichtigungen",
   "homeVerify": "Identität verifizieren",
   "logout": "Abmelden",
+  "logoutConfirm": "Möchtest du dich wirklich abmelden?",
   "validRequired": "Pflichtfeld",
   "validEmail": "Gültige E-Mail eingeben",
   "validPassword": "Mindestens 8 Zeichen",

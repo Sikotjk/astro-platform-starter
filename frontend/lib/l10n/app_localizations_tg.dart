@@ -69,6 +69,9 @@ class AppLocalizationsTg extends AppLocalizations {
   String get logout => 'Баромадан';
 
   @override
+  String get logoutConfirm => 'Шумо дар ҳақиқат баромадан мехоҳед?';
+
+  @override
   String get validRequired => 'Майдони ҳатмӣ';
 
   @override

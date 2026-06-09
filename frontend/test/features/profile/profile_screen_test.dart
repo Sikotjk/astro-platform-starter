@@ -149,6 +149,10 @@ void main() {
     await tester.tap(find.byIcon(Icons.logout));
     await tester.pumpAndSettle();
 
+    // Bestätigungsdialog -> bestätigen.
+    await tester.tap(find.byKey(const Key('confirmButton')));
+    await tester.pumpAndSettle();
+
     expect(await store.read(), isNull);
   });
 }

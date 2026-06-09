@@ -220,6 +220,12 @@ abstract class AppLocalizations {
   /// **'Abmelden'**
   String get logout;
 
+  /// No description provided for @logoutConfirm.
+  ///
+  /// In de, this message translates to:
+  /// **'Möchtest du dich wirklich abmelden?'**
+  String get logoutConfirm;
+
   /// No description provided for @validRequired.
   ///
   /// In de, this message translates to:

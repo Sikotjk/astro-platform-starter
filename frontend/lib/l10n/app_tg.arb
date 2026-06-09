@@ -20,6 +20,7 @@
   "homeNotifications": "Огоҳиномаҳо",
   "homeVerify": "Тасдиқи шахсият",
   "logout": "Баромадан",
+  "logoutConfirm": "Шумо дар ҳақиқат баромадан мехоҳед?",
   "validRequired": "Майдони ҳатмӣ",
   "validEmail": "Почтаи дурусти электрониро ворид кунед",
   "validPassword": "Ҳадди ақал 8 аломат",

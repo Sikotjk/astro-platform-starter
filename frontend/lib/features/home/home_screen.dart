@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/confirm_dialog.dart';
 import '../../widgets/language_menu.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -21,6 +22,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     Future.microtask(
       () => ref.read(notificationsControllerProvider.notifier).load(),
     );
+  }
+
+  Future<void> _confirmLogout(BuildContext context, WidgetRef ref) async {
+    final ok = await showConfirmDialog(
+      context,
+      title: context.l10n.logout,
+      message: context.l10n.logoutConfirm,
+      confirmLabel: context.l10n.logout,
+      destructive: true,
+    );
+    if (ok) ref.read(authControllerProvider.notifier).logout();
   }
 
   @override
@@ -41,7 +53,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: l10n.logout,
-            onPressed: () => ref.read(authControllerProvider.notifier).logout(),
+            onPressed: () => _confirmLogout(context, ref),
           ),
         ],
       ),

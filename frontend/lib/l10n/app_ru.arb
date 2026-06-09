@@ -20,6 +20,7 @@
   "homeNotifications": "Уведомления",
   "homeVerify": "Подтвердить личность",
   "logout": "Выйти",
+  "logoutConfirm": "Вы действительно хотите выйти?",
   "validRequired": "Обязательное поле",
   "validEmail": "Введите корректную эл. почту",
   "validPassword": "Минимум 8 символов",
