@@ -96,6 +96,40 @@ class AppLocalizationsTg extends AppLocalizations {
   String get retry => 'Аз нав кӯшиш кардан';
 
   @override
+  String get timeJustNow => 'ҳозир';
+
+  @override
+  String timeMinutesAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count дақ. пеш',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timeHoursAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count соат пеш',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timeDaysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count рӯз пеш',
+      one: 'дирӯз',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get tripsTitle => 'Ҷустуҷӯи парвозҳо';
 
   @override

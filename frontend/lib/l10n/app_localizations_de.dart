@@ -96,6 +96,42 @@ class AppLocalizationsDe extends AppLocalizations {
   String get retry => 'Erneut versuchen';
 
   @override
+  String get timeJustNow => 'gerade eben';
+
+  @override
+  String timeMinutesAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'vor $count Min.',
+      one: 'vor 1 Min.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timeHoursAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'vor $count Std.',
+      one: 'vor 1 Std.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timeDaysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'vor $count Tagen',
+      one: 'gestern',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get tripsTitle => 'Trips suchen';
 
   @override

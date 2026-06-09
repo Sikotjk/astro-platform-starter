@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/api_client.dart';
+import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../models/notification.dart';
@@ -115,7 +116,18 @@ class _NotificationList extends StatelessWidget {
               fontWeight: n.isRead ? FontWeight.normal : FontWeight.bold,
             ),
           ),
-          subtitle: Text(n.body),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(n.body),
+              const SizedBox(height: 2),
+              Text(
+                context.timeAgo(n.createdAt),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+          isThreeLine: true,
           trailing: isTripMatch ? const Icon(Icons.chevron_right) : null,
           onTap: () => onTap(n),
         );

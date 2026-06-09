@@ -274,6 +274,30 @@ abstract class AppLocalizations {
   /// **'Erneut versuchen'**
   String get retry;
 
+  /// No description provided for @timeJustNow.
+  ///
+  /// In de, this message translates to:
+  /// **'gerade eben'**
+  String get timeJustNow;
+
+  /// No description provided for @timeMinutesAgo.
+  ///
+  /// In de, this message translates to:
+  /// **'{count, plural, =1{vor 1 Min.} other{vor {count} Min.}}'**
+  String timeMinutesAgo(int count);
+
+  /// No description provided for @timeHoursAgo.
+  ///
+  /// In de, this message translates to:
+  /// **'{count, plural, =1{vor 1 Std.} other{vor {count} Std.}}'**
+  String timeHoursAgo(int count);
+
+  /// No description provided for @timeDaysAgo.
+  ///
+  /// In de, this message translates to:
+  /// **'{count, plural, =1{gestern} other{vor {count} Tagen}}'**
+  String timeDaysAgo(int count);
+
   /// No description provided for @tripsTitle.
   ///
   /// In de, this message translates to:

@@ -96,6 +96,45 @@ class AppLocalizationsRu extends AppLocalizations {
   String get retry => 'Повторить';
 
   @override
+  String get timeJustNow => 'только что';
+
+  @override
+  String timeMinutesAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count мин. назад',
+      few: '$count мин. назад',
+      one: '$count мин. назад',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timeHoursAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ч. назад',
+      few: '$count ч. назад',
+      one: '$count ч. назад',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timeDaysAgo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count дн. назад',
+      few: '$count дн. назад',
+      one: 'вчера',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get tripsTitle => 'Поиск рейсов';
 
   @override
