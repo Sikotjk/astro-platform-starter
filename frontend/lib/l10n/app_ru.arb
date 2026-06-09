@@ -107,5 +107,7 @@
   "reviewCommentHint": "Комментарий (необязательно)",
   "reviewSuccess": "Спасибо за ваш отзыв!",
   "reviewsTitle": "Отзывы",
-  "noReviews": "Отзывов пока нет."
+  "noReviews": "Отзывов пока нет.",
+  "profileTitle": "Мой профиль",
+  "reviewsCount": "{count, plural, =1{1 отзыв} few{{count} отзыва} other{{count} отзывов}}"
 }

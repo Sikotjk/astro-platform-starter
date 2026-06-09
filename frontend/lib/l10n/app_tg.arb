@@ -107,5 +107,7 @@
   "reviewCommentHint": "Шарҳ (ихтиёрӣ)",
   "reviewSuccess": "Ташаккур барои баҳои шумо!",
   "reviewsTitle": "Баҳоҳо",
-  "noReviews": "Ҳоло баҳо нест."
+  "noReviews": "Ҳоло баҳо нест.",
+  "profileTitle": "Профили ман",
+  "reviewsCount": "{count, plural, =1{1 баҳо} other{{count} баҳо}}"
 }

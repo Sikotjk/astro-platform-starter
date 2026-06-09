@@ -13,6 +13,7 @@ import 'features/home/home_screen.dart';
 import 'features/kyc/kyc_screen.dart';
 import 'features/manifest/manifest_screen.dart';
 import 'features/notifications/notifications_screen.dart';
+import 'features/profile/profile_screen.dart';
 import 'features/trips/trips_search_screen.dart';
 import 'models/trip.dart';
 
@@ -68,6 +69,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const NotificationsScreen(),
       ),
       GoRoute(path: '/kyc', builder: (_, _) => const KycScreen()),
+      GoRoute(path: '/profile', builder: (_, _) => const ProfileScreen()),
     ],
   );
 });

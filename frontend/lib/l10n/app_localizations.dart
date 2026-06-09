@@ -747,6 +747,18 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Noch keine Bewertungen.'**
   String get noReviews;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Mein Profil'**
+  String get profileTitle;
+
+  /// No description provided for @reviewsCount.
+  ///
+  /// In de, this message translates to:
+  /// **'{count, plural, =1{1 Bewertung} other{{count} Bewertungen}}'**
+  String reviewsCount(int count);
 }
 
 class _AppLocalizationsDelegate

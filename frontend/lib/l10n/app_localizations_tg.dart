@@ -340,4 +340,18 @@ class AppLocalizationsTg extends AppLocalizations {
 
   @override
   String get noReviews => 'Ҳоло баҳо нест.';
+
+  @override
+  String get profileTitle => 'Профили ман';
+
+  @override
+  String reviewsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count баҳо',
+      one: '1 баҳо',
+    );
+    return '$_temp0';
+  }
 }

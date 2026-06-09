@@ -340,4 +340,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noReviews => 'Отзывов пока нет.';
+
+  @override
+  String get profileTitle => 'Мой профиль';
+
+  @override
+  String reviewsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count отзывов',
+      few: '$count отзыва',
+      one: '1 отзыв',
+    );
+    return '$_temp0';
+  }
 }

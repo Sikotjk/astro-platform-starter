@@ -340,4 +340,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get noReviews => 'Noch keine Bewertungen.';
+
+  @override
+  String get profileTitle => 'Mein Profil';
+
+  @override
+  String reviewsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Bewertungen',
+      one: '1 Bewertung',
+    );
+    return '$_temp0';
+  }
 }

@@ -20,6 +20,7 @@ import '../features/manifest/manifest_viewer.dart';
 import '../features/manifest/printing_manifest_viewer.dart';
 import '../features/notifications/notifications_controller.dart';
 import '../features/notifications/notifications_repository.dart';
+import '../features/profile/profile_controller.dart';
 import '../features/reviews/review_controller.dart';
 import '../features/reviews/reviews_repository.dart';
 import '../features/trips/trips_controller.dart';
@@ -124,6 +125,15 @@ final reviewControllerProvider =
     StateNotifierProvider.family<ReviewController, AsyncValue<void>, String>(
       (ref, bookingId) =>
           ReviewController(ref.watch(reviewsRepositoryProvider), bookingId),
+    );
+
+// ── Profil (eigenes Profil + erhaltene Bewertungen) ──────────────────────────
+final profileControllerProvider =
+    StateNotifierProvider<ProfileController, AsyncValue<ProfileData>>(
+      (ref) => ProfileController(
+        ref.watch(authRepositoryProvider),
+        ref.watch(reviewsRepositoryProvider),
+      ),
     );
 
 // ── Benachrichtigungen ───────────────────────────────────────────────────────

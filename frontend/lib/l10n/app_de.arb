@@ -112,5 +112,8 @@
   "reviewCommentHint": "Kommentar (optional)",
   "reviewSuccess": "Danke für deine Bewertung!",
   "reviewsTitle": "Bewertungen",
-  "noReviews": "Noch keine Bewertungen."
+  "noReviews": "Noch keine Bewertungen.",
+  "profileTitle": "Mein Profil",
+  "reviewsCount": "{count, plural, =1{1 Bewertung} other{{count} Bewertungen}}",
+  "@reviewsCount": { "placeholders": { "count": { "type": "int" } } }
 }

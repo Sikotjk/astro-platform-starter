@@ -53,6 +53,12 @@ class HomeScreen extends ConsumerWidget {
               icon: const Icon(Icons.verified_user),
               label: Text(l10n.homeVerify),
             ),
+            const SizedBox(height: 12),
+            OutlinedButton.icon(
+              onPressed: () => context.push('/profile'),
+              icon: const Icon(Icons.person),
+              label: Text(l10n.profileTitle),
+            ),
           ],
         ),
       ),
