@@ -140,11 +140,24 @@ export class BookingsService {
   }
 
   async findOne(userId: string, bookingId: string) {
+    // Nur öffentliche Profilfelder der Parteien (Name + Reputation), kein
+    // E-Mail/Telefon/passwordHash.
+    const partySelect = {
+      select: {
+        id: true,
+        firstName: true,
+        avatarUrl: true,
+        ratingAvg: true,
+        ratingCount: true,
+      },
+    };
     const booking = await this.prisma.booking.findUnique({
       where: { id: bookingId },
       include: {
         statusEvents: { orderBy: { createdAt: 'asc' } },
         package: { include: { items: true } },
+        sender: partySelect,
+        traveler: partySelect,
       },
     });
     if (!booking) throw new NotFoundException('Buchung nicht gefunden.');

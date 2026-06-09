@@ -98,6 +98,7 @@
   "manifestSize": "{kb} KB",
   "@manifestSize": { "placeholders": { "kb": {} } },
   "detailTitle": "Buchungsdetails",
+  "bookingPartner": "Buchungspartner",
   "timelineTitle": "Statusverlauf",
   "actionsTitle": "Aktionen",
   "openChat": "Chat öffnen",

@@ -298,6 +298,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get detailTitle => 'Buchungsdetails';
 
   @override
+  String get bookingPartner => 'Buchungspartner';
+
+  @override
   String get timelineTitle => 'Statusverlauf';
 
   @override

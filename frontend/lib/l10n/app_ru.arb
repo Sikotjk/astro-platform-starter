@@ -93,6 +93,7 @@
   "manifestHashLabel": "Хеш целостности",
   "manifestSize": "{kb} КБ",
   "detailTitle": "Детали бронирования",
+  "bookingPartner": "Партнёр по бронированию",
   "timelineTitle": "История статусов",
   "actionsTitle": "Действия",
   "openChat": "Открыть чат",

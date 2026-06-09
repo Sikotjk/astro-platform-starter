@@ -297,6 +297,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get detailTitle => 'Детали бронирования';
 
   @override
+  String get bookingPartner => 'Партнёр по бронированию';
+
+  @override
   String get timelineTitle => 'История статусов';
 
   @override

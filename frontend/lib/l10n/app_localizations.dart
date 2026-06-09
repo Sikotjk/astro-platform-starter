@@ -658,6 +658,12 @@ abstract class AppLocalizations {
   /// **'Buchungsdetails'**
   String get detailTitle;
 
+  /// No description provided for @bookingPartner.
+  ///
+  /// In de, this message translates to:
+  /// **'Buchungspartner'**
+  String get bookingPartner;
+
   /// No description provided for @timelineTitle.
   ///
   /// In de, this message translates to:

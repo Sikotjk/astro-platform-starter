@@ -9,6 +9,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
 import '../../models/booking_detail.dart';
 import '../../widgets/error_retry.dart';
+import '../../widgets/star_rating.dart';
 import '../bookings/bookings_screen.dart';
 import '../disputes/dispute_dialog.dart';
 import '../disputes/dispute_rules.dart';
@@ -177,6 +178,7 @@ class _DetailBody extends StatelessWidget {
       isSender: isSender,
       isTraveler: isTraveler,
     );
+    final partner = booking.counterparty(myId);
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -201,6 +203,10 @@ class _DetailBody extends StatelessWidget {
           '${l10n.amountLabel}: ${booking.totalAmount.toStringAsFixed(2)} ${booking.currency}',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
+        if (partner != null) ...[
+          const SizedBox(height: 12),
+          _PartnerCard(party: partner),
+        ],
         const Divider(height: 32),
         Text(l10n.actionsTitle, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 8),
@@ -244,6 +250,46 @@ class _DetailBody extends StatelessWidget {
         else
           for (final e in booking.events) _TimelineTile(event: e, l10n: l10n),
       ],
+    );
+  }
+}
+
+/// Karte mit der Reputation der Gegenpartei (Name, Sterne, Anzahl/„Neu").
+class _PartnerCard extends StatelessWidget {
+  const _PartnerCard({required this.party});
+
+  final BookingParty party;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final hasReviews = party.ratingCount > 0;
+    return Card(
+      margin: EdgeInsets.zero,
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(
+            (party.firstName.isNotEmpty ? party.firstName[0] : '?')
+                .toUpperCase(),
+          ),
+        ),
+        title: Text(
+          party.firstName.isEmpty ? l10n.bookingPartner : party.firstName,
+        ),
+        subtitle: Row(
+          children: [
+            if (hasReviews) ...[
+              StarRating(value: party.ratingAvg.round(), size: 16),
+              const SizedBox(width: 6),
+              Text(
+                '${party.ratingAvg.toStringAsFixed(1)} '
+                '(${l10n.reviewsCount(party.ratingCount)})',
+              ),
+            ] else
+              Text(l10n.newTraveler),
+          ],
+        ),
+      ),
     );
   }
 }

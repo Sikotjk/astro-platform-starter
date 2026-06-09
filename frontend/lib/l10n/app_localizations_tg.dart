@@ -298,6 +298,9 @@ class AppLocalizationsTg extends AppLocalizations {
   String get detailTitle => 'Тафсилоти фармоиш';
 
   @override
+  String get bookingPartner => 'Шарики фармоиш';
+
+  @override
   String get timelineTitle => 'Таърихи ҳолат';
 
   @override

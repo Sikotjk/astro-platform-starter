@@ -35,6 +35,18 @@ class _FakeRepo implements BookingDetailRepository {
           createdAt: DateTime(2026, 1, 2, 9, 30),
         ),
       ],
+      sender: const BookingParty(
+        id: 's1',
+        firstName: 'Sina',
+        ratingAvg: 4,
+        ratingCount: 3,
+      ),
+      traveler: const BookingParty(
+        id: 't1',
+        firstName: 'Karim',
+        ratingAvg: 4.8,
+        ratingCount: 10,
+      ),
     );
   }
 
@@ -99,6 +111,27 @@ void main() {
     expect(find.text('Buch'), findsOneWidget);
     expect(find.textContaining('30.00 EUR'), findsOneWidget);
     expect(find.text('Angefragt'), findsWidgets);
+    // Sender sieht die Reputation der Gegenpartei (Traveler Karim).
+    expect(find.text('Karim'), findsOneWidget);
+    expect(find.textContaining('10 Bewertungen'), findsOneWidget);
+  });
+
+  testWidgets('Traveler sieht die Reputation des Senders', (tester) async {
+    await tester.pumpWidget(
+      localizedApp(
+        const BookingDetailScreen(bookingId: 'b1'),
+        overrides: [
+          bookingDetailRepositoryProvider.overrideWithValue(
+            _FakeRepo('REQUESTED'),
+          ),
+          authControllerProvider.overrideWith((ref) => _FakeAuth('t1')),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sina'), findsOneWidget);
+    expect(find.text('Karim'), findsNothing); // nicht die eigene Seite
   });
 
   testWidgets('Traveler sieht Annehmen/Ablehnen und löst Aktion aus', (
