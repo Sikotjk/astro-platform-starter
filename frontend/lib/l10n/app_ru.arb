@@ -80,5 +80,9 @@
   "bookButton": "Запросить бронь",
   "validNumber": "Введите число > 0",
   "validMin3": "Минимум 3 символа",
-  "bookingRequested": "Бронь запрошена!"
+  "bookingRequested": "Бронь запрошена!",
+  "manifestTitle": "Таможенный манифест",
+  "manifestOpen": "Открыть манифест",
+  "manifestHashLabel": "Хеш целостности",
+  "manifestSize": "{kb} КБ"
 }

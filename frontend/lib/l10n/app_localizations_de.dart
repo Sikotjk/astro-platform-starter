@@ -257,4 +257,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bookingRequested => 'Buchung angefragt!';
+
+  @override
+  String get manifestTitle => 'Zoll-Manifest';
+
+  @override
+  String get manifestOpen => 'Manifest öffnen';
+
+  @override
+  String get manifestHashLabel => 'Integritäts-Hash';
+
+  @override
+  String manifestSize(Object kb) {
+    return '$kb KB';
+  }
 }

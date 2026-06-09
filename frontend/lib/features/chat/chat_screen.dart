@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
@@ -36,7 +37,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final myId = ref.watch(authControllerProvider).session?.userId;
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.chatTitle)),
+      appBar: AppBar(
+        title: Text(context.l10n.chatTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.description),
+            tooltip: context.l10n.manifestTitle,
+            onPressed: () => context.push('/manifest/${widget.bookingId}'),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(

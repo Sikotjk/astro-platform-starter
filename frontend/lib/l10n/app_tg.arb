@@ -80,5 +80,9 @@
   "bookButton": "Дархости фармоиш",
   "validNumber": "Рақами > 0 ворид кунед",
   "validMin3": "Ҳадди ақал 3 аломат",
-  "bookingRequested": "Фармоиш дархост шуд!"
+  "bookingRequested": "Фармоиш дархост шуд!",
+  "manifestTitle": "Манифести гумрукӣ",
+  "manifestOpen": "Кушодани манифест",
+  "manifestHashLabel": "Ҳэши яклухтӣ",
+  "manifestSize": "{kb} КБ"
 }

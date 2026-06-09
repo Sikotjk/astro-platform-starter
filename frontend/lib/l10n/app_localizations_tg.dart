@@ -257,4 +257,18 @@ class AppLocalizationsTg extends AppLocalizations {
 
   @override
   String get bookingRequested => 'Фармоиш дархост шуд!';
+
+  @override
+  String get manifestTitle => 'Манифести гумрукӣ';
+
+  @override
+  String get manifestOpen => 'Кушодани манифест';
+
+  @override
+  String get manifestHashLabel => 'Ҳэши яклухтӣ';
+
+  @override
+  String manifestSize(Object kb) {
+    return '$kb КБ';
+  }
 }

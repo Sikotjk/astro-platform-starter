@@ -84,5 +84,10 @@
   "bookButton": "Buchung anfragen",
   "validNumber": "Zahl > 0 eingeben",
   "validMin3": "Mind. 3 Zeichen",
-  "bookingRequested": "Buchung angefragt!"
+  "bookingRequested": "Buchung angefragt!",
+  "manifestTitle": "Zoll-Manifest",
+  "manifestOpen": "Manifest öffnen",
+  "manifestHashLabel": "Integritäts-Hash",
+  "manifestSize": "{kb} KB",
+  "@manifestSize": { "placeholders": { "kb": {} } }
 }

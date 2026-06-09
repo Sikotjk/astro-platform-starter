@@ -257,4 +257,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get bookingRequested => 'Бронь запрошена!';
+
+  @override
+  String get manifestTitle => 'Таможенный манифест';
+
+  @override
+  String get manifestOpen => 'Открыть манифест';
+
+  @override
+  String get manifestHashLabel => 'Хеш целостности';
+
+  @override
+  String manifestSize(Object kb) {
+    return '$kb КБ';
+  }
 }

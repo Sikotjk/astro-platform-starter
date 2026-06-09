@@ -10,6 +10,7 @@ import 'features/bookings/bookings_screen.dart';
 import 'features/chat/chat_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/kyc/kyc_screen.dart';
+import 'features/manifest/manifest_screen.dart';
 import 'features/notifications/notifications_screen.dart';
 import 'features/trips/trips_search_screen.dart';
 import 'models/trip.dart';
@@ -50,6 +51,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/chat/:id',
         builder: (_, state) =>
             ChatScreen(bookingId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/manifest/:id',
+        builder: (_, state) =>
+            ManifestScreen(bookingId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: '/notifications',

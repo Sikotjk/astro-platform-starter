@@ -585,6 +585,30 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Buchung angefragt!'**
   String get bookingRequested;
+
+  /// No description provided for @manifestTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Zoll-Manifest'**
+  String get manifestTitle;
+
+  /// No description provided for @manifestOpen.
+  ///
+  /// In de, this message translates to:
+  /// **'Manifest öffnen'**
+  String get manifestOpen;
+
+  /// No description provided for @manifestHashLabel.
+  ///
+  /// In de, this message translates to:
+  /// **'Integritäts-Hash'**
+  String get manifestHashLabel;
+
+  /// No description provided for @manifestSize.
+  ///
+  /// In de, this message translates to:
+  /// **'{kb} KB'**
+  String manifestSize(Object kb);
 }
 
 class _AppLocalizationsDelegate

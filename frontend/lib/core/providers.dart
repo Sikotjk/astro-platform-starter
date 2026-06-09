@@ -12,6 +12,10 @@ import '../features/chat/chat_repository.dart';
 import '../features/chat/socket_chat_gateway.dart';
 import '../features/kyc/kyc_controller.dart';
 import '../features/kyc/kyc_repository.dart';
+import '../features/manifest/manifest_controller.dart';
+import '../features/manifest/manifest_repository.dart';
+import '../features/manifest/manifest_viewer.dart';
+import '../features/manifest/printing_manifest_viewer.dart';
 import '../features/notifications/notifications_controller.dart';
 import '../features/notifications/notifications_repository.dart';
 import '../features/trips/trips_controller.dart';
@@ -22,6 +26,7 @@ import '../models/notification.dart';
 import '../models/trip.dart';
 import 'api_client.dart';
 import 'config.dart';
+import 'locale_controller.dart';
 import 'token_store.dart';
 
 /// Zentrale Provider-Definitionen (Dependency Injection der App).
@@ -127,5 +132,30 @@ final chatControllerProvider =
         bookingId,
       );
       controller.init();
+      return controller;
+    });
+
+// ── Zoll-Manifest (PDF) ──────────────────────────────────────────────────────
+final manifestRepositoryProvider = Provider<ManifestRepository>(
+  (ref) => DioManifestRepository(ref.watch(apiClientProvider).dio),
+);
+
+final manifestViewerProvider = Provider<ManifestViewer>(
+  (ref) => const PrintingManifestViewer(),
+);
+
+final manifestControllerProvider =
+    StateNotifierProvider.family<
+      ManifestController,
+      AsyncValue<ManifestPdf>,
+      String
+    >((ref, bookingId) {
+      final locale = ref.watch(localeProvider).languageCode;
+      final controller = ManifestController(
+        ref.watch(manifestRepositoryProvider),
+        bookingId,
+        locale,
+      );
+      controller.load();
       return controller;
     });
