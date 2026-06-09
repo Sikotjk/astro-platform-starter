@@ -316,4 +316,28 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get actionCancel => 'Отменить';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get reviewAction => 'Оценить';
+
+  @override
+  String get reviewTitle => 'Оставить отзыв';
+
+  @override
+  String get reviewSubmit => 'Отправить';
+
+  @override
+  String get reviewCommentHint => 'Комментарий (необязательно)';
+
+  @override
+  String get reviewSuccess => 'Спасибо за ваш отзыв!';
+
+  @override
+  String get reviewsTitle => 'Отзывы';
+
+  @override
+  String get noReviews => 'Отзывов пока нет.';
 }

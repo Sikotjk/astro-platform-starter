@@ -99,5 +99,13 @@
   "actionTransit": "В пути",
   "actionDelivered": "Доставлено",
   "actionConfirm": "Подтвердить получение",
-  "actionCancel": "Отменить"
+  "actionCancel": "Отменить",
+  "cancel": "Отмена",
+  "reviewAction": "Оценить",
+  "reviewTitle": "Оставить отзыв",
+  "reviewSubmit": "Отправить",
+  "reviewCommentHint": "Комментарий (необязательно)",
+  "reviewSuccess": "Спасибо за ваш отзыв!",
+  "reviewsTitle": "Отзывы",
+  "noReviews": "Отзывов пока нет."
 }

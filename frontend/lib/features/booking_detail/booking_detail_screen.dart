@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
 import '../../models/booking_detail.dart';
 import '../bookings/bookings_screen.dart';
+import '../reviews/review_dialog.dart';
 import 'booking_actions.dart';
 
 /// Lokalisierte Beschriftung je Aktion.
@@ -45,6 +46,15 @@ class BookingDetailScreen extends ConsumerWidget {
     }
   }
 
+  Future<void> _review(BuildContext context) async {
+    final ok = await showReviewDialog(context, bookingId);
+    if (ok == true && context.mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.reviewSuccess)));
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -74,6 +84,7 @@ class BookingDetailScreen extends ConsumerWidget {
           booking: booking,
           myId: myId,
           onAction: (a) => _run(context, ref, a),
+          onReview: () => _review(context),
         ),
       ),
     );
@@ -85,11 +96,13 @@ class _DetailBody extends StatelessWidget {
     required this.booking,
     required this.myId,
     required this.onAction,
+    required this.onReview,
   });
 
   final BookingDetail booking;
   final String? myId;
   final void Function(BookingAction) onAction;
+  final VoidCallback onReview;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +116,7 @@ class _DetailBody extends StatelessWidget {
       termsAccepted: booking.termsAccepted,
     );
     final color = bookingStatusColor(booking.status);
+    final canReview = booking.status == 'CONFIRMED' && (isSender || isTraveler);
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -139,6 +153,13 @@ class _DetailBody extends StatelessWidget {
                 key: Key('action_${a.name}'),
                 onPressed: () => onAction(a),
                 child: Text(bookingActionLabel(l10n, a)),
+              ),
+            if (canReview)
+              FilledButton.icon(
+                key: const Key('action_review'),
+                onPressed: onReview,
+                icon: const Icon(Icons.star_outline, size: 18),
+                label: Text(l10n.reviewAction),
               ),
           ],
         ),

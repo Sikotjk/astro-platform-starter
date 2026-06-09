@@ -699,6 +699,54 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Stornieren'**
   String get actionCancel;
+
+  /// No description provided for @cancel.
+  ///
+  /// In de, this message translates to:
+  /// **'Abbrechen'**
+  String get cancel;
+
+  /// No description provided for @reviewAction.
+  ///
+  /// In de, this message translates to:
+  /// **'Bewerten'**
+  String get reviewAction;
+
+  /// No description provided for @reviewTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Bewertung abgeben'**
+  String get reviewTitle;
+
+  /// No description provided for @reviewSubmit.
+  ///
+  /// In de, this message translates to:
+  /// **'Senden'**
+  String get reviewSubmit;
+
+  /// No description provided for @reviewCommentHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Kommentar (optional)'**
+  String get reviewCommentHint;
+
+  /// No description provided for @reviewSuccess.
+  ///
+  /// In de, this message translates to:
+  /// **'Danke für deine Bewertung!'**
+  String get reviewSuccess;
+
+  /// No description provided for @reviewsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Bewertungen'**
+  String get reviewsTitle;
+
+  /// No description provided for @noReviews.
+  ///
+  /// In de, this message translates to:
+  /// **'Noch keine Bewertungen.'**
+  String get noReviews;
 }
 
 class _AppLocalizationsDelegate

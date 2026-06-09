@@ -104,5 +104,13 @@
   "actionTransit": "Im Flug",
   "actionDelivered": "Zugestellt",
   "actionConfirm": "Empfang bestätigen",
-  "actionCancel": "Stornieren"
+  "actionCancel": "Stornieren",
+  "cancel": "Abbrechen",
+  "reviewAction": "Bewerten",
+  "reviewTitle": "Bewertung abgeben",
+  "reviewSubmit": "Senden",
+  "reviewCommentHint": "Kommentar (optional)",
+  "reviewSuccess": "Danke für deine Bewertung!",
+  "reviewsTitle": "Bewertungen",
+  "noReviews": "Noch keine Bewertungen."
 }

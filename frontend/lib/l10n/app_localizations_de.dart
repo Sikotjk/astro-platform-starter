@@ -316,4 +316,28 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get actionCancel => 'Stornieren';
+
+  @override
+  String get cancel => 'Abbrechen';
+
+  @override
+  String get reviewAction => 'Bewerten';
+
+  @override
+  String get reviewTitle => 'Bewertung abgeben';
+
+  @override
+  String get reviewSubmit => 'Senden';
+
+  @override
+  String get reviewCommentHint => 'Kommentar (optional)';
+
+  @override
+  String get reviewSuccess => 'Danke für deine Bewertung!';
+
+  @override
+  String get reviewsTitle => 'Bewertungen';
+
+  @override
+  String get noReviews => 'Noch keine Bewertungen.';
 }

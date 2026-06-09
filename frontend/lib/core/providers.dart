@@ -20,6 +20,8 @@ import '../features/manifest/manifest_viewer.dart';
 import '../features/manifest/printing_manifest_viewer.dart';
 import '../features/notifications/notifications_controller.dart';
 import '../features/notifications/notifications_repository.dart';
+import '../features/reviews/review_controller.dart';
+import '../features/reviews/reviews_repository.dart';
 import '../features/trips/trips_controller.dart';
 import '../features/trips/trips_repository.dart';
 import '../models/booking.dart';
@@ -111,6 +113,17 @@ final createBookingControllerProvider =
         ref.watch(packagesRepositoryProvider),
         ref.watch(bookingsRepositoryProvider),
       ),
+    );
+
+// ── Bewertungen (Reviews) ────────────────────────────────────────────────────
+final reviewsRepositoryProvider = Provider<ReviewsRepository>(
+  (ref) => DioReviewsRepository(ref.watch(apiClientProvider).dio),
+);
+
+final reviewControllerProvider =
+    StateNotifierProvider.family<ReviewController, AsyncValue<void>, String>(
+      (ref, bookingId) =>
+          ReviewController(ref.watch(reviewsRepositoryProvider), bookingId),
     );
 
 // ── Benachrichtigungen ───────────────────────────────────────────────────────

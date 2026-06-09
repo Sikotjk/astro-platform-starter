@@ -116,6 +116,25 @@ void main() {
     expect(repo.actedPaths, ['accept']);
   });
 
+  testWidgets('CONFIRMED: Beteiligter sieht den Bewerten-Button', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      localizedApp(
+        const BookingDetailScreen(bookingId: 'b1'),
+        overrides: [
+          bookingDetailRepositoryProvider.overrideWithValue(
+            _FakeRepo('CONFIRMED'),
+          ),
+          authControllerProvider.overrideWith((ref) => _FakeAuth('s1')),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('action_review')), findsOneWidget);
+  });
+
   testWidgets('Fremder Nutzer sieht keine Aktionen', (tester) async {
     await tester.pumpWidget(
       localizedApp(

@@ -316,4 +316,28 @@ class AppLocalizationsTg extends AppLocalizations {
 
   @override
   String get actionCancel => 'Бекор кардан';
+
+  @override
+  String get cancel => 'Бекор';
+
+  @override
+  String get reviewAction => 'Баҳо додан';
+
+  @override
+  String get reviewTitle => 'Баҳо гузоштан';
+
+  @override
+  String get reviewSubmit => 'Фиристодан';
+
+  @override
+  String get reviewCommentHint => 'Шарҳ (ихтиёрӣ)';
+
+  @override
+  String get reviewSuccess => 'Ташаккур барои баҳои шумо!';
+
+  @override
+  String get reviewsTitle => 'Баҳоҳо';
+
+  @override
+  String get noReviews => 'Ҳоло баҳо нест.';
 }

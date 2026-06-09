@@ -99,5 +99,13 @@
   "actionTransit": "Дар парвоз",
   "actionDelivered": "Расонида шуд",
   "actionConfirm": "Тасдиқи қабул",
-  "actionCancel": "Бекор кардан"
+  "actionCancel": "Бекор кардан",
+  "cancel": "Бекор",
+  "reviewAction": "Баҳо додан",
+  "reviewTitle": "Баҳо гузоштан",
+  "reviewSubmit": "Фиристодан",
+  "reviewCommentHint": "Шарҳ (ихтиёрӣ)",
+  "reviewSuccess": "Ташаккур барои баҳои шумо!",
+  "reviewsTitle": "Баҳоҳо",
+  "noReviews": "Ҳоло баҳо нест."
 }
