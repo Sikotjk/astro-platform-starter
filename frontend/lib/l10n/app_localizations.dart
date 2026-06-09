@@ -256,11 +256,11 @@ abstract class AppLocalizations {
   /// **'Russisch'**
   String get langRu;
 
-  /// No description provided for @langTg.
+  /// No description provided for @langTj.
   ///
   /// In de, this message translates to:
   /// **'Tadschikisch'**
-  String get langTg;
+  String get langTj;
 }
 
 class _AppLocalizationsDelegate

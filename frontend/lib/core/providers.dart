@@ -42,6 +42,11 @@ final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
   ),
 );
 
+/// Einmaliger App-Start: versucht Auto-Login aus gespeichertem Token.
+final appBootstrapProvider = FutureProvider<void>(
+  (ref) => ref.read(authControllerProvider.notifier).restoreSession(),
+);
+
 final tripsRepositoryProvider = Provider<TripsRepository>(
   (ref) => DioTripsRepository(ref.watch(apiClientProvider).dio),
 );

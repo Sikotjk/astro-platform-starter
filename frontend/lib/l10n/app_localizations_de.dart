@@ -87,5 +87,5 @@ class AppLocalizationsDe extends AppLocalizations {
   String get langRu => 'Russisch';
 
   @override
-  String get langTg => 'Tadschikisch';
+  String get langTj => 'Tadschikisch';
 }

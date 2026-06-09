@@ -54,6 +54,23 @@ class AuthController extends StateNotifier<AuthState> {
     state = const AuthState.unauthenticated();
   }
 
+  /// Auto-Login beim App-Start: vorhandenes Token validieren (über /me).
+  /// Bei Erfolg -> authenticated, sonst Token verwerfen.
+  Future<void> restoreSession() async {
+    final token = await _tokenStore.read();
+    if (token == null || token.isEmpty) return;
+    try {
+      final profile = await _repo.me();
+      state = AuthState(
+        status: AuthStatus.authenticated,
+        session: AuthSession(accessToken: token, userId: profile.id),
+      );
+    } catch (_) {
+      await _tokenStore.clear();
+      state = const AuthState.unauthenticated();
+    }
+  }
+
   Future<void> _run(Future<AuthSession> Function() action) async {
     state = const AuthState(status: AuthStatus.loading);
     try {

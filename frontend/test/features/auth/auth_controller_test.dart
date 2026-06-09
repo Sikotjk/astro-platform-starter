@@ -6,6 +6,7 @@ import 'package:tj_shipping_app/models/auth.dart';
 
 class _FakeAuthRepo implements AuthRepository {
   bool shouldFail = false;
+  bool meShouldFail = false;
 
   @override
   Future<AuthSession> login({
@@ -28,17 +29,20 @@ class _FakeAuthRepo implements AuthRepository {
   }
 
   @override
-  Future<UserProfile> me() async => const UserProfile(
-    id: 'u1',
-    email: 'a@b.de',
-    firstName: 'A',
-    lastName: 'B',
-    role: 'SENDER',
-    preferredLocale: 'de',
-    kycStatus: 'VERIFIED',
-    ratingAvg: 0,
-    ratingCount: 0,
-  );
+  Future<UserProfile> me() async {
+    if (meShouldFail) throw Exception('401');
+    return const UserProfile(
+      id: 'u1',
+      email: 'a@b.de',
+      firstName: 'A',
+      lastName: 'B',
+      role: 'SENDER',
+      preferredLocale: 'de',
+      kycStatus: 'VERIFIED',
+      ratingAvg: 0,
+      ratingCount: 0,
+    );
+  }
 }
 
 void main() {
@@ -73,5 +77,38 @@ void main() {
 
     expect(controller.state.status, AuthStatus.unauthenticated);
     expect(await store.read(), isNull);
+  });
+
+  group('restoreSession (Auto-Login)', () {
+    test('gültiges Token -> authenticated', () async {
+      final store = InMemoryTokenStore()..write('tok_saved');
+      final controller = AuthController(_FakeAuthRepo(), store);
+
+      await controller.restoreSession();
+
+      expect(controller.state.status, AuthStatus.authenticated);
+      expect(controller.state.session?.userId, 'u1');
+    });
+
+    test('kein Token -> bleibt unauthenticated', () async {
+      final controller = AuthController(_FakeAuthRepo(), InMemoryTokenStore());
+
+      await controller.restoreSession();
+
+      expect(controller.state.status, AuthStatus.unauthenticated);
+    });
+
+    test('ungültiges Token (me schlägt fehl) -> Token verworfen', () async {
+      final store = InMemoryTokenStore()..write('tok_bad');
+      final controller = AuthController(
+        _FakeAuthRepo()..meShouldFail = true,
+        store,
+      );
+
+      await controller.restoreSession();
+
+      expect(controller.state.status, AuthStatus.unauthenticated);
+      expect(await store.read(), isNull);
+    });
   });
 }
