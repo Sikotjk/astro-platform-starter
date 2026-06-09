@@ -95,6 +95,8 @@ void main() {
     expect(find.text('Verifiziert'), findsOneWidget); // kycVerified
     expect(find.text('Sehr zuverlässig'), findsOneWidget);
     expect(find.textContaining('2 Bewertungen'), findsOneWidget);
+    expect(find.text('Bob'), findsOneWidget); // Review-Autor
+    expect(find.text('B'), findsOneWidget); // Avatar-Initiale (Bob, keine URL)
   });
 
   testWidgets('zeigt Hinweis, wenn keine Bewertungen vorhanden', (

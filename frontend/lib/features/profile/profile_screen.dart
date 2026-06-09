@@ -190,24 +190,41 @@ class _ReviewTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              StarRating(value: review.rating, size: 16),
-              const Spacer(),
-              Text(
-                '${review.authorName} · ${context.formatDate(review.createdAt)}',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
+          UserAvatar(
+            name: review.authorName,
+            url: review.authorAvatarUrl,
+            radius: 16,
           ),
-          if (review.comment != null && review.comment!.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Text(review.comment!),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    StarRating(value: review.rating, size: 16),
+                    const Spacer(),
+                    Text(
+                      context.formatDate(review.createdAt),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+                Text(
+                  review.authorName,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                if (review.comment != null && review.comment!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(review.comment!),
+                  ),
+              ],
             ),
+          ),
         ],
       ),
     );
