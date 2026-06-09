@@ -117,6 +117,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get newTraveler => 'Новый';
 
   @override
+  String get saveSearch => 'Сохранить поиск';
+
+  @override
+  String get searchSaved => 'Поиск сохранён. Мы уведомим вас о совпадениях.';
+
+  @override
+  String get savedSearches => 'Сохранённые поиски';
+
+  @override
+  String get noSavedSearches => 'Нет сохранённых поисков.';
+
+  @override
+  String get deleteSearch => 'Удалить';
+
+  @override
   String tripSubtitle(Object date, Object kg, Object price, Object currency) {
     return 'Вылет $date · $kg кг свободно · $price $currency/кг';
   }

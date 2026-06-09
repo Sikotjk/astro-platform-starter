@@ -316,6 +316,36 @@ abstract class AppLocalizations {
   /// **'Neu'**
   String get newTraveler;
 
+  /// No description provided for @saveSearch.
+  ///
+  /// In de, this message translates to:
+  /// **'Suche speichern'**
+  String get saveSearch;
+
+  /// No description provided for @searchSaved.
+  ///
+  /// In de, this message translates to:
+  /// **'Suche gespeichert. Du wirst bei Treffern benachrichtigt.'**
+  String get searchSaved;
+
+  /// No description provided for @savedSearches.
+  ///
+  /// In de, this message translates to:
+  /// **'Gespeicherte Suchen'**
+  String get savedSearches;
+
+  /// No description provided for @noSavedSearches.
+  ///
+  /// In de, this message translates to:
+  /// **'Keine gespeicherten Suchen.'**
+  String get noSavedSearches;
+
+  /// No description provided for @deleteSearch.
+  ///
+  /// In de, this message translates to:
+  /// **'Löschen'**
+  String get deleteSearch;
+
   /// No description provided for @tripSubtitle.
   ///
   /// In de, this message translates to:

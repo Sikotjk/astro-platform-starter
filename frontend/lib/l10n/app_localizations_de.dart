@@ -117,6 +117,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get newTraveler => 'Neu';
 
   @override
+  String get saveSearch => 'Suche speichern';
+
+  @override
+  String get searchSaved =>
+      'Suche gespeichert. Du wirst bei Treffern benachrichtigt.';
+
+  @override
+  String get savedSearches => 'Gespeicherte Suchen';
+
+  @override
+  String get noSavedSearches => 'Keine gespeicherten Suchen.';
+
+  @override
+  String get deleteSearch => 'Löschen';
+
+  @override
   String tripSubtitle(Object date, Object kg, Object price, Object currency) {
     return 'Abflug $date · $kg kg frei · $price $currency/kg';
   }

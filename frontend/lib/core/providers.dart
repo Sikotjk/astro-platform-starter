@@ -27,12 +27,15 @@ import '../features/notifications/notifications_repository.dart';
 import '../features/profile/profile_controller.dart';
 import '../features/reviews/review_controller.dart';
 import '../features/reviews/reviews_repository.dart';
+import '../features/saved_searches/saved_searches_controller.dart';
+import '../features/saved_searches/saved_searches_repository.dart';
 import '../features/trips/trips_controller.dart';
 import '../features/trips/trips_repository.dart';
 import '../models/booking.dart';
 import '../models/booking_detail.dart';
 import '../models/message.dart';
 import '../models/notification.dart';
+import '../models/saved_search.dart';
 import '../models/trip.dart';
 import 'api_client.dart';
 import 'config.dart';
@@ -162,6 +165,20 @@ final profileControllerProvider =
         ref.watch(authRepositoryProvider),
         ref.watch(reviewsRepositoryProvider),
       ),
+    );
+
+// ── Gespeicherte Suchen ──────────────────────────────────────────────────────
+final savedSearchesRepositoryProvider = Provider<SavedSearchesRepository>(
+  (ref) => DioSavedSearchesRepository(ref.watch(apiClientProvider).dio),
+);
+
+final savedSearchesControllerProvider =
+    StateNotifierProvider<
+      SavedSearchesController,
+      AsyncValue<List<SavedSearch>>
+    >(
+      (ref) =>
+          SavedSearchesController(ref.watch(savedSearchesRepositoryProvider)),
     );
 
 // ── Benachrichtigungen ───────────────────────────────────────────────────────

@@ -117,6 +117,22 @@ class AppLocalizationsTg extends AppLocalizations {
   String get newTraveler => 'Нав';
 
   @override
+  String get saveSearch => 'Ҷустуҷӯро захира кардан';
+
+  @override
+  String get searchSaved =>
+      'Ҷустуҷӯ захира шуд. Ҳангоми мувофиқат хабардор мешавед.';
+
+  @override
+  String get savedSearches => 'Ҷустуҷӯҳои захирашуда';
+
+  @override
+  String get noSavedSearches => 'Ҷустуҷӯи захирашуда нест.';
+
+  @override
+  String get deleteSearch => 'Нест кардан';
+
+  @override
   String tripSubtitle(Object date, Object kg, Object price, Object currency) {
     return 'Парвоз $date · $kg кг озод · $price $currency/кг';
   }
