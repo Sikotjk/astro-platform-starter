@@ -97,6 +97,8 @@
   "categoryOther": "Прочее",
   "fieldDescription": "Описание",
   "bookButton": "Запросить бронь",
+  "estimatedCost": "Примерная стоимость доставки: {amount} {currency}",
+  "plusServiceFee": "плюс сервисный сбор",
   "validNumber": "Введите число > 0",
   "validMin3": "Минимум 3 символа",
   "bookingRequested": "Бронь запрошена!",

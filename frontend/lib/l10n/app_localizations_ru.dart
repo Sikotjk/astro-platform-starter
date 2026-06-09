@@ -334,6 +334,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get bookButton => 'Запросить бронь';
 
   @override
+  String estimatedCost(Object amount, Object currency) {
+    return 'Примерная стоимость доставки: $amount $currency';
+  }
+
+  @override
+  String get plusServiceFee => 'плюс сервисный сбор';
+
+  @override
   String get validNumber => 'Введите число > 0';
 
   @override

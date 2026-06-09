@@ -20,6 +20,45 @@ class CreateBookingScreen extends ConsumerStatefulWidget {
       _CreateBookingScreenState();
 }
 
+/// Zeigt die live geschätzten Transportkosten (kg × Preis/kg). Die finale
+/// Summe inkl. Servicegebühr berechnet das Backend.
+class _CostEstimate extends StatelessWidget {
+  const _CostEstimate({
+    required this.weightText,
+    required this.pricePerKg,
+    required this.currency,
+  });
+
+  final String weightText;
+  final double pricePerKg;
+  final String currency;
+
+  @override
+  Widget build(BuildContext context) {
+    final weight = double.tryParse(weightText.trim()) ?? 0;
+    if (weight <= 0) return const SizedBox.shrink();
+    final cost = (weight * pricePerKg).toStringAsFixed(2);
+    final l10n = context.l10n;
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.estimatedCost(cost, currency),
+            key: const Key('costEstimate'),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          Text(
+            l10n.plusServiceFee,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
   final _formKey = GlobalKey<FormState>();
   final _title = TextEditingController();
@@ -126,6 +165,12 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: l10n.fieldWeightKg),
                 validator: _number,
+                onChanged: (_) => setState(() {}),
+              ),
+              _CostEstimate(
+                weightText: _weight.text,
+                pricePerKg: widget.trip.pricePerKg,
+                currency: widget.trip.currency,
               ),
               TextFormField(
                 key: const Key('value'),

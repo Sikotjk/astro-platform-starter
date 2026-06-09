@@ -97,6 +97,8 @@
   "categoryOther": "Дигар",
   "fieldDescription": "Тавсиф",
   "bookButton": "Дархости фармоиш",
+  "estimatedCost": "Хароҷоти тахминии интиқол: {amount} {currency}",
+  "plusServiceFee": "илова бар ин ҳаққи хизматрасонӣ",
   "validNumber": "Рақами > 0 ворид кунед",
   "validMin3": "Ҳадди ақал 3 аломат",
   "bookingRequested": "Фармоиш дархост шуд!",

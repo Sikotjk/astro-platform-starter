@@ -330,6 +330,14 @@ class AppLocalizationsTg extends AppLocalizations {
   String get bookButton => 'Дархости фармоиш';
 
   @override
+  String estimatedCost(Object amount, Object currency) {
+    return 'Хароҷоти тахминии интиқол: $amount $currency';
+  }
+
+  @override
+  String get plusServiceFee => 'илова бар ин ҳаққи хизматрасонӣ';
+
+  @override
   String get validNumber => 'Рақами > 0 ворид кунед';
 
   @override

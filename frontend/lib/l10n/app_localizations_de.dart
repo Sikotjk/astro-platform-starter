@@ -332,6 +332,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookButton => 'Buchung anfragen';
 
   @override
+  String estimatedCost(Object amount, Object currency) {
+    return 'Geschätzte Transportkosten: $amount $currency';
+  }
+
+  @override
+  String get plusServiceFee => 'zzgl. Servicegebühr';
+
+  @override
   String get validNumber => 'Zahl > 0 eingeben';
 
   @override

@@ -26,6 +26,22 @@ void main() {
     expect(find.text('Buchung anfragen'), findsOneWidget);
   });
 
+  testWidgets('berechnet live die Transportkosten (kg × Preis/kg)', (
+    tester,
+  ) async {
+    await tester.pumpWidget(localizedApp(CreateBookingScreen(trip: _trip())));
+
+    // Ohne Gewicht keine Schätzung.
+    expect(find.byKey(const Key('costEstimate')), findsNothing);
+
+    await tester.enterText(find.byKey(const Key('weight')), '3');
+    await tester.pump();
+
+    // 3 kg × 8 €/kg = 24.00 EUR.
+    expect(find.byKey(const Key('costEstimate')), findsOneWidget);
+    expect(find.textContaining('24.00'), findsOneWidget);
+  });
+
   testWidgets('Validierung blockt leeres Formular', (tester) async {
     await tester.pumpWidget(localizedApp(CreateBookingScreen(trip: _trip())));
 

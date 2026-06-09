@@ -682,6 +682,18 @@ abstract class AppLocalizations {
   /// **'Buchung anfragen'**
   String get bookButton;
 
+  /// No description provided for @estimatedCost.
+  ///
+  /// In de, this message translates to:
+  /// **'Geschätzte Transportkosten: {amount} {currency}'**
+  String estimatedCost(Object amount, Object currency);
+
+  /// No description provided for @plusServiceFee.
+  ///
+  /// In de, this message translates to:
+  /// **'zzgl. Servicegebühr'**
+  String get plusServiceFee;
+
   /// No description provided for @validNumber.
   ///
   /// In de, this message translates to:
