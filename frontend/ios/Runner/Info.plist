@@ -7,7 +7,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Tj Shipping App</string>
+	<string>TJ-Shipping</string>
+	<!-- Lockert ATS ausschließlich für lokale/Loopback-Adressen (localhost,
+	     127.0.0.1, *.local). Ermöglicht Dev gegen ein lokales HTTP-Backend,
+	     ohne HTTPS für öffentliche Hosts zu schwächen. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

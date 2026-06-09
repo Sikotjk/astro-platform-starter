@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  NUR im Debug-Build aktiv (liegt im debug-Source-Set). Erlaubt Cleartext-HTTP
+  ausschließlich für lokale Entwicklungs-Hosts, damit die App gegen ein lokales
+  Backend (z.B. http://10.0.2.2:3000 im Android-Emulator) testen kann.
+  Der Release-Build enthält diese Datei nicht und bleibt HTTPS-only.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>
