@@ -6,6 +6,9 @@ import 'package:tj_shipping_app/models/trip.dart';
 
 class _FakeTripsRepo implements TripsRepository {
   @override
+  Future<List<Trip>> listMine() => throw UnimplementedError();
+
+  @override
   Future<Trip> create({
     required String originAirport,
     required String destinationAirport,

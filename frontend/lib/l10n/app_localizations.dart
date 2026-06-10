@@ -340,6 +340,18 @@ abstract class AppLocalizations {
   /// **'Trip anbieten'**
   String get offerTripTitle;
 
+  /// No description provided for @myTripsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Meine Trips'**
+  String get myTripsTitle;
+
+  /// No description provided for @noMyTrips.
+  ///
+  /// In de, this message translates to:
+  /// **'Du hast noch keine Trips angeboten.'**
+  String get noMyTrips;
+
   /// No description provided for @fieldDeparture.
   ///
   /// In de, this message translates to:

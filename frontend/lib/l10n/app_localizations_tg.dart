@@ -151,6 +151,12 @@ class AppLocalizationsTg extends AppLocalizations {
   String get offerTripTitle => 'Пешниҳоди парвоз';
 
   @override
+  String get myTripsTitle => 'Парвозҳои ман';
+
+  @override
+  String get noMyTrips => 'Шумо ҳоло ягон парвоз пешниҳод накардаед.';
+
+  @override
   String get fieldDeparture => 'Санаи парвоз';
 
   @override

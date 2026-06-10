@@ -44,6 +44,8 @@
   "fieldMinKg": "Min. freie kg",
   "searchButton": "Suchen",
   "offerTripTitle": "Trip anbieten",
+  "myTripsTitle": "Meine Trips",
+  "noMyTrips": "Du hast noch keine Trips angeboten.",
   "fieldDeparture": "Abflugdatum",
   "fieldCapacityKg": "Freie Kapazität (kg)",
   "fieldPricePerKg": "Preis pro kg (EUR)",

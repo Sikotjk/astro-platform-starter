@@ -40,6 +40,8 @@
   "fieldMinKg": "Мин. свободно кг",
   "searchButton": "Искать",
   "offerTripTitle": "Предложить рейс",
+  "myTripsTitle": "Мои рейсы",
+  "noMyTrips": "Вы ещё не предложили ни одного рейса.",
   "fieldDeparture": "Дата вылета",
   "fieldCapacityKg": "Свободная вместимость (кг)",
   "fieldPricePerKg": "Цена за кг (EUR)",

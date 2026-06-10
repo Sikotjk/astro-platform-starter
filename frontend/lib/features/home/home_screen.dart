@@ -75,6 +75,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               label: Text(l10n.offerTripTitle),
             ),
             const SizedBox(height: 12),
+            OutlinedButton.icon(
+              onPressed: () => context.push('/trips/mine'),
+              icon: const Icon(Icons.luggage),
+              label: Text(l10n.myTripsTitle),
+            ),
+            const SizedBox(height: 12),
             FilledButton.tonalIcon(
               onPressed: () => context.push('/bookings'),
               icon: const Icon(Icons.inventory_2),

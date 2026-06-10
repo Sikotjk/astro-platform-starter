@@ -4,6 +4,9 @@ import 'package:tj_shipping_app/features/trips/trips_repository.dart';
 import 'package:tj_shipping_app/models/trip.dart';
 
 class _FakeTripsRepo implements TripsRepository {
+  @override
+  Future<List<Trip>> listMine() => throw UnimplementedError();
+
   _FakeTripsRepo({this.fail = false});
   bool fail;
   Map<String, dynamic>? lastCreate;

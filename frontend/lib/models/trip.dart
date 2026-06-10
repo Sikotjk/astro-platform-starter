@@ -31,6 +31,7 @@ class Trip {
     required this.currency,
     this.departureGate,
     this.traveler,
+    this.status,
   });
 
   final String id;
@@ -42,6 +43,9 @@ class Trip {
   final String currency;
   final String? departureGate;
   final TripTraveler? traveler;
+
+  /// Trip-Status (z.B. ACTIVE/FULL/CANCELLED) — gesetzt bei „Meine Trips".
+  final String? status;
 
   /// "FRA → DYU"
   String get route => '$originAirport → $destinationAirport';
@@ -66,6 +70,7 @@ class Trip {
       traveler: json['traveler'] is Map<String, dynamic>
           ? TripTraveler.fromJson(json['traveler'] as Map<String, dynamic>)
           : null,
+      status: json['status'] as String?,
     );
   }
 }

@@ -156,6 +156,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get offerTripTitle => 'Предложить рейс';
 
   @override
+  String get myTripsTitle => 'Мои рейсы';
+
+  @override
+  String get noMyTrips => 'Вы ещё не предложили ни одного рейса.';
+
+  @override
   String get fieldDeparture => 'Дата вылета';
 
   @override

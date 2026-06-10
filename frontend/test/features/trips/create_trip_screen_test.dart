@@ -12,6 +12,9 @@ import 'package:tj_shipping_app/models/trip.dart';
 import '../../support/localized_app.dart';
 
 class _FakeTripsRepo implements TripsRepository {
+  @override
+  Future<List<Trip>> listMine() => throw UnimplementedError();
+
   Map<String, dynamic>? created;
 
   @override

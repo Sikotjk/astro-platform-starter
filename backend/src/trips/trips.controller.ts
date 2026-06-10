@@ -20,6 +20,13 @@ export class TripsController {
     return this.trips.search(query);
   }
 
+  // Muss VOR @Get(':id') stehen, sonst fängt ':id' "mine" ab.
+  @Get('mine')
+  @UseGuards(JwtAuthGuard)
+  listMine(@CurrentUser() user: AuthUser) {
+    return this.trips.listMine(user.userId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.trips.findOne(id);

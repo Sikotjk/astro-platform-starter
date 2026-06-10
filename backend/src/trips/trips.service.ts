@@ -88,6 +88,18 @@ export class TripsService {
       .filter((t) => (q.minFreeKg ? t.freeKg >= q.minFreeKg : true));
   }
 
+  /** Eigene Trips des Reisenden (neueste zuerst), inkl. freier Restkapazität. */
+  async listMine(travelerId: string) {
+    const trips = await this.prisma.trip.findMany({
+      where: { travelerId },
+      orderBy: { departureAt: 'desc' },
+    });
+    return trips.map((t) => ({
+      ...t,
+      freeKg: Number(t.capacityKgTotal) - Number(t.capacityKgUsed),
+    }));
+  }
+
   async findOne(id: string) {
     const trip = await this.prisma.trip.findUnique({ where: { id } });
     if (!trip) throw new NotFoundException('Trip nicht gefunden.');

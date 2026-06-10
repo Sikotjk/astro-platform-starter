@@ -40,6 +40,8 @@
   "fieldMinKg": "Ҳадди ақал кг озод",
   "searchButton": "Ҷустуҷӯ",
   "offerTripTitle": "Пешниҳоди парвоз",
+  "myTripsTitle": "Парвозҳои ман",
+  "noMyTrips": "Шумо ҳоло ягон парвоз пешниҳод накардаед.",
   "fieldDeparture": "Санаи парвоз",
   "fieldCapacityKg": "Иқтидори озод (кг)",
   "fieldPricePerKg": "Нарх барои кг (EUR)",

@@ -153,6 +153,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get offerTripTitle => 'Trip anbieten';
 
   @override
+  String get myTripsTitle => 'Meine Trips';
+
+  @override
+  String get noMyTrips => 'Du hast noch keine Trips angeboten.';
+
+  @override
   String get fieldDeparture => 'Abflugdatum';
 
   @override

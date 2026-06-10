@@ -8,6 +8,9 @@ abstract class TripsRepository {
   /// Lädt einen einzelnen Trip (GET /trips/:id).
   Future<Trip> findOne(String id);
 
+  /// Eigene veröffentlichte Trips des Reisenden (GET /trips/mine).
+  Future<List<Trip>> listMine();
+
   /// Veröffentlicht einen neuen Trip (POST /trips). Erfordert KYC-Verifizierung.
   Future<Trip> create({
     required String originAirport,
@@ -38,6 +41,14 @@ class DioTripsRepository implements TripsRepository {
   Future<Trip> findOne(String id) async {
     final res = await _dio.get<Map<String, dynamic>>('/trips/$id');
     return Trip.fromJson(res.data!);
+  }
+
+  @override
+  Future<List<Trip>> listMine() async {
+    final res = await _dio.get<List<dynamic>>('/trips/mine');
+    return (res.data ?? [])
+        .map((e) => Trip.fromJson(e as Map<String, dynamic>))
+        .toList(growable: false);
   }
 
   @override
