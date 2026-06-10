@@ -71,6 +71,9 @@ class _FakeRepo implements BookingDetailRepository {
 
 class _NoRepo implements AuthRepository {
   @override
+  Future<void> logout(String refreshToken) async {}
+
+  @override
   Future<AuthSession> login({
     required String email,
     required String password,

@@ -7,6 +7,9 @@ import 'package:tj_shipping_app/models/auth.dart';
 import 'package:tj_shipping_app/models/review.dart';
 
 class _FakeAuthRepo implements AuthRepository {
+  @override
+  Future<void> logout(String refreshToken) async {}
+
   _FakeAuthRepo({this.fail = false, this.updateFail = false});
   bool fail;
   bool updateFail;

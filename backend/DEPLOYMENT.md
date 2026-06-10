@@ -53,6 +53,15 @@ docker compose up --build
 - Kubernetes: `/health` als `livenessProbe`, `/health/ready` als `readinessProbe`.
 - Der Docker-`HEALTHCHECK` pingt `/health` (kein zusätzliches Tool nötig).
 
+## Rate-Limiting
+
+- **In der App**: `/auth/*` ist auf 20 Requests/Minute je IP limitiert
+  (In-Memory-Throttler, gilt pro Instanz — Brute-Force-Schutz für Login).
+- **Global**: bewusst nicht in der App; bei Bedarf am Reverse-Proxy/LB
+  (z. B. nginx `limit_req`) oder später Redis-gestützt über alle Instanzen.
+- Hinter einem Proxy `app.set('trust proxy', …)` beachten, damit die echte
+  Client-IP gezählt wird (sonst limitiert man den Proxy).
+
 ## Migrationen
 
 - **Automatisch** beim Containerstart via `prisma migrate deploy`.

@@ -50,6 +50,15 @@ class AuthController extends StateNotifier<AuthState> {
   }
 
   Future<void> logout() async {
+    // Server-Revoke best-effort: ein Netzfehler darf den Logout nicht blocken.
+    final refresh = await _tokenStore.readRefresh();
+    if (refresh != null && refresh.isNotEmpty) {
+      try {
+        await _repo.logout(refresh);
+      } catch (_) {
+        // ignorieren — Token läuft serverseitig ohnehin ab
+      }
+    }
     await _tokenStore.clear();
     state = const AuthState.unauthenticated();
   }
@@ -84,6 +93,9 @@ class AuthController extends StateNotifier<AuthState> {
     try {
       final session = await action();
       await _tokenStore.write(session.accessToken);
+      if (session.refreshToken.isNotEmpty) {
+        await _tokenStore.writeRefresh(session.refreshToken);
+      }
       state = AuthState(status: AuthStatus.authenticated, session: session);
     } catch (e) {
       state = AuthState(status: AuthStatus.error, error: apiErrorMessage(e));

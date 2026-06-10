@@ -5,6 +5,9 @@ import 'package:tj_shipping_app/features/auth/auth_repository.dart';
 import 'package:tj_shipping_app/models/auth.dart';
 
 class _FakeAuthRepo implements AuthRepository {
+  @override
+  Future<void> logout(String refreshToken) async {}
+
   bool shouldFail = false;
   bool meShouldFail = false;
 

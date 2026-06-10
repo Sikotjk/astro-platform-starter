@@ -1,14 +1,20 @@
 /// Antwort von POST /auth/login bzw. /auth/register.
 class AuthSession {
-  const AuthSession({required this.accessToken, required this.userId});
+  const AuthSession({
+    required this.accessToken,
+    required this.userId,
+    this.refreshToken = '',
+  });
 
   final String accessToken;
   final String userId;
+  final String refreshToken;
 
   factory AuthSession.fromJson(Map<String, dynamic> json) {
     return AuthSession(
       accessToken: json['accessToken'] as String,
       userId: json['userId'] as String,
+      refreshToken: json['refreshToken'] as String? ?? '',
     );
   }
 }

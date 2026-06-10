@@ -10,6 +10,9 @@ import 'package:tj_shipping_app/models/auth.dart';
 /// Fake-AuthRepository für den Router-/Auth-Integrationstest.
 class _FakeAuthRepo implements AuthRepository {
   @override
+  Future<void> logout(String refreshToken) async {}
+
+  @override
   Future<AuthSession> login({
     required String email,
     required String password,

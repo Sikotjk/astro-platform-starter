@@ -5,15 +5,22 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 abstract class TokenStore {
   Future<String?> read();
   Future<void> write(String token);
+
+  /// Refresh-Token (Rotation): wird beim Auto-Refresh ausgetauscht.
+  Future<String?> readRefresh();
+  Future<void> writeRefresh(String token);
+
+  /// Entfernt beide Tokens (Logout/Session-Ende).
   Future<void> clear();
 }
 
-/// Produktiv: legt das JWT im sicheren Geräte-Speicher ab.
+/// Produktiv: legt die Tokens im sicheren Geräte-Speicher ab.
 class SecureTokenStore implements TokenStore {
   SecureTokenStore([FlutterSecureStorage? storage])
     : _storage = storage ?? const FlutterSecureStorage();
 
   static const _key = 'access_token';
+  static const _refreshKey = 'refresh_token';
   final FlutterSecureStorage _storage;
 
   @override
@@ -23,12 +30,23 @@ class SecureTokenStore implements TokenStore {
   Future<void> write(String token) => _storage.write(key: _key, value: token);
 
   @override
-  Future<void> clear() => _storage.delete(key: _key);
+  Future<String?> readRefresh() => _storage.read(key: _refreshKey);
+
+  @override
+  Future<void> writeRefresh(String token) =>
+      _storage.write(key: _refreshKey, value: token);
+
+  @override
+  Future<void> clear() async {
+    await _storage.delete(key: _key);
+    await _storage.delete(key: _refreshKey);
+  }
 }
 
-/// Für Tests/Dev: hält das Token nur im Speicher.
+/// Für Tests/Dev: hält die Tokens nur im Speicher.
 class InMemoryTokenStore implements TokenStore {
   String? _token;
+  String? _refresh;
 
   @override
   Future<String?> read() async => _token;
@@ -37,5 +55,14 @@ class InMemoryTokenStore implements TokenStore {
   Future<void> write(String token) async => _token = token;
 
   @override
-  Future<void> clear() async => _token = null;
+  Future<String?> readRefresh() async => _refresh;
+
+  @override
+  Future<void> writeRefresh(String token) async => _refresh = token;
+
+  @override
+  Future<void> clear() async {
+    _token = null;
+    _refresh = null;
+  }
 }

@@ -12,6 +12,9 @@ import 'package:tj_shipping_app/models/auth.dart';
 import '../../support/localized_app.dart';
 
 class _FakeAuthRepo implements AuthRepository {
+  @override
+  Future<void> logout(String refreshToken) async {}
+
   Map<String, String?>? lastUpdate;
 
   @override

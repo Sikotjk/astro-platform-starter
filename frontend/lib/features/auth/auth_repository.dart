@@ -22,6 +22,9 @@ abstract class AuthRepository {
     String? lastName,
     String? preferredLocale,
   });
+
+  /// Widerruft das Refresh-Token serverseitig (Logout dieses Geräts).
+  Future<void> logout(String refreshToken);
 }
 
 class DioAuthRepository implements AuthRepository {
@@ -80,5 +83,10 @@ class DioAuthRepository implements AuthRepository {
     if (preferredLocale != null) data['preferredLocale'] = preferredLocale;
     final res = await _dio.patch<Map<String, dynamic>>('/me', data: data);
     return UserProfile.fromJson(res.data!);
+  }
+
+  @override
+  Future<void> logout(String refreshToken) async {
+    await _dio.post<void>('/auth/logout', data: {'refreshToken': refreshToken});
   }
 }
