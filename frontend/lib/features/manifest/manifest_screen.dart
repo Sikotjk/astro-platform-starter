@@ -59,6 +59,15 @@ class _ManifestReady extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               Text('${l10n.manifestTitle} · ${l10n.manifestSize(pdf.sizeKb)}'),
+              if (pdf.fromCache) ...[
+                const SizedBox(height: 8),
+                Chip(
+                  key: const Key('offlineCopy'),
+                  avatar: const Icon(Icons.cloud_off, size: 16),
+                  label: Text(l10n.manifestOfflineCopy),
+                  visualDensity: VisualDensity.compact,
+                ),
+              ],
               if (pdf.hash != null) ...[
                 const SizedBox(height: 16),
                 Text(

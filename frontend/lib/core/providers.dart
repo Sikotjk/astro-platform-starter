@@ -18,6 +18,7 @@ import '../features/chat/chat_repository.dart';
 import '../features/chat/socket_chat_gateway.dart';
 import '../features/kyc/kyc_controller.dart';
 import '../features/kyc/kyc_repository.dart';
+import '../features/manifest/manifest_cache.dart';
 import '../features/manifest/manifest_controller.dart';
 import '../features/manifest/manifest_repository.dart';
 import '../features/manifest/manifest_viewer.dart';
@@ -230,6 +231,10 @@ final manifestRepositoryProvider = Provider<ManifestRepository>(
   (ref) => DioManifestRepository(ref.watch(apiClientProvider).dio),
 );
 
+final manifestCacheProvider = Provider<ManifestCache>(
+  (ref) => FileManifestCache(),
+);
+
 final manifestViewerProvider = Provider<ManifestViewer>(
   (ref) => const PrintingManifestViewer(),
 );
@@ -243,6 +248,7 @@ final manifestControllerProvider =
       final locale = ref.watch(localeProvider).languageCode;
       final controller = ManifestController(
         ref.watch(manifestRepositoryProvider),
+        ref.watch(manifestCacheProvider),
         bookingId,
         locale,
       );

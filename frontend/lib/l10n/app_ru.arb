@@ -109,6 +109,7 @@
   "manifestTitle": "Таможенный манифест",
   "manifestOpen": "Открыть манифест",
   "manifestHashLabel": "Хеш целостности",
+  "manifestOfflineCopy": "Офлайн-копия (последняя сохранённая)",
   "manifestSize": "{kb} КБ",
   "detailTitle": "Детали бронирования",
   "bookingPartner": "Партнёр по бронированию",

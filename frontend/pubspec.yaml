@@ -42,6 +42,7 @@ dependencies:
   socket_io_client: ^3.0.2 # Echtzeit-Chat (WebSocket)
   printing: ^5.13.4 # PDF anzeigen/teilen (Zoll-Manifest)
   flutter_stripe: ^13.0.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/core/providers.dart';
+import 'package:tj_shipping_app/features/manifest/manifest_cache.dart';
 import 'package:tj_shipping_app/features/manifest/manifest_repository.dart';
 import 'package:tj_shipping_app/features/manifest/manifest_screen.dart';
 import 'package:tj_shipping_app/features/manifest/manifest_viewer.dart';
@@ -45,6 +46,7 @@ void main() {
         const ManifestScreen(bookingId: 'b1'),
         overrides: [
           manifestRepositoryProvider.overrideWithValue(_FakeManifestRepo()),
+          manifestCacheProvider.overrideWithValue(InMemoryManifestCache()),
           manifestViewerProvider.overrideWithValue(viewer),
         ],
       ),
@@ -69,6 +71,7 @@ void main() {
           manifestRepositoryProvider.overrideWithValue(
             _FakeManifestRepo(fail: true),
           ),
+          manifestCacheProvider.overrideWithValue(InMemoryManifestCache()),
           manifestViewerProvider.overrideWithValue(FakeManifestViewer()),
         ],
       ),
@@ -76,5 +79,32 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('bestätigt'), findsOneWidget);
+  });
+
+  testWidgets('Netzfehler mit Offline-Kopie zeigt Badge + Öffnen-Button', (
+    tester,
+  ) async {
+    final cache = InMemoryManifestCache();
+    await cache.save(
+      'b1',
+      ManifestPdf(bytes: Uint8List.fromList(List.filled(1024, 3)), hash: 'old'),
+    );
+    await tester.pumpWidget(
+      localizedApp(
+        const ManifestScreen(bookingId: 'b1'),
+        overrides: [
+          manifestRepositoryProvider.overrideWithValue(
+            _FakeManifestRepo(fail: true),
+          ),
+          manifestCacheProvider.overrideWithValue(cache),
+          manifestViewerProvider.overrideWithValue(FakeManifestViewer()),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('offlineCopy')), findsOneWidget);
+    expect(find.byKey(const Key('openManifest')), findsOneWidget);
+    expect(find.text('old'), findsOneWidget); // Hash der Offline-Kopie
   });
 }

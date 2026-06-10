@@ -117,6 +117,7 @@
   "manifestTitle": "Zoll-Manifest",
   "manifestOpen": "Manifest öffnen",
   "manifestHashLabel": "Integritäts-Hash",
+  "manifestOfflineCopy": "Offline-Kopie (zuletzt gespeichert)",
   "manifestSize": "{kb} KB",
   "@manifestSize": { "placeholders": { "kb": {} } },
   "detailTitle": "Buchungsdetails",

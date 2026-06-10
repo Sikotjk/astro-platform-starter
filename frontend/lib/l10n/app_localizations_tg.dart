@@ -368,6 +368,9 @@ class AppLocalizationsTg extends AppLocalizations {
   String get manifestHashLabel => 'Ҳэши яклухтӣ';
 
   @override
+  String get manifestOfflineCopy => 'Нусхаи офлайн (охирин захирашуда)';
+
+  @override
   String manifestSize(Object kb) {
     return '$kb КБ';
   }

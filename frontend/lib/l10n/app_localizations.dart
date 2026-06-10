@@ -754,6 +754,12 @@ abstract class AppLocalizations {
   /// **'Integritäts-Hash'**
   String get manifestHashLabel;
 
+  /// No description provided for @manifestOfflineCopy.
+  ///
+  /// In de, this message translates to:
+  /// **'Offline-Kopie (zuletzt gespeichert)'**
+  String get manifestOfflineCopy;
+
   /// No description provided for @manifestSize.
   ///
   /// In de, this message translates to:

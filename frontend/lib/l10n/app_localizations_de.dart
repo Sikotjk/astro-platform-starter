@@ -370,6 +370,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get manifestHashLabel => 'Integritäts-Hash';
 
   @override
+  String get manifestOfflineCopy => 'Offline-Kopie (zuletzt gespeichert)';
+
+  @override
   String manifestSize(Object kb) {
     return '$kb KB';
   }

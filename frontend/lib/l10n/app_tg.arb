@@ -109,6 +109,7 @@
   "manifestTitle": "Манифести гумрукӣ",
   "manifestOpen": "Кушодани манифест",
   "manifestHashLabel": "Ҳэши яклухтӣ",
+  "manifestOfflineCopy": "Нусхаи офлайн (охирин захирашуда)",
   "manifestSize": "{kb} КБ",
   "detailTitle": "Тафсилоти фармоиш",
   "bookingPartner": "Шарики фармоиш",

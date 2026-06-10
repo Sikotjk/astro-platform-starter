@@ -372,6 +372,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get manifestHashLabel => 'Хеш целостности';
 
   @override
+  String get manifestOfflineCopy => 'Офлайн-копия (последняя сохранённая)';
+
+  @override
   String manifestSize(Object kb) {
     return '$kb КБ';
   }

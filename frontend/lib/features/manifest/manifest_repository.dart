@@ -3,11 +3,13 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 
 /// Geladenes Zoll-Manifest (PDF-Bytes + Integritäts-Hash aus dem Header).
+/// [fromCache] kennzeichnet eine lokal gespeicherte Offline-Kopie.
 class ManifestPdf {
-  const ManifestPdf({required this.bytes, this.hash});
+  const ManifestPdf({required this.bytes, this.hash, this.fromCache = false});
 
   final Uint8List bytes;
   final String? hash;
+  final bool fromCache;
 
   int get sizeKb => (bytes.lengthInBytes / 1024).ceil();
 }
