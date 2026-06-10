@@ -7,6 +7,15 @@ abstract class TripsRepository {
 
   /// Lädt einen einzelnen Trip (GET /trips/:id).
   Future<Trip> findOne(String id);
+
+  /// Veröffentlicht einen neuen Trip (POST /trips). Erfordert KYC-Verifizierung.
+  Future<Trip> create({
+    required String originAirport,
+    required String destinationAirport,
+    required DateTime departureAt,
+    required double capacityKgTotal,
+    required double pricePerKg,
+  });
 }
 
 class DioTripsRepository implements TripsRepository {
@@ -28,6 +37,27 @@ class DioTripsRepository implements TripsRepository {
   @override
   Future<Trip> findOne(String id) async {
     final res = await _dio.get<Map<String, dynamic>>('/trips/$id');
+    return Trip.fromJson(res.data!);
+  }
+
+  @override
+  Future<Trip> create({
+    required String originAirport,
+    required String destinationAirport,
+    required DateTime departureAt,
+    required double capacityKgTotal,
+    required double pricePerKg,
+  }) async {
+    final res = await _dio.post<Map<String, dynamic>>(
+      '/trips',
+      data: {
+        'originAirport': originAirport.toUpperCase(),
+        'destinationAirport': destinationAirport.toUpperCase(),
+        'departureAt': departureAt.toUtc().toIso8601String(),
+        'capacityKgTotal': capacityKgTotal,
+        'pricePerKg': pricePerKg,
+      },
+    );
     return Trip.fromJson(res.data!);
   }
 }

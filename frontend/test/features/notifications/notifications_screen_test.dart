@@ -33,6 +33,15 @@ class _FakeNotifRepo implements NotificationsRepository {
 }
 
 class _FakeTripsRepo implements TripsRepository {
+  @override
+  Future<Trip> create({
+    required String originAirport,
+    required String destinationAirport,
+    required DateTime departureAt,
+    required double capacityKgTotal,
+    required double pricePerKg,
+  }) => throw UnimplementedError();
+
   String? requestedId;
 
   @override

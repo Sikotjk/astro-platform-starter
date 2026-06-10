@@ -5,6 +5,15 @@ import 'package:tj_shipping_app/features/trips/trips_repository.dart';
 import 'package:tj_shipping_app/models/trip.dart';
 
 class _FakeTripsRepo implements TripsRepository {
+  @override
+  Future<Trip> create({
+    required String originAirport,
+    required String destinationAirport,
+    required DateTime departureAt,
+    required double capacityKgTotal,
+    required double pricePerKg,
+  }) => throw UnimplementedError();
+
   _FakeTripsRepo({this.shouldFail = false});
   bool shouldFail;
   TripSearchQuery? lastQuery;

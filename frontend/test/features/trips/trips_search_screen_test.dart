@@ -11,6 +11,15 @@ import '../../support/localized_app.dart';
 
 class _FakeTripsRepo implements TripsRepository {
   @override
+  Future<Trip> create({
+    required String originAirport,
+    required String destinationAirport,
+    required DateTime departureAt,
+    required double capacityKgTotal,
+    required double pricePerKg,
+  }) => throw UnimplementedError();
+
+  @override
   Future<List<Trip>> search(TripSearchQuery query) async => [
     Trip(
       id: 't1',

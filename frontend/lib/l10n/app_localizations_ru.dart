@@ -153,6 +153,34 @@ class AppLocalizationsRu extends AppLocalizations {
   String get searchButton => 'Искать';
 
   @override
+  String get offerTripTitle => 'Предложить рейс';
+
+  @override
+  String get fieldDeparture => 'Дата вылета';
+
+  @override
+  String get fieldCapacityKg => 'Свободная вместимость (кг)';
+
+  @override
+  String get fieldPricePerKg => 'Цена за кг (EUR)';
+
+  @override
+  String get pickDate => 'Выбрать дату';
+
+  @override
+  String get publishTrip => 'Опубликовать рейс';
+
+  @override
+  String get tripPublished => 'Рейс опубликован!';
+
+  @override
+  String get offerTripKycHint =>
+      'Примечание: для предложения нужна проверка личности (KYC).';
+
+  @override
+  String get validIata => 'Код из 3 букв (напр. FRA)';
+
+  @override
   String get noTrips => 'Рейсы не найдены.';
 
   @override

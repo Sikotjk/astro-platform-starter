@@ -150,6 +150,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get searchButton => 'Suchen';
 
   @override
+  String get offerTripTitle => 'Trip anbieten';
+
+  @override
+  String get fieldDeparture => 'Abflugdatum';
+
+  @override
+  String get fieldCapacityKg => 'Freie Kapazität (kg)';
+
+  @override
+  String get fieldPricePerKg => 'Preis pro kg (EUR)';
+
+  @override
+  String get pickDate => 'Datum wählen';
+
+  @override
+  String get publishTrip => 'Trip veröffentlichen';
+
+  @override
+  String get tripPublished => 'Trip veröffentlicht!';
+
+  @override
+  String get offerTripKycHint =>
+      'Hinweis: Zum Anbieten ist eine Identitätsprüfung (KYC) nötig.';
+
+  @override
+  String get validIata => '3-Buchstaben-Code (z.B. FRA)';
+
+  @override
   String get noTrips => 'Keine Trips gefunden.';
 
   @override

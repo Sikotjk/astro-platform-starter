@@ -70,6 +70,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             const SizedBox(height: 12),
             FilledButton.tonalIcon(
+              onPressed: () => context.push('/trip/new'),
+              icon: const Icon(Icons.flight_takeoff),
+              label: Text(l10n.offerTripTitle),
+            ),
+            const SizedBox(height: 12),
+            FilledButton.tonalIcon(
               onPressed: () => context.push('/bookings'),
               icon: const Icon(Icons.inventory_2),
               label: Text(l10n.homeMyBookings),

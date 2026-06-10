@@ -334,6 +334,60 @@ abstract class AppLocalizations {
   /// **'Suchen'**
   String get searchButton;
 
+  /// No description provided for @offerTripTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Trip anbieten'**
+  String get offerTripTitle;
+
+  /// No description provided for @fieldDeparture.
+  ///
+  /// In de, this message translates to:
+  /// **'Abflugdatum'**
+  String get fieldDeparture;
+
+  /// No description provided for @fieldCapacityKg.
+  ///
+  /// In de, this message translates to:
+  /// **'Freie Kapazität (kg)'**
+  String get fieldCapacityKg;
+
+  /// No description provided for @fieldPricePerKg.
+  ///
+  /// In de, this message translates to:
+  /// **'Preis pro kg (EUR)'**
+  String get fieldPricePerKg;
+
+  /// No description provided for @pickDate.
+  ///
+  /// In de, this message translates to:
+  /// **'Datum wählen'**
+  String get pickDate;
+
+  /// No description provided for @publishTrip.
+  ///
+  /// In de, this message translates to:
+  /// **'Trip veröffentlichen'**
+  String get publishTrip;
+
+  /// No description provided for @tripPublished.
+  ///
+  /// In de, this message translates to:
+  /// **'Trip veröffentlicht!'**
+  String get tripPublished;
+
+  /// No description provided for @offerTripKycHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Hinweis: Zum Anbieten ist eine Identitätsprüfung (KYC) nötig.'**
+  String get offerTripKycHint;
+
+  /// No description provided for @validIata.
+  ///
+  /// In de, this message translates to:
+  /// **'3-Buchstaben-Code (z.B. FRA)'**
+  String get validIata;
+
   /// No description provided for @noTrips.
   ///
   /// In de, this message translates to:

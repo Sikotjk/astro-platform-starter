@@ -30,6 +30,7 @@ import '../features/reviews/review_controller.dart';
 import '../features/reviews/reviews_repository.dart';
 import '../features/saved_searches/saved_searches_controller.dart';
 import '../features/saved_searches/saved_searches_repository.dart';
+import '../features/trips/create_trip_controller.dart';
 import '../features/trips/trips_controller.dart';
 import '../features/trips/trips_repository.dart';
 import '../models/booking.dart';
@@ -81,6 +82,11 @@ final tripsRepositoryProvider = Provider<TripsRepository>(
 final tripsControllerProvider =
     StateNotifierProvider<TripsController, AsyncValue<List<Trip>>>(
       (ref) => TripsController(ref.watch(tripsRepositoryProvider)),
+    );
+
+final createTripControllerProvider =
+    StateNotifierProvider<CreateTripController, AsyncValue<void>>(
+      (ref) => CreateTripController(ref.watch(tripsRepositoryProvider)),
     );
 
 final kycRepositoryProvider = Provider<KycRepository>(

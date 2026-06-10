@@ -148,6 +148,34 @@ class AppLocalizationsTg extends AppLocalizations {
   String get searchButton => 'Ҷустуҷӯ';
 
   @override
+  String get offerTripTitle => 'Пешниҳоди парвоз';
+
+  @override
+  String get fieldDeparture => 'Санаи парвоз';
+
+  @override
+  String get fieldCapacityKg => 'Иқтидори озод (кг)';
+
+  @override
+  String get fieldPricePerKg => 'Нарх барои кг (EUR)';
+
+  @override
+  String get pickDate => 'Интихоби сана';
+
+  @override
+  String get publishTrip => 'Нашри парвоз';
+
+  @override
+  String get tripPublished => 'Парвоз нашр шуд!';
+
+  @override
+  String get offerTripKycHint =>
+      'Эзоҳ: барои пешниҳод тасдиқи шахсият (KYC) лозим аст.';
+
+  @override
+  String get validIata => 'Рамзи 3-ҳарфӣ (мас. FRA)';
+
+  @override
   String get noTrips => 'Парвоз ёфт нашуд.';
 
   @override
