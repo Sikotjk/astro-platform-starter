@@ -28,6 +28,7 @@ import '../features/notifications/notifications_repository.dart';
 import '../features/profile/profile_controller.dart';
 import '../features/reviews/review_controller.dart';
 import '../features/reviews/reviews_repository.dart';
+import '../features/reviews/user_reviews_controller.dart';
 import '../features/saved_searches/saved_searches_controller.dart';
 import '../features/saved_searches/saved_searches_repository.dart';
 import '../features/trips/create_trip_controller.dart';
@@ -38,6 +39,7 @@ import '../models/booking.dart';
 import '../models/booking_detail.dart';
 import '../models/message.dart';
 import '../models/notification.dart';
+import '../models/review.dart';
 import '../models/saved_search.dart';
 import '../models/trip.dart';
 import 'api_client.dart';
@@ -169,6 +171,16 @@ final reviewControllerProvider =
     StateNotifierProvider.family<ReviewController, AsyncValue<void>, String>(
       (ref, bookingId) =>
           ReviewController(ref.watch(reviewsRepositoryProvider), bookingId),
+    );
+
+final userReviewsControllerProvider =
+    StateNotifierProvider.family<
+      UserReviewsController,
+      AsyncValue<List<Review>>,
+      String
+    >(
+      (ref, userId) =>
+          UserReviewsController(ref.watch(reviewsRepositoryProvider), userId),
     );
 
 // ── Profil (eigenes Profil + erhaltene Bewertungen) ──────────────────────────

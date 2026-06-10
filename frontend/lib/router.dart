@@ -15,6 +15,8 @@ import 'features/manifest/manifest_screen.dart';
 import 'features/notifications/notifications_screen.dart';
 import 'features/profile/profile_edit_screen.dart';
 import 'features/profile/profile_screen.dart';
+import 'features/reviews/public_profile_screen.dart';
+import 'models/booking_detail.dart';
 import 'features/saved_searches/saved_searches_screen.dart';
 import 'features/trips/create_trip_screen.dart';
 import 'features/trips/my_trips_screen.dart';
@@ -51,6 +53,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/trips', builder: (_, _) => const TripsSearchScreen()),
       GoRoute(path: '/trip/new', builder: (_, _) => const CreateTripScreen()),
       GoRoute(path: '/trips/mine', builder: (_, _) => const MyTripsScreen()),
+      GoRoute(
+        path: '/user',
+        builder: (_, state) =>
+            PublicProfileScreen(party: state.extra as BookingParty),
+      ),
       GoRoute(
         path: '/saved-searches',
         builder: (_, _) => const SavedSearchesScreen(),
