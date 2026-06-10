@@ -68,7 +68,9 @@ export class BookingService {
     if (!b.senderStripeCustomerId) {
       throw new BookingStateError('Sender hat keinen Stripe-Customer.');
     }
-    if (b.paymentIntentId) {
+    // Nach einer fehlgeschlagenen Zahlung (FAILED) ist ein neuer Versuch
+    // erlaubt: der alte PaymentIntent wird durch einen frischen ersetzt.
+    if (b.paymentIntentId && b.paymentStatus !== 'FAILED') {
       throw new BookingStateError('Für dieses Booking existiert bereits ein PaymentIntent.');
     }
 
@@ -150,6 +152,37 @@ export class BookingService {
     }
 
     await this.repo.markProcessedEvent(eventId, 'payment_intent.succeeded');
+    return { processed: true };
+  }
+
+  // ───────────────────────────────────────────────────────────────────────────
+  //  3b) Stripe-Webhook: payment_intent.payment_failed -> paymentStatus FAILED
+  //      Kein Statuswechsel: das Booking bleibt ACCEPTED, der Sender kann über
+  //      createEscrow() erneut bezahlen. Idempotent; überschreibt NIE einen
+  //      bereits gehaltenen/bewegten Escrow (Out-of-Order-Events).
+  // ───────────────────────────────────────────────────────────────────────────
+  async handlePaymentFailed(
+    eventId: string,
+    paymentIntentId: string,
+  ): Promise<{ processed: boolean }> {
+    if (await this.repo.hasProcessedEvent(eventId)) {
+      return { processed: false }; // Duplikat – still ignorieren.
+    }
+
+    const b = await this.findByPaymentIntent(paymentIntentId);
+    // Nur markieren, solange kein Geld gehalten/bewegt wurde.
+    if (b && (b.paymentStatus === 'PENDING' || b.paymentStatus === 'FAILED')) {
+      await this.repo.applyTransition({
+        bookingId: b.id,
+        from: b.status,
+        to: b.status, // kein Statuswechsel, nur Patch
+        triggeredBy: 'WEBHOOK',
+        patch: { paymentStatus: 'FAILED' },
+        metadata: { eventId, paymentIntentId, event: 'payment_intent.payment_failed' },
+      });
+    }
+
+    await this.repo.markProcessedEvent(eventId, 'payment_intent.payment_failed');
     return { processed: true };
   }
 

@@ -150,3 +150,55 @@ describe('Audit-Log', () => {
     });
   });
 });
+
+describe('Fehlgeschlagene Zahlung (payment_intent.payment_failed)', () => {
+  it('setzt paymentStatus FAILED, Booking bleibt ACCEPTED', async () => {
+    repo.seed(makeBooking({ status: 'ACCEPTED', paymentIntentId: 'pi_1' }));
+
+    await service.handlePaymentFailed('evt_f1', 'pi_1');
+
+    const b = (await repo.findById('bk_1'))!;
+    expect(b.status).toBe('ACCEPTED');
+    expect(b.paymentStatus).toBe('FAILED');
+  });
+
+  it('ist idempotent (gleiches Event wird nur einmal verarbeitet)', async () => {
+    repo.seed(makeBooking({ status: 'ACCEPTED', paymentIntentId: 'pi_1' }));
+
+    const first = await service.handlePaymentFailed('evt_f1', 'pi_1');
+    const second = await service.handlePaymentFailed('evt_f1', 'pi_1');
+
+    expect(first.processed).toBe(true);
+    expect(second.processed).toBe(false);
+  });
+
+  it('überschreibt einen gehaltenen Escrow nicht (Out-of-Order-Event)', async () => {
+    repo.seed(
+      makeBooking({ status: 'PAID', paymentStatus: 'ESCROW_HELD', paymentIntentId: 'pi_1' }),
+    );
+
+    await service.handlePaymentFailed('evt_late', 'pi_1');
+
+    expect((await repo.findById('bk_1'))!.paymentStatus).toBe('ESCROW_HELD');
+  });
+
+  it('erlaubt nach FAILED einen neuen Zahlversuch mit frischem PaymentIntent', async () => {
+    repo.seed(
+      makeBooking({ status: 'ACCEPTED', paymentStatus: 'FAILED', paymentIntentId: 'pi_old' }),
+    );
+
+    await service.createEscrow('bk_1');
+
+    const b = (await repo.findById('bk_1'))!;
+    expect(b.paymentIntentId).not.toBe('pi_old');
+    expect(b.paymentStatus).toBe('PENDING');
+  });
+
+  it('ohne FAILED bleibt ein zweiter Escrow-Versuch verboten', async () => {
+    repo.seed(
+      makeBooking({ status: 'ACCEPTED', paymentStatus: 'PENDING', paymentIntentId: 'pi_open' }),
+    );
+
+    await expect(service.createEscrow('bk_1')).rejects.toThrow(BookingStateError);
+  });
+});

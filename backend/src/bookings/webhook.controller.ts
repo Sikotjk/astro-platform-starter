@@ -53,6 +53,11 @@ export class StripeWebhookController {
         await this.bookings.handlePaymentSucceeded(event.id, pi.id);
         break;
       }
+      case 'payment_intent.payment_failed': {
+        const pi = event.data.object as Stripe.PaymentIntent;
+        await this.bookings.handlePaymentFailed(event.id, pi.id);
+        break;
+      }
       default:
         // Andere Events werden (noch) nicht verarbeitet — bewusst ignoriert.
         this.logger.debug(`Unbehandeltes Event: ${event.type}`);
