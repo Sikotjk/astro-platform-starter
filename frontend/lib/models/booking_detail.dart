@@ -92,6 +92,9 @@ class BookingDetail {
     this.items = const [],
     this.sender,
     this.traveler,
+    this.originAirport,
+    this.destinationAirport,
+    this.departureAt,
   });
 
   final String id;
@@ -107,6 +110,14 @@ class BookingDetail {
   final List<BookingPackageItem> items;
   final BookingParty? sender;
   final BookingParty? traveler;
+  final String? originAirport;
+  final String? destinationAirport;
+  final DateTime? departureAt;
+
+  /// "FRA → DYU", falls die Trip-Eckdaten vorliegen.
+  String? get route => (originAirport != null && destinationAirport != null)
+      ? '$originAirport → $destinationAirport'
+      : null;
 
   /// Die jeweils andere Partei aus Sicht von [myId].
   BookingParty? counterparty(String? myId) {
@@ -129,6 +140,8 @@ class BookingDetail {
         .map((e) => BookingPackageItem.fromJson(e as Map<String, dynamic>))
         .toList(growable: false);
 
+    final trip = json['trip'] as Map<String, dynamic>?;
+
     return BookingDetail(
       id: json['id'] as String,
       status: json['status'] as String? ?? 'REQUESTED',
@@ -143,6 +156,11 @@ class BookingDetail {
       items: items,
       sender: party('sender'),
       traveler: party('traveler'),
+      originAirport: trip?['originAirport'] as String?,
+      destinationAirport: trip?['destinationAirport'] as String?,
+      departureAt: trip?['departureAt'] != null
+          ? DateTime.tryParse(trip!['departureAt'] as String)
+          : null,
     );
   }
 }

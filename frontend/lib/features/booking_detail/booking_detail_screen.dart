@@ -201,6 +201,21 @@ class _DetailBody extends StatelessWidget {
             ),
           ],
         ),
+        if (booking.route != null) ...[
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              const Icon(Icons.flight, size: 16),
+              const SizedBox(width: 6),
+              Text(
+                booking.departureAt != null
+                    ? '${booking.route} · ${context.formatDate(booking.departureAt!)}'
+                    : booking.route!,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
+          ),
+        ],
         const SizedBox(height: 8),
         Text(
           '${l10n.amountLabel}: ${booking.totalAmount.toStringAsFixed(2)} ${booking.currency}',

@@ -28,6 +28,9 @@ class _FakeRepo implements BookingDetailRepository {
       travelerId: 't1',
       packageTitle: 'Buch',
       termsAccepted: false,
+      originAirport: 'FRA',
+      destinationAirport: 'DYU',
+      departureAt: DateTime(2026, 9, 1),
       events: [
         BookingStatusEvent(
           toStatus: 'REQUESTED',
@@ -125,6 +128,8 @@ void main() {
     expect(find.text('Angefragt'), findsWidgets);
     // Zahlungsstatus (PENDING) lokalisiert.
     expect(find.text('Zahlung ausstehend'), findsOneWidget);
+    // Route aus den Trip-Eckdaten.
+    expect(find.textContaining('FRA → DYU'), findsOneWidget);
     // Sender sieht die Reputation der Gegenpartei (Traveler Karim).
     expect(find.text('Karim'), findsOneWidget);
     expect(find.textContaining('10 Bewertungen'), findsOneWidget);

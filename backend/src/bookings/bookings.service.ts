@@ -158,6 +158,13 @@ export class BookingsService {
         package: { include: { items: true } },
         sender: partySelect,
         traveler: partySelect,
+        trip: {
+          select: {
+            originAirport: true,
+            destinationAirport: true,
+            departureAt: true,
+          },
+        },
       },
     });
     if (!booking) throw new NotFoundException('Buchung nicht gefunden.');

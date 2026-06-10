@@ -2,6 +2,33 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tj_shipping_app/models/booking_detail.dart';
 
 void main() {
+  test('fromJson liest die Trip-Eckdaten (Route + Abflug)', () {
+    final d = BookingDetail.fromJson({
+      'id': 'b1',
+      'senderId': 's1',
+      'travelerId': 't1',
+      'totalAmount': '0',
+      'trip': {
+        'originAirport': 'FRA',
+        'destinationAirport': 'DYU',
+        'departureAt': '2026-09-01T10:00:00.000Z',
+      },
+    });
+
+    expect(d.route, 'FRA → DYU');
+    expect(d.departureAt, isNotNull);
+  });
+
+  test('fromJson ohne Trip -> route null', () {
+    final d = BookingDetail.fromJson({
+      'id': 'b1',
+      'senderId': 's1',
+      'travelerId': 't1',
+      'totalAmount': '0',
+    });
+    expect(d.route, isNull);
+  });
+
   test('fromJson liest Parteien und counterparty wählt die andere Seite', () {
     final d = BookingDetail.fromJson({
       'id': 'b1',
