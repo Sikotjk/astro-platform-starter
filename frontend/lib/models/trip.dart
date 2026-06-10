@@ -4,17 +4,20 @@ class TripTraveler {
     required this.firstName,
     required this.ratingAvg,
     required this.ratingCount,
+    this.id,
   });
 
   final String firstName;
   final double ratingAvg;
   final int ratingCount;
+  final String? id;
 
   factory TripTraveler.fromJson(Map<String, dynamic> json) {
     return TripTraveler(
       firstName: json['firstName'] as String? ?? '',
       ratingAvg: (json['ratingAvg'] as num?)?.toDouble() ?? 0,
       ratingCount: json['ratingCount'] as int? ?? 0,
+      id: json['id'] as String?,
     );
   }
 }

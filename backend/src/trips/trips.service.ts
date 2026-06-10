@@ -75,7 +75,9 @@ export class TripsService {
       orderBy: { departureAt: 'asc' },
       take: 50,
       include: {
-        traveler: { select: { firstName: true, ratingAvg: true, ratingCount: true } },
+        traveler: {
+          select: { id: true, firstName: true, ratingAvg: true, ratingCount: true },
+        },
       },
     });
 
