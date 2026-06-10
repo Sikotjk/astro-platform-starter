@@ -36,3 +36,9 @@ export class LoginDto {
   @IsString()
   password!: string;
 }
+
+export class RefreshDto {
+  @IsString()
+  @MinLength(32)
+  refreshToken!: string;
+}
