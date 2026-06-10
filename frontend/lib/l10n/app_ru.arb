@@ -101,6 +101,8 @@
   "categoryOther": "Прочее",
   "fieldDescription": "Описание",
   "bookButton": "Запросить бронь",
+  "complianceDeclaration": "Подтверждаю: без оружия, наркотиков, подделок, скоропортящихся продуктов и рецептурных лекарств.",
+  "complianceRequired": "Подтвердите декларацию, чтобы продолжить.",
   "estimatedCost": "Примерная стоимость доставки: {amount} {currency}",
   "plusServiceFee": "плюс сервисный сбор",
   "validNumber": "Введите число > 0",

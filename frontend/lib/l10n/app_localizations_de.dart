@@ -344,6 +344,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookButton => 'Buchung anfragen';
 
   @override
+  String get complianceDeclaration =>
+      'Ich bestätige: keine Waffen, Drogen, Fälschungen, verderblichen Lebensmittel oder verschreibungspflichtigen Medikamente.';
+
+  @override
+  String get complianceRequired =>
+      'Bitte bestätige die Erklärung, um fortzufahren.';
+
+  @override
   String estimatedCost(Object amount, Object currency) {
     return 'Geschätzte Transportkosten: $amount $currency';
   }

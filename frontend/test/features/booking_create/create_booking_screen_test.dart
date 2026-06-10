@@ -51,4 +51,41 @@ void main() {
 
     expect(find.text('Pflichtfeld'), findsWidgets);
   });
+
+  testWidgets('Compliance-Erklärung ist Pflicht; Haken hebt den Fehler auf', (
+    tester,
+  ) async {
+    await tester.pumpWidget(localizedApp(CreateBookingScreen(trip: _trip())));
+
+    // Formular vollständig ausfüllen (Kategorie ist per Default gültig).
+    await tester.enterText(find.byKey(const Key('title')), 'Geschenk');
+    await tester.enterText(find.byKey(const Key('weight')), '2');
+    await tester.enterText(find.byKey(const Key('value')), '50');
+    await tester.enterText(find.byKey(const Key('recipientName')), 'Karim');
+    await tester.enterText(find.byKey(const Key('recipientPhone')), '+992900');
+    await tester.enterText(find.byKey(const Key('recipientCity')), 'Dushanbe');
+    await tester.enterText(
+      find.byKey(const Key('itemDescription')),
+      'Pullover',
+    );
+    await tester.pump();
+
+    // Absenden ohne Haken -> Compliance-Fehler, aber KEIN Feld-Fehler.
+    await tester.ensureVisible(find.text('Buchung anfragen'));
+    await tester.tap(find.text('Buchung anfragen'));
+    await tester.pumpAndSettle();
+    expect(find.text('Pflichtfeld'), findsNothing);
+    expect(
+      find.text('Bitte bestätige die Erklärung, um fortzufahren.'),
+      findsOneWidget,
+    );
+
+    // Haken setzen -> Fehler verschwindet.
+    await tester.tap(find.byKey(const Key('complianceCheck')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Bitte bestätige die Erklärung, um fortzufahren.'),
+      findsNothing,
+    );
+  });
 }

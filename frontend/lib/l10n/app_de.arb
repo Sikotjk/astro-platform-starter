@@ -108,6 +108,8 @@
   "categoryOther": "Sonstiges",
   "fieldDescription": "Beschreibung",
   "bookButton": "Buchung anfragen",
+  "complianceDeclaration": "Ich bestätige: keine Waffen, Drogen, Fälschungen, verderblichen Lebensmittel oder verschreibungspflichtigen Medikamente.",
+  "complianceRequired": "Bitte bestätige die Erklärung, um fortzufahren.",
   "estimatedCost": "Geschätzte Transportkosten: {amount} {currency}",
   "@estimatedCost": { "placeholders": { "amount": {}, "currency": {} } },
   "plusServiceFee": "zzgl. Servicegebühr",

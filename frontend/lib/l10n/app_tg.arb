@@ -101,6 +101,8 @@
   "categoryOther": "Дигар",
   "fieldDescription": "Тавсиф",
   "bookButton": "Дархости фармоиш",
+  "complianceDeclaration": "Тасдиқ мекунам: бе силоҳ, маводи мухаддир, қалбакӣ, маҳсулоти зудвайроншаванда ё доруҳои рецептӣ.",
+  "complianceRequired": "Барои идома эъломияро тасдиқ кунед.",
   "estimatedCost": "Хароҷоти тахминии интиқол: {amount} {currency}",
   "plusServiceFee": "илова бар ин ҳаққи хизматрасонӣ",
   "validNumber": "Рақами > 0 ворид кунед",

@@ -346,6 +346,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get bookButton => 'Запросить бронь';
 
   @override
+  String get complianceDeclaration =>
+      'Подтверждаю: без оружия, наркотиков, подделок, скоропортящихся продуктов и рецептурных лекарств.';
+
+  @override
+  String get complianceRequired => 'Подтвердите декларацию, чтобы продолжить.';
+
+  @override
   String estimatedCost(Object amount, Object currency) {
     return 'Примерная стоимость доставки: $amount $currency';
   }

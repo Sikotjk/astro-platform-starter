@@ -69,6 +69,8 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
   final _recipientCity = TextEditingController();
   final _itemDescription = TextEditingController();
   String _category = 'CLOTHING';
+  bool _compliance = false; // Pflicht-Selbstdeklaration (keine Verbotsgüter)
+  bool _complianceTouched = false;
 
   @override
   void dispose() {
@@ -87,7 +89,9 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
   }
 
   void _submit() {
-    if (!(_formKey.currentState?.validate() ?? false)) return;
+    final formOk = _formKey.currentState?.validate() ?? false;
+    if (!_compliance) setState(() => _complianceTouched = true);
+    if (!formOk || !_compliance) return;
     final weight = double.tryParse(_weight.text.trim()) ?? 0;
     final value = double.tryParse(_value.text.trim()) ?? 0;
 
@@ -227,7 +231,33 @@ class _CreateBookingScreenState extends ConsumerState<CreateBookingScreen> {
                 validator: (v) =>
                     (v == null || v.trim().length < 3) ? l10n.validMin3 : null,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              CheckboxListTile(
+                key: const Key('complianceCheck'),
+                value: _compliance,
+                onChanged: (v) => setState(() {
+                  _compliance = v ?? false;
+                  _complianceTouched = true;
+                }),
+                controlAffinity: ListTileControlAffinity.leading,
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  l10n.complianceDeclaration,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+              if (_complianceTouched && !_compliance)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    l10n.complianceRequired,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 16),
               if (state.status == CreateStatus.error && state.error != null)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12),

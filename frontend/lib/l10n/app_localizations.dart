@@ -706,6 +706,18 @@ abstract class AppLocalizations {
   /// **'Buchung anfragen'**
   String get bookButton;
 
+  /// No description provided for @complianceDeclaration.
+  ///
+  /// In de, this message translates to:
+  /// **'Ich bestätige: keine Waffen, Drogen, Fälschungen, verderblichen Lebensmittel oder verschreibungspflichtigen Medikamente.'**
+  String get complianceDeclaration;
+
+  /// No description provided for @complianceRequired.
+  ///
+  /// In de, this message translates to:
+  /// **'Bitte bestätige die Erklärung, um fortzufahren.'**
+  String get complianceRequired;
+
   /// No description provided for @estimatedCost.
   ///
   /// In de, this message translates to:

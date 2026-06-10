@@ -342,6 +342,13 @@ class AppLocalizationsTg extends AppLocalizations {
   String get bookButton => 'Дархости фармоиш';
 
   @override
+  String get complianceDeclaration =>
+      'Тасдиқ мекунам: бе силоҳ, маводи мухаддир, қалбакӣ, маҳсулоти зудвайроншаванда ё доруҳои рецептӣ.';
+
+  @override
+  String get complianceRequired => 'Барои идома эъломияро тасдиқ кунед.';
+
+  @override
   String estimatedCost(Object amount, Object currency) {
     return 'Хароҷоти тахминии интиқол: $amount $currency';
   }
