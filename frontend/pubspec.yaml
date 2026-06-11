@@ -36,7 +36,7 @@ dependencies:
   intl: any
   cupertino_icons: ^1.0.8
   flutter_riverpod: ^2.6.1 # State-Management
-  go_router: ^14.6.2 # Navigation
+  go_router: ^17.3.0 # Navigation
   dio: ^5.7.0 # HTTP-Client
   flutter_secure_storage: ^9.2.2 # JWT sicher ablegen
   socket_io_client: ^3.0.2 # Echtzeit-Chat (WebSocket)
