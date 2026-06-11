@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../models/booking_detail.dart';
 import '../../models/saved_search.dart';
 import '../../models/trip.dart';
 import '../../widgets/error_retry.dart';
@@ -212,10 +213,38 @@ class _TripList extends StatelessWidget {
           ),
           trailing: t.traveler == null
               ? null
-              : TravelerReputation(traveler: t.traveler!),
+              : _TravelerBadge(traveler: t.traveler!),
           onTap: () => context.push('/book', extra: t),
         );
       },
+    );
+  }
+}
+
+/// Reputation des Reisenden; antippbar → öffentliches Profil mit Bewertungen.
+class _TravelerBadge extends StatelessWidget {
+  const _TravelerBadge({required this.traveler});
+
+  final TripTraveler traveler;
+
+  @override
+  Widget build(BuildContext context) {
+    final id = traveler.id;
+    final badge = TravelerReputation(traveler: traveler);
+    if (id == null) return badge; // ältere API-Antwort ohne id
+    return InkWell(
+      key: Key('travelerBadge_$id'),
+      borderRadius: BorderRadius.circular(8),
+      onTap: () => context.push(
+        '/user',
+        extra: BookingParty(
+          id: id,
+          firstName: traveler.firstName,
+          ratingAvg: traveler.ratingAvg,
+          ratingCount: traveler.ratingCount,
+        ),
+      ),
+      child: Padding(padding: const EdgeInsets.all(4), child: badge),
     );
   }
 }

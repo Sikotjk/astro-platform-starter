@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tj_shipping_app/core/localization_delegates.dart';
 import 'package:tj_shipping_app/core/providers.dart';
 import 'package:tj_shipping_app/features/saved_searches/saved_searches_repository.dart';
 import 'package:tj_shipping_app/features/trips/trips_repository.dart';
 import 'package:tj_shipping_app/features/trips/trips_search_screen.dart';
+import 'package:tj_shipping_app/l10n/app_localizations.dart';
+import 'package:tj_shipping_app/models/booking_detail.dart';
 import 'package:tj_shipping_app/models/saved_search.dart';
 import 'package:tj_shipping_app/models/trip.dart';
 
@@ -33,6 +38,7 @@ class _FakeTripsRepo implements TripsRepository {
       pricePerKg: 8,
       currency: 'EUR',
       traveler: const TripTraveler(
+        id: 'u1',
         firstName: 'Karim',
         ratingAvg: 4.5,
         ratingCount: 12,
@@ -126,5 +132,48 @@ void main() {
     // IATA-Formatter erzwingt Großschreibung.
     expect(saved.created, {'origin': 'FRA', 'dest': 'DYU'});
     expect(find.textContaining('gespeichert'), findsOneWidget); // SnackBar
+  });
+
+  testWidgets('Tipp auf die Reisenden-Reputation öffnet das Profil', (
+    tester,
+  ) async {
+    BookingParty? pushed;
+    final router = GoRouter(
+      routes: [
+        GoRoute(path: '/', builder: (_, _) => const TripsSearchScreen()),
+        GoRoute(
+          path: '/user',
+          builder: (_, state) {
+            pushed = state.extra as BookingParty?;
+            return const Text('PROFIL');
+          },
+        ),
+      ],
+    );
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          tripsRepositoryProvider.overrideWithValue(_FakeTripsRepo()),
+        ],
+        child: MaterialApp.router(
+          routerConfig: router,
+          localizationsDelegates: appLocalizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: const Locale('de'),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Suchen'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('travelerBadge_u1')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('PROFIL'), findsOneWidget);
+    expect(pushed?.id, 'u1');
+    expect(pushed?.firstName, 'Karim');
+    expect(pushed?.ratingCount, 12);
   });
 }
