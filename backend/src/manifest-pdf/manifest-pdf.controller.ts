@@ -1,4 +1,5 @@
 import { Controller, Get, Param, Query, Res, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import type { Response } from 'express';
 import { ManifestPdfService } from './manifest-pdf.service';
 import { JwtAuthGuard } from '../common/jwt-auth.guard';
@@ -8,6 +9,8 @@ import type { Locale } from '../customs/customs.types';
 
 const LOCALES: Locale[] = ['de', 'ru', 'tg'];
 
+// PDF-Erzeugung ist rechenintensiv → strenger drosseln (Schutz vor CPU-DoS).
+@Throttle({ default: { ttl: 60_000, limit: 20 } })
 @Controller('bookings/:id/manifest')
 @UseGuards(JwtAuthGuard)
 export class ManifestPdfController {

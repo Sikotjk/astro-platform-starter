@@ -39,7 +39,7 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/tj_shipping
-      JWT_ACCESS_SECRET: ci-test-secret
+      JWT_ACCESS_SECRET: ci-test-secret-not-for-production-use
       # Keine Stripe-Keys -> App nutzt automatisch die Fake-Gateways.
 
     steps:

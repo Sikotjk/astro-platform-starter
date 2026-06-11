@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import {
+  ArrayMaxSize,
   ArrayMinSize,
   IsArray,
   IsBoolean,
@@ -8,6 +9,8 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Max,
+  MaxLength,
   Min,
   MinLength,
   ValidateNested,
@@ -30,14 +33,17 @@ export class DeclarationItemDto {
 
   @IsString()
   @MinLength(3)
+  @MaxLength(200)
   description!: string;
 
   @IsNumber()
   @Min(1)
+  @Max(10_000)
   quantity!: number;
 
   @IsNumber()
   @Min(0)
+  @Max(1_000_000)
   unitValueEur!: number;
 
   @IsBoolean()
@@ -47,6 +53,7 @@ export class DeclarationItemDto {
 export class EvaluateDeclarationDto {
   @IsArray()
   @ArrayMinSize(1)
+  @ArrayMaxSize(50)
   @ValidateNested({ each: true })
   @Type(() => DeclarationItemDto)
   items!: DeclarationItemDto[];

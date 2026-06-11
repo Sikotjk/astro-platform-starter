@@ -1,12 +1,11 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
-import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
+import { Body, Controller, Post } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { LoginDto, RefreshDto, RegisterDto } from './dto/auth.dto';
 
-// Rate-Limit gegen Brute-Force: 20 Requests/Minute je IP und Route.
-// Bewusst nur auf den Auth-Routen (kein globales Limit; siehe DEPLOYMENT.md).
+// Strenges Rate-Limit gegen Brute-Force: 20 Requests/Minute je IP und Route.
+// Der ThrottlerGuard läuft global (APP_GUARD); hier nur das schärfere Limit.
 @Controller('auth')
-@UseGuards(ThrottlerGuard)
 @Throttle({ default: { ttl: 60_000, limit: 20 } })
 export class AuthController {
   constructor(private readonly auth: AuthService) {}

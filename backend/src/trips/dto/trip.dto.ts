@@ -1,4 +1,5 @@
 import {
+  ArrayMaxSize,
   IsArray,
   IsDateString,
   IsEnum,
@@ -6,6 +7,8 @@ import {
   IsOptional,
   IsString,
   Length,
+  Max,
+  MaxLength,
   Min,
 } from 'class-validator';
 
@@ -31,6 +34,7 @@ export class CreateTripDto {
 
   @IsOptional()
   @IsString()
+  @MaxLength(20)
   departureGate?: string;
 
   @IsDateString()
@@ -42,23 +46,28 @@ export class CreateTripDto {
 
   @IsNumber()
   @Min(0.1)
+  @Max(100)
   capacityKgTotal!: number;
 
   @IsNumber()
   @Min(0)
+  @Max(10_000)
   pricePerKg!: number;
 
   @IsOptional()
   @IsString()
+  @Length(3, 3)
   currency?: string;
 
   @IsOptional()
   @IsArray()
+  @ArrayMaxSize(8)
   @IsEnum(CustomsCategoryDto, { each: true })
   acceptedCategories?: CustomsCategoryDto[];
 
   @IsOptional()
   @IsString()
+  @MaxLength(1000)
   notes?: string;
 }
 

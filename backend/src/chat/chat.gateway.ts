@@ -25,7 +25,18 @@ interface AuthedSocket extends Socket {
 
 const room = (bookingId: string) => `booking:${bookingId}`;
 
-@WebSocketGateway({ namespace: '/chat', cors: { origin: '*' } })
+// CORS-Origins aus der Umgebung (gleiche Liste wie die REST-API). Leer =>
+// keine Cross-Origin-Browser-Verbindungen erlaubt. Mobile Clients senden
+// keinen Origin-Header und sind davon nicht betroffen.
+const wsCorsOrigins = (process.env.CORS_ORIGIN ?? '')
+  .split(',')
+  .map((o) => o.trim())
+  .filter((o) => o.length > 0);
+
+@WebSocketGateway({
+  namespace: '/chat',
+  cors: { origin: wsCorsOrigins.length > 0 ? wsCorsOrigins : false, credentials: true },
+})
 export class ChatGateway implements OnGatewayConnection {
   private readonly logger = new Logger('ChatGateway');
 

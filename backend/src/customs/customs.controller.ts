@@ -1,7 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { CustomsService } from './customs.service';
 import { EvaluateDeclarationDto } from './dto/declaration.dto';
 
+// Öffentlicher (auth-freier) Endpunkt → strenger drosseln als der globale Default.
+@Throttle({ default: { ttl: 60_000, limit: 30 } })
 @Controller('customs')
 export class CustomsController {
   constructor(private readonly customs: CustomsService) {}

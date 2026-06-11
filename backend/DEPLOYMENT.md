@@ -55,12 +55,30 @@ docker compose up --build
 
 ## Rate-Limiting
 
-- **In der App**: `/auth/*` ist auf 20 Requests/Minute je IP limitiert
-  (In-Memory-Throttler, gilt pro Instanz — Brute-Force-Schutz für Login).
-- **Global**: bewusst nicht in der App; bei Bedarf am Reverse-Proxy/LB
-  (z. B. nginx `limit_req`) oder später Redis-gestützt über alle Instanzen.
+- **Global**: Ein `ThrottlerGuard` läuft app-weit (`APP_GUARD`) mit großzügigem
+  Default von 200 Requests/Minute je IP (In-Memory, pro Instanz).
+- **Strenger limitierte Endpunkte** (per `@Throttle`):
+  - `/auth/*` → 20/min (Brute-Force-Schutz für Login/Register).
+  - `/customs/evaluate` → 30/min (öffentlich, auth-frei).
+  - `GET /bookings/:id/manifest` → 20/min (teure PDF-Erzeugung, CPU-DoS-Schutz).
+  - `/health*` ist via `@SkipThrottle()` ausgenommen (LB/Orchestrator-Probes).
+- **Verteilt**: Der In-Memory-Store zählt pro Instanz. Für mehrere Instanzen
+  zusätzlich am Reverse-Proxy/LB (z. B. nginx `limit_req`) oder Redis-gestützt.
 - Hinter einem Proxy `app.set('trust proxy', …)` beachten, damit die echte
   Client-IP gezählt wird (sonst limitiert man den Proxy).
+
+## Härtung (HTTP)
+
+- **helmet**: sichere Default-Header (HSTS, X-Frame-Options, CSP …) via
+  `app.use(helmet())`.
+- **Body-Size-Limit**: JSON/urlencoded auf 256 KB begrenzt (Speicher-DoS-Schutz).
+- **Eingabe-Validierung**: `ValidationPipe` mit `whitelist` +
+  `forbidNonWhitelisted`; alle DTOs mit Längen-/Wert-/Array-Grenzen.
+- **WebSocket-CORS**: Der Chat-Gateway nutzt dieselbe `CORS_ORIGIN`-Whitelist
+  wie die REST-API (leer ⇒ keine Cross-Origin-Browser-Verbindungen).
+- **JWT-Secret Fail-Fast**: Die App startet nicht ohne starkes
+  `JWT_ACCESS_SECRET` (kein Default, Platzhalter und zu kurze Werte werden
+  beim Boot abgelehnt).
 
 ## Migrationen
 

@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { TripsModule } from './trips/trips.module';
@@ -19,6 +21,10 @@ import { HealthModule } from './health/health.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    // Globales Rate-Limit (In-Memory, pro Instanz). Großzügiger Default für
+    // normale API-Nutzung; sensible Endpunkte (Auth, Zoll, Manifest) setzen
+    // per @Throttle strengere Limits. Greift app-weit über den APP_GUARD.
+    ThrottlerModule.forRoot([{ ttl: 60_000, limit: 200 }]),
     PrismaModule,
     AuthModule,
     UsersModule,
@@ -34,6 +40,10 @@ import { HealthModule } from './health/health.module';
     AlertsModule,
     PushModule,
     HealthModule,
+  ],
+  providers: [
+    // Rate-Limiting app-weit erzwingen (statt nur am AuthController).
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
   ],
 })
 export class AppModule {}
