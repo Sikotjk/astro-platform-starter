@@ -1,0 +1,2 @@
+export const PUSH_SENDER = Symbol('PUSH_SENDER');
+export const DEVICE_TOKEN_REPOSITORY = Symbol('DEVICE_TOKEN_REPOSITORY');

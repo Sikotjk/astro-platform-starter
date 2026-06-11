@@ -1,0 +1,74 @@
+import 'package:dio/dio.dart';
+
+import '../../models/trip.dart';
+
+abstract class TripsRepository {
+  Future<List<Trip>> search(TripSearchQuery query);
+
+  /// Lädt einen einzelnen Trip (GET /trips/:id).
+  Future<Trip> findOne(String id);
+
+  /// Eigene veröffentlichte Trips des Reisenden (GET /trips/mine).
+  Future<List<Trip>> listMine();
+
+  /// Veröffentlicht einen neuen Trip (POST /trips). Erfordert KYC-Verifizierung.
+  Future<Trip> create({
+    required String originAirport,
+    required String destinationAirport,
+    required DateTime departureAt,
+    required double capacityKgTotal,
+    required double pricePerKg,
+  });
+}
+
+class DioTripsRepository implements TripsRepository {
+  DioTripsRepository(this._dio);
+
+  final Dio _dio;
+
+  @override
+  Future<List<Trip>> search(TripSearchQuery query) async {
+    final res = await _dio.get<List<dynamic>>(
+      '/trips',
+      queryParameters: query.toQuery(),
+    );
+    return (res.data ?? [])
+        .map((e) => Trip.fromJson(e as Map<String, dynamic>))
+        .toList(growable: false);
+  }
+
+  @override
+  Future<Trip> findOne(String id) async {
+    final res = await _dio.get<Map<String, dynamic>>('/trips/$id');
+    return Trip.fromJson(res.data!);
+  }
+
+  @override
+  Future<List<Trip>> listMine() async {
+    final res = await _dio.get<List<dynamic>>('/trips/mine');
+    return (res.data ?? [])
+        .map((e) => Trip.fromJson(e as Map<String, dynamic>))
+        .toList(growable: false);
+  }
+
+  @override
+  Future<Trip> create({
+    required String originAirport,
+    required String destinationAirport,
+    required DateTime departureAt,
+    required double capacityKgTotal,
+    required double pricePerKg,
+  }) async {
+    final res = await _dio.post<Map<String, dynamic>>(
+      '/trips',
+      data: {
+        'originAirport': originAirport.toUpperCase(),
+        'destinationAirport': destinationAirport.toUpperCase(),
+        'departureAt': departureAt.toUtc().toIso8601String(),
+        'capacityKgTotal': capacityKgTotal,
+        'pricePerKg': pricePerKg,
+      },
+    );
+    return Trip.fromJson(res.data!);
+  }
+}

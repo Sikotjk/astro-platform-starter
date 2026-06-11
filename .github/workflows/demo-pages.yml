@@ -1,0 +1,72 @@
+name: Demo (GitHub Pages)
+
+# Baut die Flutter-Web-App im DEMO-Modus (ohne Backend) und veröffentlicht sie
+# auf GitHub Pages. Ergebnis: ein Link, der auf dem Handy im Browser läuft.
+#
+# Einmalig aktivieren: Repo → Settings → Pages → "Build and deployment" →
+# Source: "GitHub Actions". Danach läuft dieser Workflow bei jedem Push am
+# Frontend (oder manuell über "Run workflow").
+
+on:
+  push:
+    branches: ['claude/tadschikistan-p2p-delivery-PSIJM', 'main']
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/demo-pages.yml'
+  workflow_dispatch:
+
+# Rechte für das Pages-Deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Immer nur ein Deployment gleichzeitig; laufende abbrechen.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (Flutter Web, Demo)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.1'
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # base-href muss dem Pages-Unterpfad entsprechen (Projekt-Site):
+      # https://<user>.github.io/<repo>/
+      - name: Build web (Demo-Modus)
+        run: >-
+          flutter build web --release
+          --dart-define=DEMO_MODE=true
+          --base-href "/${{ github.event.repository.name }}/"
+          --no-tree-shake-icons
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/build/web
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
