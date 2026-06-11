@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@nestjs/testing": "^11.1.26",
-    "@swc/core": "^1.15.40",
+    "@swc/core": "^1.15.41",
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.0",
     "@types/node": "^20.12.7",
