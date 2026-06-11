@@ -14,6 +14,7 @@ class ApiClient {
     TokenStore tokenStore, {
     String? baseUrl,
     void Function()? onUnauthorized,
+    HttpClientAdapter? adapter,
   }) {
     final dio = Dio(
       BaseOptions(
@@ -23,6 +24,9 @@ class ApiClient {
         contentType: 'application/json',
       ),
     );
+
+    // Demo-Modus: Anfragen gehen an ein In-Memory-Backend statt ins Netz.
+    if (adapter != null) dio.httpClientAdapter = adapter;
 
     // Single-Flight: parallele 401s teilen sich EINEN Refresh-Aufruf.
     Future<String?>? refreshing;

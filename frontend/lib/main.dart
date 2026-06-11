@@ -60,6 +60,15 @@ class TjShippingApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: theme,
       routerConfig: router,
+      // Im Demo-Modus eine deutlich sichtbare Ecken-Markierung einblenden.
+      builder: AppConfig.isDemoMode
+          ? (context, child) => Banner(
+              message: 'DEMO',
+              location: BannerLocation.topEnd,
+              color: Colors.deepOrange,
+              child: child ?? const SizedBox.shrink(),
+            )
+          : null,
     );
   }
 }
