@@ -61,6 +61,28 @@ void main() {
     expect(find.text('Pflichtfeld'), findsWidgets); // Datum fehlt
   });
 
+  testWidgets('zeigt live die Verdienst-Vorschau (Kapazität × Preis)', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      localizedApp(
+        const CreateTripScreen(),
+        overrides: [
+          tripsRepositoryProvider.overrideWithValue(_FakeTripsRepo()),
+        ],
+      ),
+    );
+
+    expect(find.byKey(const Key('earningsEstimate')), findsNothing);
+
+    await tester.enterText(find.byKey(const Key('capacity')), '10');
+    await tester.enterText(find.byKey(const Key('price')), '8');
+    await tester.pump();
+
+    expect(find.byKey(const Key('earningsEstimate')), findsOneWidget);
+    expect(find.textContaining('80'), findsOneWidget); // 10 kg × 8 €
+  });
+
   testWidgets('mit gültigen Daten + Datum wird der Trip angelegt', (
     tester,
   ) async {

@@ -5,6 +5,7 @@ class TripTraveler {
     required this.ratingAvg,
     required this.ratingCount,
     this.id,
+    this.kycVerified = false,
   });
 
   final String firstName;
@@ -12,12 +13,16 @@ class TripTraveler {
   final int ratingCount;
   final String? id;
 
+  /// Identität via Stripe Identity bestätigt (Trust-Badge in der Suche).
+  final bool kycVerified;
+
   factory TripTraveler.fromJson(Map<String, dynamic> json) {
     return TripTraveler(
       firstName: json['firstName'] as String? ?? '',
       ratingAvg: (json['ratingAvg'] as num?)?.toDouble() ?? 0,
       ratingCount: json['ratingCount'] as int? ?? 0,
       id: json['id'] as String?,
+      kycVerified: json['kycStatus'] == 'VERIFIED',
     );
   }
 }

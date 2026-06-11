@@ -76,7 +76,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   icon: Icons.search_rounded,
                   label: l10n.homeSearchTrips,
                   color: AppColors.teal,
-                  onTap: () => context.push('/trips'),
+                  onTap: () => context.go('/trips'),
                 ),
                 _ActionCard(
                   icon: Icons.flight_takeoff_rounded,
@@ -94,7 +94,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   icon: Icons.inventory_2_rounded,
                   label: l10n.homeMyBookings,
                   color: AppColors.success,
-                  onTap: () => context.push('/bookings'),
+                  onTap: () => context.go('/bookings'),
                 ),
                 _ActionCard(
                   icon: Icons.notifications_rounded,
@@ -114,7 +114,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   icon: Icons.person_rounded,
                   label: l10n.profileTitle,
                   color: AppColors.tealDeep,
-                  onTap: () => context.push('/profile'),
+                  onTap: () => context.go('/profile'),
                 ),
               ]),
             ),

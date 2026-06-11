@@ -6,6 +6,7 @@ import '../../core/customs.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../core/theme/app_theme.dart';
 import '../../models/package.dart';
 import '../../models/trip.dart';
 import 'create_booking_controller.dart';
@@ -20,8 +21,12 @@ class CreateBookingScreen extends ConsumerStatefulWidget {
       _CreateBookingScreenState();
 }
 
-/// Zeigt die live geschätzten Transportkosten (kg × Preis/kg). Die finale
-/// Summe inkl. Servicegebühr berechnet das Backend.
+/// Muss dem Backend-Default PLATFORM_FEE_RATE entsprechen (Anzeige-Schätzung;
+/// verbindlich rechnet das Backend).
+const _serviceFeeRate = 0.15;
+
+/// Live-Preisrechner: transparente Aufschlüsselung Transport + Servicegebühr
+/// = Gesamt, sobald ein Gewicht eingegeben ist (Vorbild Grabr).
 class _CostEstimate extends StatelessWidget {
   const _CostEstimate({
     required this.weightText,
@@ -37,22 +42,68 @@ class _CostEstimate extends StatelessWidget {
   Widget build(BuildContext context) {
     final weight = double.tryParse(weightText.trim()) ?? 0;
     if (weight <= 0) return const SizedBox.shrink();
-    final cost = (weight * pricePerKg).toStringAsFixed(2);
     final l10n = context.l10n;
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
+    final scheme = Theme.of(context).colorScheme;
+
+    final transport = weight * pricePerKg;
+    final fee = transport * _serviceFeeRate;
+    final total = transport + fee;
+    String money(double v) => '${v.toStringAsFixed(2)} $currency';
+
+    Widget row(String label, String value, {bool bold = false}) {
+      final style = bold
+          ? Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: AppColors.teal,
+              fontWeight: FontWeight.w800,
+            )
+          : Theme.of(context).textTheme.bodyMedium;
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        child: Row(
+          children: [
+            Expanded(child: Text(label, style: style)),
+            Text(value, style: style),
+          ],
+        ),
+      );
+    }
+
+    return Container(
+      key: const Key('costEstimate'),
+      margin: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.teal.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(color: AppColors.teal.withValues(alpha: 0.25)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            l10n.estimatedCost(cost, currency),
-            key: const Key('costEstimate'),
-            style: Theme.of(context).textTheme.titleSmall,
+          Row(
+            children: [
+              const Icon(
+                Icons.receipt_long_rounded,
+                size: 18,
+                color: AppColors.teal,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                l10n.estimatedCost(transport.toStringAsFixed(2), currency),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ],
           ),
-          Text(
-            l10n.plusServiceFee,
-            style: Theme.of(context).textTheme.bodySmall,
+          const SizedBox(height: 10),
+          row(
+            '${l10n.priceTransport} '
+            '(${weight.toStringAsFixed(1)} kg × '
+            '${pricePerKg.toStringAsFixed(2)} $currency)',
+            money(transport),
           ),
+          row(l10n.priceServiceFee, money(fee)),
+          Divider(height: 16, color: scheme.outlineVariant),
+          row(l10n.priceTotal, money(total), bold: true),
         ],
       ),
     );

@@ -1119,6 +1119,54 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'{count, plural, =1{1 Bewertung} other{{count} Bewertungen}}'**
   String reviewsCount(int count);
+
+  /// No description provided for @tabHome.
+  ///
+  /// In de, this message translates to:
+  /// **'Start'**
+  String get tabHome;
+
+  /// No description provided for @tabSearch.
+  ///
+  /// In de, this message translates to:
+  /// **'Suchen'**
+  String get tabSearch;
+
+  /// No description provided for @tabBookings.
+  ///
+  /// In de, this message translates to:
+  /// **'Buchungen'**
+  String get tabBookings;
+
+  /// No description provided for @tabProfile.
+  ///
+  /// In de, this message translates to:
+  /// **'Profil'**
+  String get tabProfile;
+
+  /// No description provided for @priceTransport.
+  ///
+  /// In de, this message translates to:
+  /// **'Transport'**
+  String get priceTransport;
+
+  /// No description provided for @priceServiceFee.
+  ///
+  /// In de, this message translates to:
+  /// **'Servicegebühr (15 %)'**
+  String get priceServiceFee;
+
+  /// No description provided for @priceTotal.
+  ///
+  /// In de, this message translates to:
+  /// **'Gesamt'**
+  String get priceTotal;
+
+  /// No description provided for @earningsEstimate.
+  ///
+  /// In de, this message translates to:
+  /// **'Du kannst bis zu {amount} € verdienen'**
+  String earningsEstimate(Object amount);
 }
 
 class _AppLocalizationsDelegate

@@ -570,4 +570,30 @@ class AppLocalizationsDe extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get tabHome => 'Start';
+
+  @override
+  String get tabSearch => 'Suchen';
+
+  @override
+  String get tabBookings => 'Buchungen';
+
+  @override
+  String get tabProfile => 'Profil';
+
+  @override
+  String get priceTransport => 'Transport';
+
+  @override
+  String get priceServiceFee => 'Servicegebühr (15 %)';
+
+  @override
+  String get priceTotal => 'Gesamt';
+
+  @override
+  String earningsEstimate(Object amount) {
+    return 'Du kannst bis zu $amount € verdienen';
+  }
 }

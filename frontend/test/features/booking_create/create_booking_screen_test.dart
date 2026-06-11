@@ -37,9 +37,11 @@ void main() {
     await tester.enterText(find.byKey(const Key('weight')), '3');
     await tester.pump();
 
-    // 3 kg × 8 €/kg = 24.00 EUR.
+    // 3 kg × 8 €/kg = 24.00 EUR Transport (Titel + Aufschlüsselungszeile).
     expect(find.byKey(const Key('costEstimate')), findsOneWidget);
-    expect(find.textContaining('24.00'), findsOneWidget);
+    expect(find.textContaining('24.00'), findsWidgets);
+    // Gesamt inkl. 15 % Servicegebühr: 24.00 + 3.60 = 27.60.
+    expect(find.textContaining('27.60'), findsOneWidget);
   });
 
   testWidgets('Validierung blockt leeres Formular', (tester) async {

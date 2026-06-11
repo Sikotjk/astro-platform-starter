@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../core/theme/app_theme.dart';
 
 class CreateTripScreen extends ConsumerStatefulWidget {
   const CreateTripScreen({super.key});
@@ -155,6 +156,7 @@ class _CreateTripScreenState extends ConsumerState<CreateTripScreen> {
                 ],
                 decoration: InputDecoration(labelText: l10n.fieldCapacityKg),
                 validator: _positive,
+                onChanged: (_) => setState(() {}),
               ),
               const SizedBox(height: 12),
               TextFormField(
@@ -166,6 +168,11 @@ class _CreateTripScreenState extends ConsumerState<CreateTripScreen> {
                 ],
                 decoration: InputDecoration(labelText: l10n.fieldPricePerKg),
                 validator: _positive,
+                onChanged: (_) => setState(() {}),
+              ),
+              _EarningsEstimate(
+                capacityText: _capacity.text,
+                priceText: _price.text,
               ),
               const SizedBox(height: 24),
               FilledButton(
@@ -188,6 +195,51 @@ class _CreateTripScreenState extends ConsumerState<CreateTripScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Verdienst-Vorschau für Reisende: Kapazität × Preis/kg, live beim Tippen.
+/// Der wichtigste Anreiz, einen Trip einzustellen (Vorbild Grabr/Worldcraze).
+class _EarningsEstimate extends StatelessWidget {
+  const _EarningsEstimate({
+    required this.capacityText,
+    required this.priceText,
+  });
+
+  final String capacityText;
+  final String priceText;
+
+  @override
+  Widget build(BuildContext context) {
+    final capacity = double.tryParse(capacityText.trim()) ?? 0;
+    final price = double.tryParse(priceText.trim()) ?? 0;
+    if (capacity <= 0 || price <= 0) return const SizedBox.shrink();
+    final earnings = (capacity * price).toStringAsFixed(0);
+
+    return Container(
+      key: const Key('earningsEstimate'),
+      margin: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        gradient: AppColors.amberGradient,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.savings_rounded, color: Colors.white),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              context.l10n.earningsEstimate(earnings),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

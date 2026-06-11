@@ -46,7 +46,14 @@ class DemoBackend {
   String _iso(DateTime d) => d.toUtc().toIso8601String();
 
   Map<String, dynamic> _party(String id, String name, double avg, int count) =>
-      {'id': id, 'firstName': name, 'ratingAvg': avg, 'ratingCount': count};
+      {
+        'id': id,
+        'firstName': name,
+        'ratingAvg': avg,
+        'ratingCount': count,
+        // Neue Reisende (ohne Bewertungen) sind im Demo noch unverifiziert.
+        'kycStatus': count > 0 ? 'VERIFIED' : 'NOT_STARTED',
+      };
 
   void _seed() {
     String inDays(int d) => _iso(_now.add(Duration(days: d)));

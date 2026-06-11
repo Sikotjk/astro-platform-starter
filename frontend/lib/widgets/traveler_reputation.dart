@@ -19,9 +19,26 @@ class TravelerReputation extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          traveler.firstName,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              traveler.firstName,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+            if (traveler.kycVerified) ...[
+              const SizedBox(width: 4),
+              Tooltip(
+                message: l10n.kycVerified,
+                child: const Icon(
+                  Icons.verified_rounded,
+                  key: Key('verifiedBadge'),
+                  size: 16,
+                  color: Color(0xFF3E78B2),
+                ),
+              ),
+            ],
+          ],
         ),
         const SizedBox(height: 2),
         if (!hasReviews)

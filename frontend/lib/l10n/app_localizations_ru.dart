@@ -571,4 +571,30 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get tabHome => 'Главная';
+
+  @override
+  String get tabSearch => 'Поиск';
+
+  @override
+  String get tabBookings => 'Заказы';
+
+  @override
+  String get tabProfile => 'Профиль';
+
+  @override
+  String get priceTransport => 'Доставка';
+
+  @override
+  String get priceServiceFee => 'Сервисный сбор (15 %)';
+
+  @override
+  String get priceTotal => 'Итого';
+
+  @override
+  String earningsEstimate(Object amount) {
+    return 'Вы можете заработать до $amount €';
+  }
 }

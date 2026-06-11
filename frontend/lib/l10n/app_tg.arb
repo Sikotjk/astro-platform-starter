@@ -169,5 +169,13 @@
   "editProfile": "Профилро таҳрир кардан",
   "save": "Захира кардан",
   "profileSaved": "Профил захира шуд.",
-  "reviewsCount": "{count, plural, =1{1 баҳо} other{{count} баҳо}}"
+  "reviewsCount": "{count, plural, =1{1 баҳо} other{{count} баҳо}}",
+  "tabHome": "Асосӣ",
+  "tabSearch": "Ҷустуҷӯ",
+  "tabBookings": "Фармоишҳо",
+  "tabProfile": "Профил",
+  "priceTransport": "Интиқол",
+  "priceServiceFee": "Пардохти хизматрасонӣ (15 %)",
+  "priceTotal": "Ҳамагӣ",
+  "earningsEstimate": "Шумо метавонед то {amount} € кор кунед"
 }

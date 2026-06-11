@@ -76,7 +76,13 @@ export class TripsService {
       take: 50,
       include: {
         traveler: {
-          select: { id: true, firstName: true, ratingAvg: true, ratingCount: true },
+          select: {
+            id: true,
+            firstName: true,
+            ratingAvg: true,
+            ratingCount: true,
+            kycStatus: true, // Trust-Signal „verifiziert“ in der Suche
+          },
         },
       },
     });

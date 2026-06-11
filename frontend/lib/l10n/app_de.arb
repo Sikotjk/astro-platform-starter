@@ -231,5 +231,18 @@
         "type": "int"
       }
     }
+  },
+  "tabHome": "Start",
+  "tabSearch": "Suchen",
+  "tabBookings": "Buchungen",
+  "tabProfile": "Profil",
+  "priceTransport": "Transport",
+  "priceServiceFee": "Servicegebühr (15 %)",
+  "priceTotal": "Gesamt",
+  "earningsEstimate": "Du kannst bis zu {amount} € verdienen",
+  "@earningsEstimate": {
+    "placeholders": {
+      "amount": {}
+    }
   }
 }

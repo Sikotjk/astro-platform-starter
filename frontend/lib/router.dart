@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'core/l10n_ext.dart';
 import 'core/providers.dart';
 import 'features/auth/login_screen.dart';
 import 'features/auth/register_screen.dart';
@@ -49,8 +50,41 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
       GoRoute(path: '/register', builder: (_, _) => const RegisterScreen()),
-      GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
-      GoRoute(path: '/trips', builder: (_, _) => const TripsSearchScreen()),
+      // Haupt-Tabs mit Bottom-Navigation (Zustand pro Tab bleibt erhalten).
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => _TabShell(shell: shell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/trips',
+                builder: (_, _) => const TripsSearchScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/bookings',
+                builder: (_, _) => const BookingsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/profile',
+                builder: (_, _) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
       GoRoute(path: '/trip/new', builder: (_, _) => const CreateTripScreen()),
       GoRoute(path: '/trips/mine', builder: (_, _) => const MyTripsScreen()),
       GoRoute(
@@ -66,7 +100,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/book',
         builder: (_, state) => CreateBookingScreen(trip: state.extra as Trip),
       ),
-      GoRoute(path: '/bookings', builder: (_, _) => const BookingsScreen()),
       GoRoute(
         path: '/booking/:id',
         builder: (_, state) =>
@@ -87,7 +120,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const NotificationsScreen(),
       ),
       GoRoute(path: '/kyc', builder: (_, _) => const KycScreen()),
-      GoRoute(path: '/profile', builder: (_, _) => const ProfileScreen()),
       GoRoute(
         path: '/profile/edit',
         builder: (_, state) =>
@@ -96,3 +128,45 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+/// Gerüst um die Haupt-Tabs: Inhalt + Bottom-Navigation.
+class _TabShell extends StatelessWidget {
+  const _TabShell({required this.shell});
+
+  final StatefulNavigationShell shell;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Scaffold(
+      body: shell,
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: shell.currentIndex,
+        onDestinationSelected: (i) =>
+            shell.goBranch(i, initialLocation: i == shell.currentIndex),
+        destinations: [
+          NavigationDestination(
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: const Icon(Icons.home_rounded),
+            label: l10n.tabHome,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.search_outlined),
+            selectedIcon: const Icon(Icons.search_rounded),
+            label: l10n.tabSearch,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.inventory_2_outlined),
+            selectedIcon: const Icon(Icons.inventory_2_rounded),
+            label: l10n.tabBookings,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.person_outline_rounded),
+            selectedIcon: const Icon(Icons.person_rounded),
+            label: l10n.tabProfile,
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -30,6 +30,47 @@ void main() {
     expect(find.text('Neu'), findsNothing);
   });
 
+  testWidgets('verifizierter Reisender trägt das Verifiziert-Badge', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      localizedApp(
+        const Scaffold(
+          body: TravelerReputation(
+            traveler: TripTraveler(
+              firstName: 'Karim',
+              ratingAvg: 4.5,
+              ratingCount: 12,
+              kycVerified: true,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('verifiedBadge')), findsOneWidget);
+  });
+
+  testWidgets('unverifizierter Reisender: kein Badge', (tester) async {
+    await tester.pumpWidget(
+      localizedApp(
+        const Scaffold(
+          body: TravelerReputation(
+            traveler: TripTraveler(
+              firstName: 'Neu',
+              ratingAvg: 0,
+              ratingCount: 0,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('verifiedBadge')), findsNothing);
+  });
+
   testWidgets('neuer Reisender ohne Bewertung: "Neu"-Kennzeichnung', (
     tester,
   ) async {

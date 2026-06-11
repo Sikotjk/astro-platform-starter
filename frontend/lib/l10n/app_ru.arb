@@ -169,5 +169,13 @@
   "editProfile": "Редактировать профиль",
   "save": "Сохранить",
   "profileSaved": "Профиль сохранён.",
-  "reviewsCount": "{count, plural, =1{1 отзыв} few{{count} отзыва} other{{count} отзывов}}"
+  "reviewsCount": "{count, plural, =1{1 отзыв} few{{count} отзыва} other{{count} отзывов}}",
+  "tabHome": "Главная",
+  "tabSearch": "Поиск",
+  "tabBookings": "Заказы",
+  "tabProfile": "Профиль",
+  "priceTransport": "Доставка",
+  "priceServiceFee": "Сервисный сбор (15 %)",
+  "priceTotal": "Итого",
+  "earningsEstimate": "Вы можете заработать до {amount} €"
 }

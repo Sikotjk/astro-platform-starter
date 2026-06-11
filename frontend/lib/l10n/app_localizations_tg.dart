@@ -567,4 +567,30 @@ class AppLocalizationsTg extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get tabHome => 'Асосӣ';
+
+  @override
+  String get tabSearch => 'Ҷустуҷӯ';
+
+  @override
+  String get tabBookings => 'Фармоишҳо';
+
+  @override
+  String get tabProfile => 'Профил';
+
+  @override
+  String get priceTransport => 'Интиқол';
+
+  @override
+  String get priceServiceFee => 'Пардохти хизматрасонӣ (15 %)';
+
+  @override
+  String get priceTotal => 'Ҳамагӣ';
+
+  @override
+  String earningsEstimate(Object amount) {
+    return 'Шумо метавонед то $amount € кор кунед';
+  }
 }
