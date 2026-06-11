@@ -85,6 +85,8 @@ Eingang zeitnah und koordinieren eine verantwortungsvolle Offenlegung.
 | 3 | Globaler `ThrottlerGuard` + strengere Endpunkt-Limits | Hoch | `app.module.ts`, `auth/customs/manifest/health`-Controller |
 | 4 | Body-Size-Limit (256 KB) + DTO-Array-/Längen-/Wert-Grenzen | Hoch | `main.ts`, `*/dto/*.ts` |
 | 5 | WebSocket-CORS auf `CORS_ORIGIN`-Whitelist | Mittel | `chat/chat.gateway.ts` |
+| 6 | Dependency-Upgrade: NestJS 11, @nestjs/config 4, vitest 4 → 0 npm-audit-Findings | Hoch | `backend/package.json` |
+| 7 | Dependabot (npm · pub · GitHub Actions, wöchentlich) | Niedrig | `.github/dependabot.yml` |
 
 ---
 
@@ -116,7 +118,10 @@ Eingang zeitnah und koordinieren eine verantwortungsvolle Offenlegung.
   Rate-Limit (z. B. progressive Delays).
 
 ### Niedrig / laufend
-- **Dependency-Scanning**: `npm audit` / Dependabot im CI aktivieren.
+- ~~**Dependency-Scanning**~~ ✓ erledigt: Dependabot aktiv
+  (`.github/dependabot.yml`, npm + pub + GitHub Actions); alle
+  npm-audit-Findings durch Upgrade auf NestJS 11 / vitest 4 behoben
+  (0 Vulnerabilities).
 - **Security-Header-Feintuning**: CSP für ein künftiges Web-Frontend explizit
   konfigurieren (die API liefert kein HTML).
 - **DSGVO-Betroffenenrechte**: Export/Löschung von Nutzerdaten als Prozess
