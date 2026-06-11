@@ -54,6 +54,17 @@ class AppLocalizationsTg extends AppLocalizations {
   String get homeWelcome => 'Хуш омадед ба TJ-Shipping!';
 
   @override
+  String get loginTagline =>
+      'Фиристодани бехатари бастаҳо бо мусофирони боэътимод.';
+
+  @override
+  String get homeQuickActions => 'Амалҳои зуд';
+
+  @override
+  String get noTripsHint =>
+      'Филтрҳоро тағйир диҳед ё ҷустуҷӯро барои огоҳиҳо нигоҳ доред.';
+
+  @override
   String get homeSearchTrips => 'Ҷустуҷӯи парвозҳо';
 
   @override

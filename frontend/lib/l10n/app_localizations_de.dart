@@ -54,6 +54,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homeWelcome => 'Willkommen bei TJ-Shipping!';
 
   @override
+  String get loginTagline =>
+      'Sicher Pakete senden – verbunden mit geprüften Reisenden.';
+
+  @override
+  String get homeQuickActions => 'Schnellzugriff';
+
+  @override
+  String get noTripsHint =>
+      'Passe deine Filter an oder speichere die Suche für Benachrichtigungen.';
+
+  @override
   String get homeSearchTrips => 'Trips suchen';
 
   @override

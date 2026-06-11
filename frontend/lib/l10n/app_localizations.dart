@@ -190,6 +190,24 @@ abstract class AppLocalizations {
   /// **'Willkommen bei TJ-Shipping!'**
   String get homeWelcome;
 
+  /// No description provided for @loginTagline.
+  ///
+  /// In de, this message translates to:
+  /// **'Sicher Pakete senden – verbunden mit geprüften Reisenden.'**
+  String get loginTagline;
+
+  /// No description provided for @homeQuickActions.
+  ///
+  /// In de, this message translates to:
+  /// **'Schnellzugriff'**
+  String get homeQuickActions;
+
+  /// No description provided for @noTripsHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Passe deine Filter an oder speichere die Suche für Benachrichtigungen.'**
+  String get noTripsHint;
+
   /// No description provided for @homeSearchTrips.
   ///
   /// In de, this message translates to:

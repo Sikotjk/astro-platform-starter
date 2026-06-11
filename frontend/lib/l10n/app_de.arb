@@ -1,7 +1,9 @@
 {
   "@@locale": "de",
   "appTitle": "TJ-Shipping",
-  "@appTitle": { "description": "App-Name" },
+  "@appTitle": {
+    "description": "App-Name"
+  },
   "navLogin": "Anmelden",
   "navRegister": "Registrieren",
   "fieldEmail": "E-Mail",
@@ -16,6 +18,9 @@
   "roleTraveler": "Platz anbieten",
   "roleBoth": "Beides",
   "homeWelcome": "Willkommen bei TJ-Shipping!",
+  "loginTagline": "Sicher Pakete senden – verbunden mit geprüften Reisenden.",
+  "homeQuickActions": "Schnellzugriff",
+  "noTripsHint": "Passe deine Filter an oder speichere die Suche für Benachrichtigungen.",
   "homeSearchTrips": "Trips suchen",
   "homeMyBookings": "Meine Buchungen",
   "homeNotifications": "Benachrichtigungen",
@@ -33,11 +38,29 @@
   "retry": "Erneut versuchen",
   "timeJustNow": "gerade eben",
   "timeMinutesAgo": "{count, plural, =1{vor 1 Min.} other{vor {count} Min.}}",
-  "@timeMinutesAgo": { "placeholders": { "count": { "type": "int" } } },
+  "@timeMinutesAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "timeHoursAgo": "{count, plural, =1{vor 1 Std.} other{vor {count} Std.}}",
-  "@timeHoursAgo": { "placeholders": { "count": { "type": "int" } } },
+  "@timeHoursAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "timeDaysAgo": "{count, plural, =1{gestern} other{vor {count} Tagen}}",
-  "@timeDaysAgo": { "placeholders": { "count": { "type": "int" } } },
+  "@timeDaysAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "tripsTitle": "Trips suchen",
   "fieldFrom": "Von (IATA)",
   "fieldTo": "Nach (IATA)",
@@ -62,7 +85,14 @@
   "noSavedSearches": "Keine gespeicherten Suchen.",
   "deleteSearch": "Löschen",
   "tripSubtitle": "Abflug {date} · {kg} kg frei · {price} {currency}/kg",
-  "@tripSubtitle": { "placeholders": { "date": {}, "kg": {}, "price": {}, "currency": {} } },
+  "@tripSubtitle": {
+    "placeholders": {
+      "date": {},
+      "kg": {},
+      "price": {},
+      "currency": {}
+    }
+  },
   "bookingsTitle": "Meine Buchungen",
   "filterAll": "Alle",
   "filterAsSender": "Als Sender",
@@ -97,9 +127,19 @@
   "markAllRead": "Alle gelesen",
   "noNotifications": "Keine Benachrichtigungen.",
   "bookTitle": "Buchen · {route}",
-  "@bookTitle": { "placeholders": { "route": {} } },
+  "@bookTitle": {
+    "placeholders": {
+      "route": {}
+    }
+  },
   "bookTripInfo": "Abflug {date} · {price} {currency}/kg",
-  "@bookTripInfo": { "placeholders": { "date": {}, "price": {}, "currency": {} } },
+  "@bookTripInfo": {
+    "placeholders": {
+      "date": {},
+      "price": {},
+      "currency": {}
+    }
+  },
   "fieldPackageTitle": "Pakettitel",
   "fieldWeightKg": "Gewicht (kg)",
   "fieldDeclaredValue": "Warenwert (EUR)",
@@ -122,7 +162,12 @@
   "complianceDeclaration": "Ich bestätige: keine Waffen, Drogen, Fälschungen, verderblichen Lebensmittel oder verschreibungspflichtigen Medikamente.",
   "complianceRequired": "Bitte bestätige die Erklärung, um fortzufahren.",
   "estimatedCost": "Geschätzte Transportkosten: {amount} {currency}",
-  "@estimatedCost": { "placeholders": { "amount": {}, "currency": {} } },
+  "@estimatedCost": {
+    "placeholders": {
+      "amount": {},
+      "currency": {}
+    }
+  },
   "plusServiceFee": "zzgl. Servicegebühr",
   "validNumber": "Zahl > 0 eingeben",
   "validMin3": "Mind. 3 Zeichen",
@@ -132,7 +177,11 @@
   "manifestHashLabel": "Integritäts-Hash",
   "manifestOfflineCopy": "Offline-Kopie (zuletzt gespeichert)",
   "manifestSize": "{kb} KB",
-  "@manifestSize": { "placeholders": { "kb": {} } },
+  "@manifestSize": {
+    "placeholders": {
+      "kb": {}
+    }
+  },
   "detailTitle": "Buchungsdetails",
   "bookingPartner": "Buchungspartner",
   "timelineTitle": "Statusverlauf",
@@ -176,5 +225,11 @@
   "save": "Speichern",
   "profileSaved": "Profil gespeichert.",
   "reviewsCount": "{count, plural, =1{1 Bewertung} other{{count} Bewertungen}}",
-  "@reviewsCount": { "placeholders": { "count": { "type": "int" } } }
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -4,8 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../core/theme/app_theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
+import '../../widgets/empty_state.dart';
 import '../../widgets/error_retry.dart';
 
 /// Lokalisierte Beschriftung je Buchungsstatus.
@@ -161,55 +163,109 @@ class _BookingList extends StatelessWidget {
       return ListView(
         physics: const AlwaysScrollableScrollPhysics(),
         children: [
-          const SizedBox(height: 120),
-          Center(child: Text(l10n.noBookings)),
+          const SizedBox(height: 80),
+          EmptyState(
+            icon: Icons.inventory_2_outlined,
+            message: l10n.noBookings,
+          ),
         ],
       );
     }
     return ListView.separated(
       physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(16),
       itemCount: bookings.length,
-      separatorBuilder: (_, _) => const Divider(height: 1),
-      itemBuilder: (context, i) {
-        final b = bookings[i];
-        final color = bookingStatusColor(b.status);
-        return ListTile(
-          title: Text(
-            b.route,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          subtitle: Column(
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
+      itemBuilder: (context, i) => _BookingCard(booking: bookings[i]),
+    );
+  }
+}
+
+/// Karte für eine Buchung in der Übersicht.
+class _BookingCard extends StatelessWidget {
+  const _BookingCard({required this.booking});
+
+  final BookingSummary booking;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final scheme = Theme.of(context).colorScheme;
+    final b = booking;
+    final color = bookingStatusColor(b.status);
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => context.push('/booking/${b.id}'),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '${b.packageTitle} · ${b.totalAmount.toStringAsFixed(2)} ${b.currency}',
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      b.route,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.14),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                    ),
+                    child: Text(
+                      bookingStatusLabel(l10n, b.status),
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: color,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 6),
+              Text(
+                b.packageTitle,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 14),
               Row(
                 children: [
                   Icon(
                     paymentStatusIcon(b.paymentStatus),
-                    size: 14,
-                    color: Theme.of(context).colorScheme.outline,
+                    size: 16,
+                    color: scheme.onSurfaceVariant,
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 6),
                   Text(
                     paymentStatusLabel(l10n, b.paymentStatus),
                     style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${b.totalAmount.toStringAsFixed(2)} ${b.currency}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppColors.teal,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ],
               ),
             ],
           ),
-          isThreeLine: true,
-          trailing: Chip(
-            label: Text(bookingStatusLabel(l10n, b.status)),
-            backgroundColor: color.withValues(alpha: 0.15),
-            labelStyle: TextStyle(color: color),
-          ),
-          onTap: () => context.push('/booking/${b.id}'),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../core/theme/app_theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/auth.dart';
 import '../../models/review.dart';
@@ -99,11 +100,14 @@ class _ProfileBody extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       children: [
         _Header(profile: p),
-        const Divider(height: 32),
+        const SizedBox(height: 20),
         Text(l10n.reviewsTitle, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 8),
         if (reviews.isEmpty)
-          Text(l10n.noReviews)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(l10n.noReviews),
+          )
         else
           for (final r in reviews) _ReviewTile(review: r),
       ],
@@ -120,40 +124,66 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final name = '${profile.firstName} ${profile.lastName}'.trim();
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        UserAvatar(name: profile.firstName, url: profile.avatarUrl, radius: 32),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name.isEmpty ? profile.email : name,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 4),
-              Text(roleLabel(l10n, profile.role)),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  StarRating(value: profile.ratingAvg.round(), size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    profile.ratingCount == 0
-                        ? l10n.noReviews
-                        : '${profile.ratingAvg.toStringAsFixed(1)} '
-                              '(${l10n.reviewsCount(profile.ratingCount)})',
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              _KycChip(status: profile.kycStatus),
-            ],
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          // Marken-Banner als Kopf der Profilkarte.
+          Container(
+            height: 70,
+            decoration: const BoxDecoration(gradient: AppColors.heroGradient),
           ),
-        ),
-      ],
+          Transform.translate(
+            offset: const Offset(0, -34),
+            child: Column(
+              children: [
+                // Avatar mit weißem Ring, der über das Banner ragt.
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: UserAvatar(
+                    name: profile.firstName,
+                    url: profile.avatarUrl,
+                    radius: 36,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  name.isEmpty ? profile.email : name,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  roleLabel(l10n, profile.role),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    StarRating(value: profile.ratingAvg.round(), size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      profile.ratingCount == 0
+                          ? l10n.noReviews
+                          : '${profile.ratingAvg.toStringAsFixed(1)} '
+                                '(${l10n.reviewsCount(profile.ratingCount)})',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                _KycChip(status: profile.kycStatus),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

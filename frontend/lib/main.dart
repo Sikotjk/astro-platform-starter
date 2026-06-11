@@ -7,8 +7,10 @@ import 'core/config.dart';
 import 'core/locale_controller.dart';
 import 'core/localization_delegates.dart';
 import 'core/providers.dart';
+import 'core/theme/app_theme.dart';
 import 'l10n/app_localizations.dart';
 import 'router.dart';
+import 'widgets/app_logo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,10 +36,8 @@ class TjShippingApp extends ConsumerWidget {
       ref.read(authControllerProvider.notifier).handleSessionExpired();
     });
 
-    final theme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1E88E5)),
-      useMaterial3: true,
-    );
+    final theme = buildAppTheme(Brightness.light);
+    final darkTheme = buildAppTheme(Brightness.dark);
 
     // Während des Auto-Logins einen Splash zeigen, danach die Router-App.
     if (bootstrap.isLoading) {
@@ -47,7 +47,8 @@ class TjShippingApp extends ConsumerWidget {
         localizationsDelegates: appLocalizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: theme,
-        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
+        darkTheme: darkTheme,
+        home: const _SplashScreen(),
       );
     }
 
@@ -59,6 +60,7 @@ class TjShippingApp extends ConsumerWidget {
       localizationsDelegates: appLocalizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: theme,
+      darkTheme: darkTheme,
       routerConfig: router,
       // Im Demo-Modus eine deutlich sichtbare Ecken-Markierung einblenden.
       builder: AppConfig.isDemoMode
@@ -69,6 +71,46 @@ class TjShippingApp extends ConsumerWidget {
               child: child ?? const SizedBox.shrink(),
             )
           : null,
+    );
+  }
+}
+
+/// Markenbildschirm während des Auto-Logins.
+class _SplashScreen extends StatelessWidget {
+  const _SplashScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: DecoratedBox(
+        decoration: const BoxDecoration(gradient: AppColors.heroGradient),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const AppLogo(size: 88),
+              const SizedBox(height: 28),
+              Text(
+                'TJ-Shipping',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.5,
+                ),
+              ),
+              const SizedBox(height: 24),
+              const SizedBox(
+                height: 26,
+                width: 26,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.4,
+                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

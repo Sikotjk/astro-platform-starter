@@ -54,6 +54,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeWelcome => 'Добро пожаловать в TJ-Shipping!';
 
   @override
+  String get loginTagline =>
+      'Безопасная отправка посылок с проверенными путешественниками.';
+
+  @override
+  String get homeQuickActions => 'Быстрые действия';
+
+  @override
+  String get noTripsHint =>
+      'Измените фильтры или сохраните поиск, чтобы получать уведомления.';
+
+  @override
   String get homeSearchTrips => 'Поиск рейсов';
 
   @override

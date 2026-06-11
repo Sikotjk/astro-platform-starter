@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/theme/app_theme.dart';
+
 /// Sterne-Bewertung. Interaktiv, wenn [onChanged] gesetzt ist, sonst nur Anzeige.
 class StarRating extends StatelessWidget {
   const StarRating({
@@ -17,7 +19,7 @@ class StarRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
+    const color = AppColors.amber; // goldene Sterne
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [for (var i = 1; i <= count; i++) _star(context, i, color)],

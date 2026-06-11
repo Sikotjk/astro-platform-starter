@@ -6,9 +6,11 @@ import 'package:go_router/go_router.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../core/theme/app_theme.dart';
 import '../../models/booking_detail.dart';
 import '../../models/saved_search.dart';
 import '../../models/trip.dart';
+import '../../widgets/empty_state.dart';
 import '../../widgets/error_retry.dart';
 import '../../widgets/traveler_reputation.dart';
 
@@ -191,32 +193,139 @@ class _TripList extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     if (trips.isEmpty) {
-      return Center(child: Text(l10n.noTrips));
+      return EmptyState(
+        icon: Icons.travel_explore_rounded,
+        message: l10n.noTrips,
+        detail: l10n.noTripsHint,
+      );
     }
     return ListView.separated(
+      padding: const EdgeInsets.all(16),
       itemCount: trips.length,
-      separatorBuilder: (_, _) => const Divider(height: 1),
-      itemBuilder: (context, i) {
-        final t = trips[i];
-        return ListTile(
-          title: Text(
-            t.route,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
+      itemBuilder: (context, i) => _TripCard(trip: trips[i]),
+    );
+  }
+}
+
+/// Karte für ein Trip-Angebot: Route, Eckdaten als Pills, Reisenden-Reputation.
+class _TripCard extends StatelessWidget {
+  const _TripCard({required this.trip});
+
+  final Trip trip;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => context.push('/book', extra: trip),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.teal.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                    ),
+                    child: const Icon(
+                      Icons.flight_takeoff_rounded,
+                      color: AppColors.teal,
+                      size: 20,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      trip.route,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: scheme.onSurfaceVariant,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  _Pill(
+                    icon: Icons.event_rounded,
+                    label: context.formatDate(trip.departureAt),
+                  ),
+                  _Pill(
+                    icon: Icons.scale_rounded,
+                    label: '${trip.freeKg.toStringAsFixed(1)} kg',
+                  ),
+                  _Pill(
+                    icon: Icons.sell_rounded,
+                    label:
+                        '${trip.pricePerKg.toStringAsFixed(2)} ${trip.currency}/kg',
+                    highlight: true,
+                  ),
+                ],
+              ),
+              if (trip.traveler != null) ...[
+                const Divider(height: 28),
+                _TravelerBadge(traveler: trip.traveler!),
+              ],
+            ],
           ),
-          subtitle: Text(
-            l10n.tripSubtitle(
-              context.formatDate(t.departureAt),
-              t.freeKg.toStringAsFixed(1),
-              t.pricePerKg.toStringAsFixed(2),
-              t.currency,
+        ),
+      ),
+    );
+  }
+}
+
+/// Kleine Info-Pille (Icon + Text) für Trip-Eckdaten.
+class _Pill extends StatelessWidget {
+  const _Pill({
+    required this.icon,
+    required this.label,
+    this.highlight = false,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool highlight;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final fg = highlight ? AppColors.amberDeep : scheme.onSurfaceVariant;
+    final bg = highlight
+        ? AppColors.amber.withValues(alpha: 0.14)
+        : scheme.surfaceContainerHighest.withValues(alpha: 0.6);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 15, color: fg),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: fg,
+              fontWeight: highlight ? FontWeight.w700 : FontWeight.w600,
             ),
           ),
-          trailing: t.traveler == null
-              ? null
-              : _TravelerBadge(traveler: t.traveler!),
-          onTap: () => context.push('/book', extra: t),
-        );
-      },
+        ],
+      ),
     );
   }
 }
