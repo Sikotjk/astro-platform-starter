@@ -25,7 +25,9 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/tj_shipping
-      JWT_ACCESS_SECRET: dev-secret-change-me
+      # Lokales Dev-Secret (>=16 Zeichen, kein Platzhalter) — nur fuer lokal!
+      # In Produktion ueber den Secret-Store setzen, niemals committen.
+      JWT_ACCESS_SECRET: local-dev-only-not-for-production-7f3a9c21
       PLATFORM_FEE_RATE: '0.15'
       PORT: '3000'
       # Ohne Stripe-Keys nutzt die App automatisch die Fake-Gateways.
