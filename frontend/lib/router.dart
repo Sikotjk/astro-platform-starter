@@ -15,6 +15,7 @@ import 'features/kyc/kyc_screen.dart';
 import 'features/manifest/manifest_screen.dart';
 import 'features/notifications/notifications_screen.dart';
 import 'features/profile/profile_edit_screen.dart';
+import 'features/requests/my_requests_screen.dart';
 import 'features/requests/post_request_screen.dart';
 import 'features/requests/request_detail_screen.dart';
 import 'features/requests/requests_board_screen.dart';
@@ -94,6 +95,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/requests',
         builder: (_, _) => const RequestsBoardScreen(),
+      ),
+      GoRoute(
+        path: '/requests/mine',
+        builder: (_, _) => const MyRequestsScreen(),
       ),
       GoRoute(
         path: '/request/new',

@@ -640,4 +640,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get fieldNotesOptional => 'Notiz (optional)';
+
+  @override
+  String get myRequestsTitle => 'Meine Wünsche';
+
+  @override
+  String get noMyRequests => 'Du hast noch keine Wünsche gepostet.';
 }

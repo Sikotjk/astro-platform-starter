@@ -258,5 +258,7 @@
   "homeRequestBoard": "Wunsch-Board",
   "homePostRequest": "Wunsch posten",
   "requestContactHint": "Du bist Reisender? Kontaktiere den Sender über sein Profil, um diesen Wunsch zu erfüllen.",
-  "fieldNotesOptional": "Notiz (optional)"
+  "fieldNotesOptional": "Notiz (optional)",
+  "myRequestsTitle": "Meine Wünsche",
+  "noMyRequests": "Du hast noch keine Wünsche gepostet."
 }

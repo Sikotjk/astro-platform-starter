@@ -60,7 +60,16 @@ class _RequestsBoardScreenState extends ConsumerState<RequestsBoardScreen> {
     final state = ref.watch(requestsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.requestsBoardTitle)),
+      appBar: AppBar(
+        title: Text(l10n.requestsBoardTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.outbox_rounded),
+            tooltip: l10n.myRequestsTitle,
+            onPressed: () => context.push('/requests/mine'),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         key: const Key('postRequestFab'),
         onPressed: () => context.push('/request/new'),

@@ -128,6 +128,12 @@ final createRequestControllerProvider =
       (ref) => CreateRequestController(ref.watch(requestsRepositoryProvider)),
     );
 
+final myRequestsControllerProvider =
+    StateNotifierProvider<
+      MyRequestsController,
+      AsyncValue<List<PackageRequest>>
+    >((ref) => MyRequestsController(ref.watch(requestsRepositoryProvider)));
+
 final kycRepositoryProvider = Provider<KycRepository>(
   (ref) => DioKycRepository(ref.watch(apiClientProvider).dio),
 );

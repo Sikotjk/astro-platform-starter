@@ -48,3 +48,20 @@ class CreateRequestController extends StateNotifier<AsyncValue<void>> {
     }
   }
 }
+
+/// Lädt die eigenen Wünsche des angemeldeten Senders.
+class MyRequestsController
+    extends StateNotifier<AsyncValue<List<PackageRequest>>> {
+  MyRequestsController(this._repo) : super(const AsyncValue.loading());
+
+  final RequestsRepository _repo;
+
+  Future<void> load() async {
+    state = const AsyncValue.loading();
+    try {
+      state = AsyncValue.data(await _repo.listMine());
+    } catch (e, st) {
+      state = AsyncValue.error(apiErrorMessage(e), st);
+    }
+  }
+}

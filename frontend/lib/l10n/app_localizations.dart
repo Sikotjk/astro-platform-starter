@@ -1251,6 +1251,18 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Notiz (optional)'**
   String get fieldNotesOptional;
+
+  /// No description provided for @myRequestsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Meine Wünsche'**
+  String get myRequestsTitle;
+
+  /// No description provided for @noMyRequests.
+  ///
+  /// In de, this message translates to:
+  /// **'Du hast noch keine Wünsche gepostet.'**
+  String get noMyRequests;
 }
 
 class _AppLocalizationsDelegate

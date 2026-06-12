@@ -636,4 +636,10 @@ class AppLocalizationsTg extends AppLocalizations {
 
   @override
   String get fieldNotesOptional => 'Эзоҳ (ихтиёрӣ)';
+
+  @override
+  String get myRequestsTitle => 'Дархостҳои ман';
+
+  @override
+  String get noMyRequests => 'Шумо ҳоло дархост нагузоштаед.';
 }

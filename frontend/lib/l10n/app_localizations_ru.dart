@@ -640,4 +640,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fieldNotesOptional => 'Примечание (необязательно)';
+
+  @override
+  String get myRequestsTitle => 'Мои заявки';
+
+  @override
+  String get noMyRequests => 'Вы ещё не размещали заявок.';
 }

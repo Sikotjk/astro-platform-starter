@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../core/theme/app_theme.dart';
 import '../../models/saved_search.dart';
+import '../../widgets/empty_state.dart';
 import '../../widgets/error_retry.dart';
 
 /// Liste der gespeicherten Suchen. Tippen wählt eine Suche aus (pop mit
@@ -53,31 +55,49 @@ class _SavedSearchesScreenState extends ConsumerState<SavedSearchesScreen> {
         ),
         data: (searches) {
           if (searches.isEmpty) {
-            return Center(child: Text(l10n.noSavedSearches));
+            return EmptyState(
+              icon: Icons.bookmark_border_rounded,
+              message: l10n.noSavedSearches,
+            );
           }
           return ListView.separated(
+            padding: const EdgeInsets.all(16),
             itemCount: searches.length,
-            separatorBuilder: (_, _) => const Divider(height: 1),
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
             itemBuilder: (context, i) {
               final s = searches[i];
-              return ListTile(
-                leading: const Icon(Icons.bookmark),
-                title: Text(
-                  s.route,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+              return Card(
+                clipBehavior: Clip.antiAlias,
+                child: ListTile(
+                  leading: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: AppColors.teal.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                    ),
+                    child: const Icon(
+                      Icons.bookmark_rounded,
+                      color: AppColors.teal,
+                    ),
+                  ),
+                  title: Text(
+                    s.route,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  subtitle: s.minFreeKg != null
+                      ? Text(
+                          '${l10n.fieldMinKg}: ${s.minFreeKg!.toStringAsFixed(0)}',
+                        )
+                      : null,
+                  trailing: IconButton(
+                    key: Key('delete_${s.id}'),
+                    icon: const Icon(Icons.delete_outline),
+                    tooltip: l10n.deleteSearch,
+                    onPressed: () => _delete(s),
+                  ),
+                  onTap: () => context.pop(s),
                 ),
-                subtitle: s.minFreeKg != null
-                    ? Text(
-                        '${l10n.fieldMinKg}: ${s.minFreeKg!.toStringAsFixed(0)}',
-                      )
-                    : null,
-                trailing: IconButton(
-                  key: Key('delete_${s.id}'),
-                  icon: const Icon(Icons.delete_outline),
-                  tooltip: l10n.deleteSearch,
-                  onPressed: () => _delete(s),
-                ),
-                onTap: () => context.pop(s),
               );
             },
           );

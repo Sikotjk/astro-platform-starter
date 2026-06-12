@@ -191,5 +191,7 @@
   "homeRequestBoard": "Доска заявок",
   "homePostRequest": "Разместить заявку",
   "requestContactHint": "Вы путешественник? Свяжитесь с отправителем через его профиль, чтобы выполнить заявку.",
-  "fieldNotesOptional": "Примечание (необязательно)"
+  "fieldNotesOptional": "Примечание (необязательно)",
+  "myRequestsTitle": "Мои заявки",
+  "noMyRequests": "Вы ещё не размещали заявок."
 }

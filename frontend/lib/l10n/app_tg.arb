@@ -191,5 +191,7 @@
   "homeRequestBoard": "Лавҳаи дархостҳо",
   "homePostRequest": "Дархост гузоред",
   "requestContactHint": "Шумо мусофир ҳастед? Бо фиристанда тавассути профили ӯ тамос гиред.",
-  "fieldNotesOptional": "Эзоҳ (ихтиёрӣ)"
+  "fieldNotesOptional": "Эзоҳ (ихтиёрӣ)",
+  "myRequestsTitle": "Дархостҳои ман",
+  "noMyRequests": "Шумо ҳоло дархост нагузоштаед."
 }
