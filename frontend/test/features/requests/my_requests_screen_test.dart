@@ -25,6 +25,18 @@ class _FakeRepo implements RequestsRepository {
   @override
   Future<PackageRequest> create(CreateRequestInput input) =>
       throw UnimplementedError();
+
+  @override
+  Future<RequestOffer> createOffer(String requestId, {String? message}) =>
+      throw UnimplementedError();
+
+  @override
+  Future<List<RequestOffer>> listOffers(String requestId) =>
+      throw UnimplementedError();
+
+  @override
+  Future<RequestOffer> acceptOffer(String requestId, String offerId) =>
+      throw UnimplementedError();
 }
 
 PackageRequest _req() => const PackageRequest(

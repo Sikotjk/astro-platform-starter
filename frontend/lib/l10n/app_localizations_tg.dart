@@ -642,4 +642,37 @@ class AppLocalizationsTg extends AppLocalizations {
 
   @override
   String get noMyRequests => 'Шумо ҳоло дархост нагузоштаед.';
+
+  @override
+  String get reactToRequest => 'Ба дархост ҷавоб додан';
+
+  @override
+  String get makeOfferHint => 'Паём ба фиристанда (ихтиёрӣ)';
+
+  @override
+  String get offerSend => 'Пешниҳод фиристодан';
+
+  @override
+  String get offerSent => 'Пешниҳоди шумо фиристода шуд.';
+
+  @override
+  String get offersTitle => 'Пешниҳодҳо';
+
+  @override
+  String get noOffers => 'Ҳоло пешниҳод нест.';
+
+  @override
+  String get acceptOffer => 'Қабул';
+
+  @override
+  String get offerAccepted => 'Қабулшуда';
+
+  @override
+  String get offerDeclined => 'Радшуда';
+
+  @override
+  String get requestAlreadyMatched => 'Ин дархост аллакай баста шудааст.';
+
+  @override
+  String get offerAcceptedSnack => 'Пешниҳод қабул шуд.';
 }

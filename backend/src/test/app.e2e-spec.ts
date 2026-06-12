@@ -672,3 +672,59 @@ describe('Wunsch-Board (umgekehrter Marktplatz)', () => {
     expect(r.body.title).toContain('Medikamente');
   });
 });
+
+describe('Angebote auf Wünsche (Marktplatz-Kreis)', () => {
+  it('Reisender gibt ein Angebot ab (201)', async () => {
+    const r = await request(http())
+      .post(`/requests/${state.requestId}/offers`)
+      .set(auth(state.travelerToken))
+      .send({ message: 'Ich fliege nächste Woche, nehme es gern mit.' });
+    expect(r.status).toBe(201);
+    expect(r.body.status).toBe('PENDING');
+    state.offerId = r.body.id;
+  });
+
+  it('Sender kann nicht auf den eigenen Wunsch bieten (400)', async () => {
+    const r = await request(http())
+      .post(`/requests/${state.requestId}/offers`)
+      .set(auth(state.senderToken))
+      .send({});
+    expect(r.status).toBe(400);
+  });
+
+  it('Außenstehender darf die Angebote nicht sehen (403)', async () => {
+    const r = await request(http())
+      .get(`/requests/${state.requestId}/offers`)
+      .set(auth(state.travelerToken));
+    expect(r.status).toBe(403);
+  });
+
+  it('Sender sieht die eingegangenen Angebote inkl. Reisenden-Reputation', async () => {
+    const r = await request(http())
+      .get(`/requests/${state.requestId}/offers`)
+      .set(auth(state.senderToken));
+    expect(r.status).toBe(200);
+    expect(r.body.length).toBe(1);
+    expect(r.body[0].traveler.firstName).toBeDefined();
+    expect(r.body[0].traveler.passwordHash).toBeUndefined();
+  });
+
+  it('Sender nimmt ein Angebot an -> ACCEPTED + Wunsch MATCHED', async () => {
+    const r = await request(http())
+      .post(`/requests/${state.requestId}/offers/${state.offerId}/accept`)
+      .set(auth(state.senderToken));
+    expect(r.status).toBe(201);
+    expect(r.body.status).toBe('ACCEPTED');
+
+    const req = await request(http()).get(`/requests/${state.requestId}`);
+    expect(req.body.status).toBe('MATCHED');
+  });
+
+  it('vergebener Wunsch nimmt keine Angebote mehr an (409)', async () => {
+    const r = await request(http())
+      .post(`/requests/${state.requestId}/offers`)
+      .set(auth(state.travelerToken))
+      .send({});
+    expect(r.status).toBe(409);
+  });
+});

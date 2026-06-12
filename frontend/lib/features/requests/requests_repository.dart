@@ -18,6 +18,15 @@ abstract class RequestsRepository {
 
   /// Neuen Wunsch veröffentlichen (erfordert Anmeldung).
   Future<PackageRequest> create(CreateRequestInput input);
+
+  /// Als Reisender ein Angebot auf einen Wunsch abgeben.
+  Future<RequestOffer> createOffer(String requestId, {String? message});
+
+  /// Angebote eines Wunsches (nur der Ersteller darf sie sehen).
+  Future<List<RequestOffer>> listOffers(String requestId);
+
+  /// Als Ersteller ein Angebot annehmen (Wunsch wird MATCHED).
+  Future<RequestOffer> acceptOffer(String requestId, String offerId);
 }
 
 class DioRequestsRepository implements RequestsRepository {
@@ -65,5 +74,30 @@ class DioRequestsRepository implements RequestsRepository {
       data: input.toJson(),
     );
     return PackageRequest.fromJson(res.data!);
+  }
+
+  @override
+  Future<RequestOffer> createOffer(String requestId, {String? message}) async {
+    final res = await _dio.post<Map<String, dynamic>>(
+      '/requests/$requestId/offers',
+      data: {if (message != null && message.isNotEmpty) 'message': message},
+    );
+    return RequestOffer.fromJson(res.data!);
+  }
+
+  @override
+  Future<List<RequestOffer>> listOffers(String requestId) async {
+    final res = await _dio.get<List<dynamic>>('/requests/$requestId/offers');
+    return (res.data ?? [])
+        .map((e) => RequestOffer.fromJson(e as Map<String, dynamic>))
+        .toList(growable: false);
+  }
+
+  @override
+  Future<RequestOffer> acceptOffer(String requestId, String offerId) async {
+    final res = await _dio.post<Map<String, dynamic>>(
+      '/requests/$requestId/offers/$offerId/accept',
+    );
+    return RequestOffer.fromJson(res.data!);
   }
 }

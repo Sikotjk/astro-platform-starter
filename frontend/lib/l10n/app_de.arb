@@ -260,5 +260,16 @@
   "requestContactHint": "Du bist Reisender? Kontaktiere den Sender über sein Profil, um diesen Wunsch zu erfüllen.",
   "fieldNotesOptional": "Notiz (optional)",
   "myRequestsTitle": "Meine Wünsche",
-  "noMyRequests": "Du hast noch keine Wünsche gepostet."
+  "noMyRequests": "Du hast noch keine Wünsche gepostet.",
+  "reactToRequest": "Auf Wunsch reagieren",
+  "makeOfferHint": "Nachricht an den Sender (optional)",
+  "offerSend": "Angebot senden",
+  "offerSent": "Dein Angebot wurde gesendet.",
+  "offersTitle": "Angebote",
+  "noOffers": "Noch keine Angebote.",
+  "acceptOffer": "Annehmen",
+  "offerAccepted": "Angenommen",
+  "offerDeclined": "Abgelehnt",
+  "requestAlreadyMatched": "Dieser Wunsch ist bereits vergeben.",
+  "offerAcceptedSnack": "Angebot angenommen."
 }

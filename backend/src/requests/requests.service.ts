@@ -1,7 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreatePackageRequestDto, SearchRequestsDto } from './dto/request.dto';
+import { CreatePackageRequestDto, CreateOfferDto, SearchRequestsDto } from './dto/request.dto';
 
 /** Felder der Gegenpartei, die wir öffentlich anzeigen (Trust-Signale). */
 const senderSelect = {
@@ -63,5 +69,83 @@ export class RequestsService {
     });
     if (!req) throw new NotFoundException('Wunsch nicht gefunden.');
     return req;
+  }
+
+  // ── Angebote (Reisender reagiert auf einen Wunsch) ─────────────────────────
+
+  /** Ein Reisender gibt ein Angebot auf einen offenen Wunsch ab (idempotent). */
+  async createOffer(travelerId: string, requestId: string, dto: CreateOfferDto) {
+    const req = await this.prisma.packageRequest.findUnique({
+      where: { id: requestId },
+    });
+    if (!req) throw new NotFoundException('Wunsch nicht gefunden.');
+    if (req.senderId === travelerId) {
+      throw new BadRequestException('Du kannst nicht auf deinen eigenen Wunsch bieten.');
+    }
+    if (req.status !== 'OPEN') {
+      throw new ConflictException('Dieser Wunsch nimmt keine Angebote mehr an.');
+    }
+    return this.prisma.requestOffer.upsert({
+      where: { requestId_travelerId: { requestId, travelerId } },
+      create: { requestId, travelerId, message: dto.message },
+      update: { message: dto.message, status: 'PENDING' },
+    });
+  }
+
+  /** Angebote eines Wunsches — nur der Sender (Eigentümer) darf sie sehen. */
+  async listOffers(userId: string, requestId: string) {
+    const req = await this.prisma.packageRequest.findUnique({
+      where: { id: requestId },
+    });
+    if (!req) throw new NotFoundException('Wunsch nicht gefunden.');
+    if (req.senderId !== userId) {
+      throw new ForbiddenException('Nur der Ersteller sieht die Angebote.');
+    }
+    return this.prisma.requestOffer.findMany({
+      where: { requestId },
+      orderBy: { createdAt: 'desc' },
+      include: { traveler: { select: senderSelect } },
+    });
+  }
+
+  /**
+   * Der Sender nimmt ein Angebot an: Angebot -> ACCEPTED, alle anderen
+   * -> DECLINED, der Wunsch -> MATCHED. Append-frei, atomar in einer Transaktion.
+   */
+  async acceptOffer(userId: string, requestId: string, offerId: string) {
+    const req = await this.prisma.packageRequest.findUnique({
+      where: { id: requestId },
+    });
+    if (!req) throw new NotFoundException('Wunsch nicht gefunden.');
+    if (req.senderId !== userId) {
+      throw new ForbiddenException('Nur der Ersteller kann Angebote annehmen.');
+    }
+    const offer = await this.prisma.requestOffer.findUnique({
+      where: { id: offerId },
+    });
+    if (!offer || offer.requestId !== requestId) {
+      throw new NotFoundException('Angebot nicht gefunden.');
+    }
+    if (req.status !== 'OPEN') {
+      throw new ConflictException('Der Wunsch ist bereits vergeben.');
+    }
+    await this.prisma.$transaction([
+      this.prisma.requestOffer.update({
+        where: { id: offerId },
+        data: { status: 'ACCEPTED' },
+      }),
+      this.prisma.requestOffer.updateMany({
+        where: { requestId, id: { not: offerId } },
+        data: { status: 'DECLINED' },
+      }),
+      this.prisma.packageRequest.update({
+        where: { id: requestId },
+        data: { status: 'MATCHED' },
+      }),
+    ]);
+    return this.prisma.requestOffer.findUniqueOrThrow({
+      where: { id: offerId },
+      include: { traveler: { select: senderSelect } },
+    });
   }
 }

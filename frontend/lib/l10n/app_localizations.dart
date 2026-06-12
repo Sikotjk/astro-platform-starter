@@ -1263,6 +1263,72 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Du hast noch keine Wünsche gepostet.'**
   String get noMyRequests;
+
+  /// No description provided for @reactToRequest.
+  ///
+  /// In de, this message translates to:
+  /// **'Auf Wunsch reagieren'**
+  String get reactToRequest;
+
+  /// No description provided for @makeOfferHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Nachricht an den Sender (optional)'**
+  String get makeOfferHint;
+
+  /// No description provided for @offerSend.
+  ///
+  /// In de, this message translates to:
+  /// **'Angebot senden'**
+  String get offerSend;
+
+  /// No description provided for @offerSent.
+  ///
+  /// In de, this message translates to:
+  /// **'Dein Angebot wurde gesendet.'**
+  String get offerSent;
+
+  /// No description provided for @offersTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Angebote'**
+  String get offersTitle;
+
+  /// No description provided for @noOffers.
+  ///
+  /// In de, this message translates to:
+  /// **'Noch keine Angebote.'**
+  String get noOffers;
+
+  /// No description provided for @acceptOffer.
+  ///
+  /// In de, this message translates to:
+  /// **'Annehmen'**
+  String get acceptOffer;
+
+  /// No description provided for @offerAccepted.
+  ///
+  /// In de, this message translates to:
+  /// **'Angenommen'**
+  String get offerAccepted;
+
+  /// No description provided for @offerDeclined.
+  ///
+  /// In de, this message translates to:
+  /// **'Abgelehnt'**
+  String get offerDeclined;
+
+  /// No description provided for @requestAlreadyMatched.
+  ///
+  /// In de, this message translates to:
+  /// **'Dieser Wunsch ist bereits vergeben.'**
+  String get requestAlreadyMatched;
+
+  /// No description provided for @offerAcceptedSnack.
+  ///
+  /// In de, this message translates to:
+  /// **'Angebot angenommen.'**
+  String get offerAcceptedSnack;
 }
 
 class _AppLocalizationsDelegate

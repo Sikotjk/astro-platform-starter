@@ -84,6 +84,40 @@ class PackageRequest {
   }
 }
 
+/// Angebot eines Reisenden auf einen Wunsch (GET /requests/:id/offers).
+class RequestOffer {
+  const RequestOffer({
+    required this.id,
+    required this.status,
+    this.message,
+    this.traveler,
+    this.createdAt,
+  });
+
+  final String id;
+  final String status; // PENDING | ACCEPTED | DECLINED
+  final String? message;
+  final RequestSender? traveler;
+  final DateTime? createdAt;
+
+  bool get isAccepted => status == 'ACCEPTED';
+  bool get isDeclined => status == 'DECLINED';
+
+  factory RequestOffer.fromJson(Map<String, dynamic> json) {
+    return RequestOffer(
+      id: json['id'] as String,
+      status: json['status'] as String? ?? 'PENDING',
+      message: json['message'] as String?,
+      traveler: json['traveler'] is Map<String, dynamic>
+          ? RequestSender.fromJson(json['traveler'] as Map<String, dynamic>)
+          : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.tryParse(json['createdAt'] as String)
+          : null,
+    );
+  }
+}
+
 /// Eingaben zum Erstellen eines Wunsches (POST /requests).
 class CreateRequestInput {
   const CreateRequestInput({

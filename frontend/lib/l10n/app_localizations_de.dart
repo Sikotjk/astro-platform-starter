@@ -646,4 +646,37 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get noMyRequests => 'Du hast noch keine Wünsche gepostet.';
+
+  @override
+  String get reactToRequest => 'Auf Wunsch reagieren';
+
+  @override
+  String get makeOfferHint => 'Nachricht an den Sender (optional)';
+
+  @override
+  String get offerSend => 'Angebot senden';
+
+  @override
+  String get offerSent => 'Dein Angebot wurde gesendet.';
+
+  @override
+  String get offersTitle => 'Angebote';
+
+  @override
+  String get noOffers => 'Noch keine Angebote.';
+
+  @override
+  String get acceptOffer => 'Annehmen';
+
+  @override
+  String get offerAccepted => 'Angenommen';
+
+  @override
+  String get offerDeclined => 'Abgelehnt';
+
+  @override
+  String get requestAlreadyMatched => 'Dieser Wunsch ist bereits vergeben.';
+
+  @override
+  String get offerAcceptedSnack => 'Angebot angenommen.';
 }

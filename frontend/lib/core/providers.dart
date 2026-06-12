@@ -134,6 +134,26 @@ final myRequestsControllerProvider =
       AsyncValue<List<PackageRequest>>
     >((ref) => MyRequestsController(ref.watch(requestsRepositoryProvider)));
 
+// Angebote eines Wunsches (Eigentümer-Sicht), je requestId.
+final requestOffersControllerProvider =
+    StateNotifierProvider.family<
+      RequestOffersController,
+      AsyncValue<List<RequestOffer>>,
+      String
+    >(
+      (ref, requestId) => RequestOffersController(
+        ref.watch(requestsRepositoryProvider),
+        requestId,
+      ),
+    );
+
+// Angebot abgeben (Reisenden-Sicht), je requestId.
+final makeOfferControllerProvider =
+    StateNotifierProvider.family<MakeOfferController, AsyncValue<void>, String>(
+      (ref, requestId) =>
+          MakeOfferController(ref.watch(requestsRepositoryProvider), requestId),
+    );
+
 final kycRepositoryProvider = Provider<KycRepository>(
   (ref) => DioKycRepository(ref.watch(apiClientProvider).dio),
 );

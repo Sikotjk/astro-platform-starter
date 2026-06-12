@@ -56,6 +56,14 @@ export class CreatePackageRequestDto {
   notes?: string;
 }
 
+/** Angebot eines Reisenden auf einen Wunsch. */
+export class CreateOfferDto {
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  message?: string;
+}
+
 /** Filter für das öffentliche Wunsch-Board. */
 export class SearchRequestsDto {
   @IsOptional()

@@ -193,5 +193,16 @@
   "requestContactHint": "Вы путешественник? Свяжитесь с отправителем через его профиль, чтобы выполнить заявку.",
   "fieldNotesOptional": "Примечание (необязательно)",
   "myRequestsTitle": "Мои заявки",
-  "noMyRequests": "Вы ещё не размещали заявок."
+  "noMyRequests": "Вы ещё не размещали заявок.",
+  "reactToRequest": "Откликнуться на заявку",
+  "makeOfferHint": "Сообщение отправителю (необязательно)",
+  "offerSend": "Отправить предложение",
+  "offerSent": "Ваше предложение отправлено.",
+  "offersTitle": "Предложения",
+  "noOffers": "Пока нет предложений.",
+  "acceptOffer": "Принять",
+  "offerAccepted": "Принято",
+  "offerDeclined": "Отклонено",
+  "requestAlreadyMatched": "Эта заявка уже закрыта.",
+  "offerAcceptedSnack": "Предложение принято."
 }

@@ -239,5 +239,38 @@ void main() {
       final r = obj(backend.handle('GET', '/requests/req_1', {}, null).body);
       expect(r['title'], contains('Medikamente'));
     });
+
+    test('eigener Wunsch hat ein eingegangenes Angebot', () {
+      final offers = list(
+        backend.handle('GET', '/requests/req_1/offers', {}, null).body,
+      );
+      expect(offers.length, 1);
+      expect(obj(offers.first)['traveler']['firstName'], 'Karim');
+      expect(obj(offers.first)['status'], 'PENDING');
+    });
+
+    test('Angebot abgeben auf fremden Wunsch', () {
+      final created = obj(
+        backend.handle('POST', '/requests/req_2/offers', {}, {
+          'message': 'Nehme ich mit',
+        }).body,
+      );
+      expect(created['status'], 'PENDING');
+      final offers = list(
+        backend.handle('GET', '/requests/req_2/offers', {}, null).body,
+      );
+      expect(offers.length, 1);
+    });
+
+    test('Angebot annehmen -> ACCEPTED + Wunsch MATCHED', () {
+      final res = obj(
+        backend
+            .handle('POST', '/requests/req_1/offers/off_1/accept', {}, null)
+            .body,
+      );
+      expect(res['status'], 'ACCEPTED');
+      final req = obj(backend.handle('GET', '/requests/req_1', {}, null).body);
+      expect(req['status'], 'MATCHED');
+    });
   });
 }

@@ -115,6 +115,7 @@ model User {
   deviceTokens       DeviceToken[]
   refreshTokens      RefreshToken[]
   packageRequests    PackageRequest[]
+  requestOffers      RequestOffer[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -427,9 +428,36 @@ model PackageRequest {
   notes              String?
   status             PackageRequestStatus @default(OPEN)
 
+  offers RequestOffer[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([originAirport, destinationAirport, status])
   @@index([senderId])
+}
+
+enum RequestOfferStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+// Angebot eines Reisenden auf einen Wunsch (schließt den Marktplatz-Kreis).
+model RequestOffer {
+  id        String         @id @default(cuid())
+  requestId String
+  request   PackageRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  travelerId String
+  traveler   User          @relation(fields: [travelerId], references: [id], onDelete: Cascade)
+
+  message String?
+  status  RequestOfferStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([requestId, travelerId]) // ein Angebot je Reisendem und Wunsch
+  @@index([requestId])
+  @@index([travelerId])
 }

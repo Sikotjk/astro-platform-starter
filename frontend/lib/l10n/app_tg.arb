@@ -193,5 +193,16 @@
   "requestContactHint": "Шумо мусофир ҳастед? Бо фиристанда тавассути профили ӯ тамос гиред.",
   "fieldNotesOptional": "Эзоҳ (ихтиёрӣ)",
   "myRequestsTitle": "Дархостҳои ман",
-  "noMyRequests": "Шумо ҳоло дархост нагузоштаед."
+  "noMyRequests": "Шумо ҳоло дархост нагузоштаед.",
+  "reactToRequest": "Ба дархост ҷавоб додан",
+  "makeOfferHint": "Паём ба фиристанда (ихтиёрӣ)",
+  "offerSend": "Пешниҳод фиристодан",
+  "offerSent": "Пешниҳоди шумо фиристода шуд.",
+  "offersTitle": "Пешниҳодҳо",
+  "noOffers": "Ҳоло пешниҳод нест.",
+  "acceptOffer": "Қабул",
+  "offerAccepted": "Қабулшуда",
+  "offerDeclined": "Радшуда",
+  "requestAlreadyMatched": "Ин дархост аллакай баста шудааст.",
+  "offerAcceptedSnack": "Пешниҳод қабул шуд."
 }

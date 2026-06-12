@@ -646,4 +646,37 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noMyRequests => 'Вы ещё не размещали заявок.';
+
+  @override
+  String get reactToRequest => 'Откликнуться на заявку';
+
+  @override
+  String get makeOfferHint => 'Сообщение отправителю (необязательно)';
+
+  @override
+  String get offerSend => 'Отправить предложение';
+
+  @override
+  String get offerSent => 'Ваше предложение отправлено.';
+
+  @override
+  String get offersTitle => 'Предложения';
+
+  @override
+  String get noOffers => 'Пока нет предложений.';
+
+  @override
+  String get acceptOffer => 'Принять';
+
+  @override
+  String get offerAccepted => 'Принято';
+
+  @override
+  String get offerDeclined => 'Отклонено';
+
+  @override
+  String get requestAlreadyMatched => 'Эта заявка уже закрыта.';
+
+  @override
+  String get offerAcceptedSnack => 'Предложение принято.';
 }

@@ -65,3 +65,55 @@ class MyRequestsController
     }
   }
 }
+
+/// Lädt & verwaltet die Angebote eines Wunsches (Eigentümer-Sicht).
+class RequestOffersController
+    extends StateNotifier<AsyncValue<List<RequestOffer>>> {
+  RequestOffersController(this._repo, this._requestId)
+    : super(const AsyncValue.loading());
+
+  final RequestsRepository _repo;
+  final String _requestId;
+
+  Future<void> load() async {
+    state = const AsyncValue.loading();
+    try {
+      state = AsyncValue.data(await _repo.listOffers(_requestId));
+    } catch (e, st) {
+      state = AsyncValue.error(apiErrorMessage(e), st);
+    }
+  }
+
+  /// Nimmt ein Angebot an; liefert bei Fehler eine Meldung, sonst null.
+  Future<String?> accept(String offerId) async {
+    try {
+      await _repo.acceptOffer(_requestId, offerId);
+      await load();
+      return null;
+    } catch (e) {
+      return apiErrorMessage(e);
+    }
+  }
+}
+
+/// Gibt ein Angebot auf einen Wunsch ab (Reisenden-Sicht).
+class MakeOfferController extends StateNotifier<AsyncValue<void>> {
+  MakeOfferController(this._repo, this._requestId)
+    : super(const AsyncValue.data(null));
+
+  final RequestsRepository _repo;
+  final String _requestId;
+
+  /// Liefert bei Fehler eine Meldung zurück, sonst null (Erfolg).
+  Future<String?> submit({String? message}) async {
+    state = const AsyncValue.loading();
+    try {
+      await _repo.createOffer(_requestId, message: message);
+      state = const AsyncValue.data(null);
+      return null;
+    } catch (e, st) {
+      state = AsyncValue.error(apiErrorMessage(e), st);
+      return apiErrorMessage(e);
+    }
+  }
+}

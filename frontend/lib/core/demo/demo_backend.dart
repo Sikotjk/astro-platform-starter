@@ -41,6 +41,7 @@ class DemoBackend {
   late List<Map<String, dynamic>> _notifications;
   late Map<String, List<Map<String, dynamic>>> _reviews;
   late List<Map<String, dynamic>> _requests;
+  late Map<String, List<Map<String, dynamic>>> _offers;
   int _seq = 0;
 
   String _id(String prefix) => '${prefix}_${++_seq}';
@@ -327,6 +328,20 @@ class DemoBackend {
         'sender': _party(firuzaId, 'Firuza', 0, 0),
       },
     ];
+
+    // Auf den eigenen Wunsch (req_1) liegt bereits ein Angebot von Karim.
+    _offers = {
+      'req_1': [
+        {
+          'id': 'off_1',
+          'requestId': 'req_1',
+          'message': 'Ich fliege nächste Woche FRA → DYU, nehme es gern mit!',
+          'status': 'PENDING',
+          'createdAt': agoDays(0),
+          'traveler': _party(karimId, 'Karim', 4.7, 23),
+        },
+      ],
+    };
   }
 
   Map<String, dynamic> _msg(
@@ -467,6 +482,10 @@ class DemoBackend {
       };
       _requests.insert(0, r);
       return DemoResponse(201, r);
+    }
+    // Angebote: /requests/:id/offers  und  .../offers/:offerId/accept
+    if (segs.length >= 3 && segs[0] == 'requests' && segs[2] == 'offers') {
+      return _offersRoute(m, segs, body);
     }
     if (segs.length == 2 && segs[0] == 'requests') {
       final r = _requests.firstWhere(
@@ -617,6 +636,53 @@ class DemoBackend {
       }
       return true;
     }).toList();
+  }
+
+  /// Routen rund um Angebote auf einen Wunsch.
+  DemoResponse _offersRoute(
+    String method,
+    List<String> segs,
+    Map<String, dynamic>? body,
+  ) {
+    final requestId = segs[1];
+    final req = _requests.firstWhere(
+      (e) => e['id'] == requestId,
+      orElse: () => {},
+    );
+    if (req.isEmpty) {
+      return const DemoResponse(404, {'message': 'Wunsch nicht gefunden.'});
+    }
+    final list = _offers[requestId] ?? [];
+
+    // .../offers/:offerId/accept
+    if (segs.length == 5 && segs[4] == 'accept') {
+      final offerId = segs[3];
+      for (final o in list) {
+        o['status'] = o['id'] == offerId ? 'ACCEPTED' : 'DECLINED';
+      }
+      req['status'] = 'MATCHED';
+      final accepted = list.firstWhere(
+        (o) => o['id'] == offerId,
+        orElse: () => {},
+      );
+      return DemoResponse(201, accepted);
+    }
+
+    // /requests/:id/offers
+    if (method == 'GET') return DemoResponse(200, list);
+
+    // POST: ich (Demo-Nutzer) gebe ein Angebot ab.
+    final offer = {
+      'id': _id('off'),
+      'requestId': requestId,
+      'message': body?['message'],
+      'status': 'PENDING',
+      'createdAt': _iso(_now),
+      'traveler': _party(meId, 'Anvar', 4.8, 6),
+    };
+    list.add(offer);
+    _offers[requestId] = list;
+    return DemoResponse(201, offer);
   }
 
   DemoResponse _bookingOr404(String id) {
