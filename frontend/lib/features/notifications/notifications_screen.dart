@@ -6,7 +6,9 @@ import '../../core/api_client.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../core/theme/app_theme.dart';
 import '../../models/notification.dart';
+import '../../widgets/empty_state.dart';
 import '../../widgets/error_retry.dart';
 
 class NotificationsScreen extends ConsumerStatefulWidget {
@@ -130,47 +132,121 @@ class _NotificationList extends StatelessWidget {
       return ListView(
         physics: const AlwaysScrollableScrollPhysics(),
         children: [
-          const SizedBox(height: 120),
-          Center(child: Text(context.l10n.noNotifications)),
+          const SizedBox(height: 80),
+          EmptyState(
+            icon: Icons.notifications_none_rounded,
+            message: context.l10n.noNotifications,
+          ),
         ],
       );
     }
     return ListView.separated(
       physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(16),
       itemCount: items.length,
-      separatorBuilder: (_, _) => const Divider(height: 1),
-      itemBuilder: (context, i) {
-        final n = items[i];
-        final isTripMatch = n.type == 'TRIP_MATCH' && n.tripId != null;
-        return ListTile(
-          leading: Icon(
-            n.isRead ? Icons.notifications_none : Icons.notifications_active,
-            color: n.isRead
-                ? Theme.of(context).colorScheme.outline
-                : Theme.of(context).colorScheme.primary,
-          ),
-          title: Text(
-            n.title,
-            style: TextStyle(
-              fontWeight: n.isRead ? FontWeight.normal : FontWeight.bold,
-            ),
-          ),
-          subtitle: Column(
+      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      itemBuilder: (context, i) =>
+          _NotificationCard(item: items[i], onTap: () => onTap(items[i])),
+    );
+  }
+}
+
+class _NotificationCard extends StatelessWidget {
+  const _NotificationCard({required this.item, required this.onTap});
+
+  final NotificationItem item;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final n = item;
+    final isTripMatch = n.type == 'TRIP_MATCH' && n.tripId != null;
+    final (icon, color) = switch (n.type) {
+      'TRIP_MATCH' => (Icons.flight_takeoff_rounded, AppColors.teal),
+      'BOOKING_UPDATE' => (Icons.inventory_2_rounded, AppColors.info),
+      _ => (Icons.notifications_rounded, AppColors.amberDeep),
+    };
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(n.body),
-              const SizedBox(height: 2),
-              Text(
-                context.timeAgo(n.createdAt),
-                style: Theme.of(context).textTheme.bodySmall,
+              Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.14),
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                ),
+                child: Icon(icon, color: color, size: 22),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            n.title,
+                            style: Theme.of(context).textTheme.titleSmall
+                                ?.copyWith(
+                                  fontWeight: n.isRead
+                                      ? FontWeight.w600
+                                      : FontWeight.w800,
+                                ),
+                          ),
+                        ),
+                        if (!n.isRead)
+                          Container(
+                            width: 9,
+                            height: 9,
+                            margin: const EdgeInsets.only(left: 8, top: 4),
+                            decoration: const BoxDecoration(
+                              color: AppColors.teal,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      n.body,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: scheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Text(
+                          context.timeAgo(n.createdAt),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: scheme.outline),
+                        ),
+                        const Spacer(),
+                        if (isTripMatch)
+                          Icon(
+                            Icons.chevron_right,
+                            color: scheme.onSurfaceVariant,
+                            size: 20,
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-          isThreeLine: true,
-          trailing: isTripMatch ? const Icon(Icons.chevron_right) : null,
-          onTap: () => onTap(n),
-        );
-      },
+        ),
+      ),
     );
   }
 }

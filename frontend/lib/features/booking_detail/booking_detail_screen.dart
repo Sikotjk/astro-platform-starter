@@ -7,6 +7,7 @@ import '../../core/customs.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../core/theme/app_theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
 import '../../models/booking_detail.dart';
@@ -174,7 +175,6 @@ class _DetailBody extends StatelessWidget {
       isTraveler: isTraveler,
       termsAccepted: booking.termsAccepted,
     );
-    final color = bookingStatusColor(booking.status);
     final canReview = booking.status == 'CONFIRMED' && (isSender || isTraveler);
     final canDispute = canOpenDispute(
       status: booking.status,
@@ -183,115 +183,192 @@ class _DetailBody extends StatelessWidget {
     );
     final partner = booking.counterparty(myId);
 
+    final hasActions = actions.isNotEmpty || canReview || canDispute;
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                booking.packageTitle,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ),
-            Chip(
-              label: Text(bookingStatusLabel(l10n, booking.status)),
-              backgroundColor: color.withValues(alpha: 0.15),
-              labelStyle: TextStyle(color: color),
-            ),
-          ],
-        ),
-        if (booking.route != null) ...[
-          const SizedBox(height: 6),
-          Row(
+        // ── Kopf: Titel, Status, Route, Betrag, Zahlung ──
+        Card(
+          clipBehavior: Clip.antiAlias,
+          child: Column(
             children: [
-              const Icon(Icons.flight, size: 16),
-              const SizedBox(width: 6),
-              Text(
-                booking.departureAt != null
-                    ? '${booking.route} · ${context.formatDate(booking.departureAt!)}'
-                    : booking.route!,
-                style: Theme.of(context).textTheme.bodyMedium,
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  gradient: AppColors.heroGradient,
+                ),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            booking.packageTitle,
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(color: Colors.white),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.22),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                          ),
+                          child: Text(
+                            bookingStatusLabel(l10n, booking.status),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12.5,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (booking.route != null) ...[
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.flight_rounded,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            booking.departureAt != null
+                                ? '${booking.route} · ${context.formatDate(booking.departureAt!)}'
+                                : booking.route!,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Icon(
+                      paymentStatusIcon(booking.paymentStatus),
+                      size: 18,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      paymentStatusLabel(l10n, booking.paymentStatus),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${booking.totalAmount.toStringAsFixed(2)} ${booking.currency}',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: AppColors.teal,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        ],
-        const SizedBox(height: 8),
-        Text(
-          '${l10n.amountLabel}: ${booking.totalAmount.toStringAsFixed(2)} ${booking.currency}',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        const SizedBox(height: 6),
-        Row(
-          children: [
-            Icon(
-              paymentStatusIcon(booking.paymentStatus),
-              size: 18,
-              color: Theme.of(context).colorScheme.outline,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              paymentStatusLabel(l10n, booking.paymentStatus),
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
         ),
         if (partner != null) ...[
           const SizedBox(height: 12),
           _PartnerCard(party: partner),
         ],
         if (booking.items.isNotEmpty) ...[
-          const Divider(height: 32),
-          Text(
-            l10n.contentSection,
-            style: Theme.of(context).textTheme.titleMedium,
+          const SizedBox(height: 12),
+          _SectionCard(
+            title: l10n.contentSection,
+            child: Column(
+              children: [
+                for (final item in booking.items) _ContentTile(item: item),
+              ],
+            ),
           ),
-          const SizedBox(height: 4),
-          for (final item in booking.items) _ContentTile(item: item),
         ],
-        const Divider(height: 32),
-        Text(l10n.actionsTitle, style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final a in actions)
-              ElevatedButton(
-                key: Key('action_${a.name}'),
-                onPressed: () => onAction(a),
-                child: Text(bookingActionLabel(l10n, a)),
-              ),
-            if (canReview)
-              FilledButton.icon(
-                key: const Key('action_review'),
-                onPressed: onReview,
-                icon: const Icon(Icons.star_outline, size: 18),
-                label: Text(l10n.reviewAction),
-              ),
-            if (canDispute)
-              OutlinedButton.icon(
-                key: const Key('action_dispute'),
-                onPressed: onDispute,
-                icon: const Icon(Icons.gavel, size: 18),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Theme.of(context).colorScheme.error,
+        if (hasActions) ...[
+          const SizedBox(height: 12),
+          _SectionCard(
+            title: l10n.actionsTitle,
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final a in actions)
+                  ElevatedButton(
+                    key: Key('action_${a.name}'),
+                    onPressed: () => onAction(a),
+                    child: Text(bookingActionLabel(l10n, a)),
+                  ),
+                if (canReview)
+                  FilledButton.icon(
+                    key: const Key('action_review'),
+                    onPressed: onReview,
+                    icon: const Icon(Icons.star_outline, size: 18),
+                    label: Text(l10n.reviewAction),
+                  ),
+                if (canDispute)
+                  OutlinedButton.icon(
+                    key: const Key('action_dispute'),
+                    onPressed: onDispute,
+                    icon: const Icon(Icons.gavel, size: 18),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Theme.of(context).colorScheme.error,
+                    ),
+                    label: Text(l10n.disputeAction),
+                  ),
+              ],
+            ),
+          ),
+        ],
+        const SizedBox(height: 12),
+        _SectionCard(
+          title: l10n.timelineTitle,
+          child: booking.events.isEmpty
+              ? Text(l10n.noEvents)
+              : Column(
+                  children: [
+                    for (final e in booking.events)
+                      _TimelineTile(event: e, l10n: l10n),
+                  ],
                 ),
-                label: Text(l10n.disputeAction),
-              ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Wiederverwendbare Sektions-Karte mit Titel.
+class _SectionCard extends StatelessWidget {
+  const _SectionCard({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 10),
+            child,
           ],
         ),
-        const Divider(height: 32),
-        Text(
-          l10n.timelineTitle,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        const SizedBox(height: 8),
-        if (booking.events.isEmpty)
-          Text(l10n.noEvents)
-        else
-          for (final e in booking.events) _TimelineTile(event: e, l10n: l10n),
-      ],
+      ),
     );
   }
 }
