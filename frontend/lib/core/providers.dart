@@ -26,6 +26,8 @@ import '../features/manifest/printing_manifest_viewer.dart';
 import '../features/notifications/notifications_controller.dart';
 import '../features/notifications/notifications_repository.dart';
 import '../features/profile/profile_controller.dart';
+import '../features/requests/requests_controller.dart';
+import '../features/requests/requests_repository.dart';
 import '../features/reviews/review_controller.dart';
 import '../features/reviews/reviews_repository.dart';
 import '../features/reviews/user_reviews_controller.dart';
@@ -39,6 +41,7 @@ import '../models/booking.dart';
 import '../models/booking_detail.dart';
 import '../models/message.dart';
 import '../models/notification.dart';
+import '../models/package_request.dart';
 import '../models/review.dart';
 import '../models/saved_search.dart';
 import '../models/trip.dart';
@@ -108,6 +111,21 @@ final createTripControllerProvider =
 final myTripsControllerProvider =
     StateNotifierProvider<MyTripsController, AsyncValue<List<Trip>>>(
       (ref) => MyTripsController(ref.watch(tripsRepositoryProvider)),
+    );
+
+// ── Wunsch-Board (umgekehrter Marktplatz) ────────────────────────────────────
+final requestsRepositoryProvider = Provider<RequestsRepository>(
+  (ref) => DioRequestsRepository(ref.watch(apiClientProvider).dio),
+);
+
+final requestsControllerProvider =
+    StateNotifierProvider<RequestsController, AsyncValue<List<PackageRequest>>>(
+      (ref) => RequestsController(ref.watch(requestsRepositoryProvider)),
+    );
+
+final createRequestControllerProvider =
+    StateNotifierProvider<CreateRequestController, AsyncValue<void>>(
+      (ref) => CreateRequestController(ref.watch(requestsRepositoryProvider)),
     );
 
 final kycRepositoryProvider = Provider<KycRepository>(

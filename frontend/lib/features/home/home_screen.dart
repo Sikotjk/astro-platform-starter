@@ -85,6 +85,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   onTap: () => context.push('/trip/new'),
                 ),
                 _ActionCard(
+                  icon: Icons.inbox_rounded,
+                  label: l10n.homeRequestBoard,
+                  color: AppColors.amberDeep,
+                  onTap: () => context.push('/requests'),
+                ),
+                _ActionCard(
+                  icon: Icons.add_box_rounded,
+                  label: l10n.homePostRequest,
+                  color: AppColors.tealDeep,
+                  onTap: () => context.push('/request/new'),
+                ),
+                _ActionCard(
                   icon: Icons.luggage_rounded,
                   label: l10n.myTripsTitle,
                   color: AppColors.amberDeep,

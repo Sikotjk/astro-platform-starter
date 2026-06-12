@@ -40,6 +40,7 @@ class DemoBackend {
   late List<Map<String, dynamic>> _savedSearches;
   late List<Map<String, dynamic>> _notifications;
   late Map<String, List<Map<String, dynamic>>> _reviews;
+  late List<Map<String, dynamic>> _requests;
   int _seq = 0;
 
   String _id(String prefix) => '${prefix}_${++_seq}';
@@ -278,6 +279,54 @@ class DemoBackend {
       salimId: [_review('Top!', 5, 'Madina', agoDays(10))],
       firuzaId: [],
     };
+
+    _requests = [
+      {
+        'id': 'req_1',
+        'title': 'Suche jemanden für Medikamente',
+        'originAirport': 'FRA',
+        'destinationAirport': 'DYU',
+        'desiredByDate': inDays(20),
+        'weightKg': '1.50',
+        'rewardOffered': '40.00',
+        'currency': 'EUR',
+        'category': 'MEDICINE',
+        'notes': 'Bitte kühl transportieren, geht an meine Mutter.',
+        'status': 'OPEN',
+        'createdAt': agoDays(1),
+        'sender': _party(meId, 'Anvar', 4.8, 6),
+      },
+      {
+        'id': 'req_2',
+        'title': 'Dokumente nach Chudschand',
+        'originAirport': 'MUC',
+        'destinationAirport': 'LBD',
+        'desiredByDate': inDays(30),
+        'weightKg': '0.50',
+        'rewardOffered': '25.00',
+        'currency': 'EUR',
+        'category': 'DOCUMENTS',
+        'notes': null,
+        'status': 'OPEN',
+        'createdAt': agoDays(2),
+        'sender': _party(salimId, 'Salim', 5.0, 8),
+      },
+      {
+        'id': 'req_3',
+        'title': 'Geschenke für die Hochzeit',
+        'originAirport': 'FRA',
+        'destinationAirport': 'DYU',
+        'desiredByDate': inDays(12),
+        'weightKg': '4.00',
+        'rewardOffered': '60.00',
+        'currency': 'EUR',
+        'category': 'GIFTS',
+        'notes': 'Mehrere kleinere Päckchen.',
+        'status': 'OPEN',
+        'createdAt': agoDays(3),
+        'sender': _party(firuzaId, 'Firuza', 0, 0),
+      },
+    ];
   }
 
   Map<String, dynamic> _msg(
@@ -384,6 +433,47 @@ class DemoBackend {
         orElse: () => _trips.first,
       );
       return DemoResponse(200, t);
+    }
+
+    // ── Wunsch-Board (umgekehrter Marktplatz) ────────────────────────────────────
+    if (path == '/requests/mine') {
+      final mine = _requests
+          .where((r) => (r['sender'] as Map)['id'] == meId)
+          .toList();
+      return DemoResponse(200, mine);
+    }
+    if (path == '/requests' && m == 'GET') {
+      return DemoResponse(200, _searchRequests(query));
+    }
+    if (path == '/requests' && m == 'POST') {
+      final r = {
+        'id': _id('req'),
+        'title': (body?['title'] ?? 'Wunsch').toString(),
+        'originAirport': (body?['originAirport'] ?? 'FRA')
+            .toString()
+            .toUpperCase(),
+        'destinationAirport': (body?['destinationAirport'] ?? 'DYU')
+            .toString()
+            .toUpperCase(),
+        'desiredByDate': body?['desiredByDate'],
+        'weightKg': (body?['weightKg'] ?? 1).toString(),
+        'rewardOffered': (body?['rewardOffered'] ?? 0).toString(),
+        'currency': body?['currency'] ?? 'EUR',
+        'category': body?['category'] ?? 'OTHER',
+        'notes': body?['notes'],
+        'status': 'OPEN',
+        'createdAt': _iso(_now),
+        'sender': _party(meId, 'Anvar', 4.8, 6),
+      };
+      _requests.insert(0, r);
+      return DemoResponse(201, r);
+    }
+    if (segs.length == 2 && segs[0] == 'requests') {
+      final r = _requests.firstWhere(
+        (e) => e['id'] == segs[1],
+        orElse: () => _requests.first,
+      );
+      return DemoResponse(200, r);
     }
 
     // ── Bookings ───────────────────────────────────────────────────────────────
@@ -510,6 +600,21 @@ class DemoBackend {
         return false;
       }
       if (minKg != null && (t['freeKg'] as num) < minKg) return false;
+      return true;
+    }).toList();
+  }
+
+  List<Map<String, dynamic>> _searchRequests(Map<String, String> query) {
+    final from = query['originAirport']?.toUpperCase();
+    final to = query['destinationAirport']?.toUpperCase();
+    return _requests.where((r) {
+      if (r['status'] != 'OPEN') return false;
+      if (from != null && from.isNotEmpty && r['originAirport'] != from) {
+        return false;
+      }
+      if (to != null && to.isNotEmpty && r['destinationAirport'] != to) {
+        return false;
+      }
       return true;
     }).toList();
   }

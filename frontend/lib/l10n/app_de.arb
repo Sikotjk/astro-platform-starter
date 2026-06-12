@@ -244,5 +244,19 @@
     "placeholders": {
       "amount": {}
     }
-  }
+  },
+  "requestsBoardTitle": "Wunsch-Board",
+  "requestsBoardSubtitle": "Pakete, die jemand mitgenommen haben möchte",
+  "postRequestTitle": "Wunsch posten",
+  "fieldReward": "Belohnung (€)",
+  "rewardLabel": "Belohnung",
+  "requestPublished": "Dein Wunsch wurde veröffentlicht.",
+  "noRequests": "Noch keine Wünsche.",
+  "noRequestsHint": "Sei der Erste und poste einen Liefer-Wunsch.",
+  "requestDetailTitle": "Wunsch-Details",
+  "desiredBy": "Gewünscht bis",
+  "homeRequestBoard": "Wunsch-Board",
+  "homePostRequest": "Wunsch posten",
+  "requestContactHint": "Du bist Reisender? Kontaktiere den Sender über sein Profil, um diesen Wunsch zu erfüllen.",
+  "fieldNotesOptional": "Notiz (optional)"
 }

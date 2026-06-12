@@ -177,5 +177,19 @@
   "priceTransport": "Доставка",
   "priceServiceFee": "Сервисный сбор (15 %)",
   "priceTotal": "Итого",
-  "earningsEstimate": "Вы можете заработать до {amount} €"
+  "earningsEstimate": "Вы можете заработать до {amount} €",
+  "requestsBoardTitle": "Доска заявок",
+  "requestsBoardSubtitle": "Посылки, которые нужно перевезти",
+  "postRequestTitle": "Разместить заявку",
+  "fieldReward": "Вознаграждение (€)",
+  "rewardLabel": "Вознаграждение",
+  "requestPublished": "Ваша заявка опубликована.",
+  "noRequests": "Заявок пока нет.",
+  "noRequestsHint": "Будьте первым — разместите заявку на доставку.",
+  "requestDetailTitle": "Детали заявки",
+  "desiredBy": "Желаемо до",
+  "homeRequestBoard": "Доска заявок",
+  "homePostRequest": "Разместить заявку",
+  "requestContactHint": "Вы путешественник? Свяжитесь с отправителем через его профиль, чтобы выполнить заявку.",
+  "fieldNotesOptional": "Примечание (необязательно)"
 }

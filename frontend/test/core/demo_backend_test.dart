@@ -180,4 +180,64 @@ void main() {
     expect(obj(res['declaration'])['level'], 'ALLOW');
     expect(obj(res['package'])['id'], isNotEmpty);
   });
+
+  group('Wunsch-Board', () {
+    test('listet offene Wünsche inkl. Sender', () {
+      final all = list(backend.handle('GET', '/requests', {}, null).body);
+      expect(all.length, greaterThanOrEqualTo(3));
+      expect(obj(all.first)['sender']['firstName'], isNotEmpty);
+    });
+
+    test('filtert nach Route', () {
+      final fraDyu = list(
+        backend.handle('GET', '/requests', {
+          'originAirport': 'fra',
+          'destinationAirport': 'dyu',
+        }, null).body,
+      );
+      expect(fraDyu, isNotEmpty);
+      expect(
+        fraDyu.every(
+          (r) =>
+              obj(r)['originAirport'] == 'FRA' &&
+              obj(r)['destinationAirport'] == 'DYU',
+        ),
+        isTrue,
+      );
+    });
+
+    test('Wunsch posten normalisiert IATA und erscheint im Board', () {
+      final before = list(
+        backend.handle('GET', '/requests', {}, null).body,
+      ).length;
+      final created = obj(
+        backend.handle('POST', '/requests', {}, {
+          'title': 'Test-Wunsch',
+          'originAirport': 'txl',
+          'destinationAirport': 'dyu',
+          'weightKg': 2,
+          'rewardOffered': 30,
+          'category': 'GIFTS',
+        }).body,
+      );
+      expect(created['originAirport'], 'TXL');
+      expect(created['status'], 'OPEN');
+      final after = list(backend.handle('GET', '/requests', {}, null).body);
+      expect(after.length, before + 1);
+    });
+
+    test('mine liefert die eigenen Wünsche', () {
+      final mine = list(backend.handle('GET', '/requests/mine', {}, null).body);
+      expect(mine, isNotEmpty);
+      expect(
+        mine.every((r) => obj(r)['sender']['id'] == DemoBackend.meId),
+        isTrue,
+      );
+    });
+
+    test('Einzelwunsch abrufbar', () {
+      final r = obj(backend.handle('GET', '/requests/req_1', {}, null).body);
+      expect(r['title'], contains('Medikamente'));
+    });
+  });
 }

@@ -177,5 +177,19 @@
   "priceTransport": "Интиқол",
   "priceServiceFee": "Пардохти хизматрасонӣ (15 %)",
   "priceTotal": "Ҳамагӣ",
-  "earningsEstimate": "Шумо метавонед то {amount} € кор кунед"
+  "earningsEstimate": "Шумо метавонед то {amount} € кор кунед",
+  "requestsBoardTitle": "Лавҳаи дархостҳо",
+  "requestsBoardSubtitle": "Бастаҳое, ки касе мехоҳад бурда шавад",
+  "postRequestTitle": "Дархост гузоред",
+  "fieldReward": "Мукофот (€)",
+  "rewardLabel": "Мукофот",
+  "requestPublished": "Дархости шумо нашр шуд.",
+  "noRequests": "Ҳоло дархост нест.",
+  "noRequestsHint": "Аввалин шавед ва дархости интиқол гузоред.",
+  "requestDetailTitle": "Тафсилоти дархост",
+  "desiredBy": "То санаи",
+  "homeRequestBoard": "Лавҳаи дархостҳо",
+  "homePostRequest": "Дархост гузоред",
+  "requestContactHint": "Шумо мусофир ҳастед? Бо фиристанда тавассути профили ӯ тамос гиред.",
+  "fieldNotesOptional": "Эзоҳ (ихтиёрӣ)"
 }

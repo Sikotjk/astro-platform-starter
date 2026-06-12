@@ -596,4 +596,48 @@ class AppLocalizationsDe extends AppLocalizations {
   String earningsEstimate(Object amount) {
     return 'Du kannst bis zu $amount € verdienen';
   }
+
+  @override
+  String get requestsBoardTitle => 'Wunsch-Board';
+
+  @override
+  String get requestsBoardSubtitle =>
+      'Pakete, die jemand mitgenommen haben möchte';
+
+  @override
+  String get postRequestTitle => 'Wunsch posten';
+
+  @override
+  String get fieldReward => 'Belohnung (€)';
+
+  @override
+  String get rewardLabel => 'Belohnung';
+
+  @override
+  String get requestPublished => 'Dein Wunsch wurde veröffentlicht.';
+
+  @override
+  String get noRequests => 'Noch keine Wünsche.';
+
+  @override
+  String get noRequestsHint => 'Sei der Erste und poste einen Liefer-Wunsch.';
+
+  @override
+  String get requestDetailTitle => 'Wunsch-Details';
+
+  @override
+  String get desiredBy => 'Gewünscht bis';
+
+  @override
+  String get homeRequestBoard => 'Wunsch-Board';
+
+  @override
+  String get homePostRequest => 'Wunsch posten';
+
+  @override
+  String get requestContactHint =>
+      'Du bist Reisender? Kontaktiere den Sender über sein Profil, um diesen Wunsch zu erfüllen.';
+
+  @override
+  String get fieldNotesOptional => 'Notiz (optional)';
 }

@@ -15,9 +15,13 @@ import 'features/kyc/kyc_screen.dart';
 import 'features/manifest/manifest_screen.dart';
 import 'features/notifications/notifications_screen.dart';
 import 'features/profile/profile_edit_screen.dart';
+import 'features/requests/post_request_screen.dart';
+import 'features/requests/request_detail_screen.dart';
+import 'features/requests/requests_board_screen.dart';
 import 'features/profile/profile_screen.dart';
 import 'features/reviews/public_profile_screen.dart';
 import 'models/booking_detail.dart';
+import 'models/package_request.dart';
 import 'features/saved_searches/saved_searches_screen.dart';
 import 'features/trips/create_trip_screen.dart';
 import 'features/trips/my_trips_screen.dart';
@@ -87,6 +91,19 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: '/trip/new', builder: (_, _) => const CreateTripScreen()),
       GoRoute(path: '/trips/mine', builder: (_, _) => const MyTripsScreen()),
+      GoRoute(
+        path: '/requests',
+        builder: (_, _) => const RequestsBoardScreen(),
+      ),
+      GoRoute(
+        path: '/request/new',
+        builder: (_, _) => const PostRequestScreen(),
+      ),
+      GoRoute(
+        path: '/request/:id',
+        builder: (_, state) =>
+            RequestDetailScreen(request: state.extra as PackageRequest),
+      ),
       GoRoute(
         path: '/user',
         builder: (_, state) =>

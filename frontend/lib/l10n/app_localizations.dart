@@ -1167,6 +1167,90 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Du kannst bis zu {amount} € verdienen'**
   String earningsEstimate(Object amount);
+
+  /// No description provided for @requestsBoardTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Wunsch-Board'**
+  String get requestsBoardTitle;
+
+  /// No description provided for @requestsBoardSubtitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Pakete, die jemand mitgenommen haben möchte'**
+  String get requestsBoardSubtitle;
+
+  /// No description provided for @postRequestTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Wunsch posten'**
+  String get postRequestTitle;
+
+  /// No description provided for @fieldReward.
+  ///
+  /// In de, this message translates to:
+  /// **'Belohnung (€)'**
+  String get fieldReward;
+
+  /// No description provided for @rewardLabel.
+  ///
+  /// In de, this message translates to:
+  /// **'Belohnung'**
+  String get rewardLabel;
+
+  /// No description provided for @requestPublished.
+  ///
+  /// In de, this message translates to:
+  /// **'Dein Wunsch wurde veröffentlicht.'**
+  String get requestPublished;
+
+  /// No description provided for @noRequests.
+  ///
+  /// In de, this message translates to:
+  /// **'Noch keine Wünsche.'**
+  String get noRequests;
+
+  /// No description provided for @noRequestsHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Sei der Erste und poste einen Liefer-Wunsch.'**
+  String get noRequestsHint;
+
+  /// No description provided for @requestDetailTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Wunsch-Details'**
+  String get requestDetailTitle;
+
+  /// No description provided for @desiredBy.
+  ///
+  /// In de, this message translates to:
+  /// **'Gewünscht bis'**
+  String get desiredBy;
+
+  /// No description provided for @homeRequestBoard.
+  ///
+  /// In de, this message translates to:
+  /// **'Wunsch-Board'**
+  String get homeRequestBoard;
+
+  /// No description provided for @homePostRequest.
+  ///
+  /// In de, this message translates to:
+  /// **'Wunsch posten'**
+  String get homePostRequest;
+
+  /// No description provided for @requestContactHint.
+  ///
+  /// In de, this message translates to:
+  /// **'Du bist Reisender? Kontaktiere den Sender über sein Profil, um diesen Wunsch zu erfüllen.'**
+  String get requestContactHint;
+
+  /// No description provided for @fieldNotesOptional.
+  ///
+  /// In de, this message translates to:
+  /// **'Notiz (optional)'**
+  String get fieldNotesOptional;
 }
 
 class _AppLocalizationsDelegate

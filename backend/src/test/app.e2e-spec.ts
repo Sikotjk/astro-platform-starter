@@ -617,3 +617,58 @@ describe('Account & Dashboard', () => {
     expect(paid.body.length).toBe(0);
   });
 });
+
+describe('Wunsch-Board (umgekehrter Marktplatz)', () => {
+  it('Sender veröffentlicht einen Liefer-Wunsch', async () => {
+    const r = await request(http()).post('/requests').set(auth(state.senderToken)).send({
+      title: 'Suche jemanden für Medikamente',
+      originAirport: 'fra',
+      destinationAirport: 'dyu',
+      weightKg: 2,
+      rewardOffered: 40,
+      category: 'MEDICINE',
+      notes: 'Bitte kühl transportieren.',
+    });
+    expect(r.status).toBe(201);
+    expect(r.body.originAirport).toBe('FRA'); // normalisiert
+    expect(r.body.status).toBe('OPEN');
+    state.requestId = r.body.id;
+  });
+
+  it('lehnt einen Wunsch ohne Auth ab (401)', async () => {
+    const r = await request(http()).post('/requests').send({
+      title: 'X',
+      originAirport: 'FRA',
+      destinationAirport: 'DYU',
+      weightKg: 1,
+      rewardOffered: 10,
+    });
+    expect(r.status).toBe(401);
+  });
+
+  it('Board listet offene Wünsche inkl. Sender-Reputation', async () => {
+    const r = await request(http()).get('/requests?originAirport=FRA&destinationAirport=DYU');
+    expect(r.status).toBe(200);
+    expect(r.body.length).toBeGreaterThanOrEqual(1);
+    expect(r.body[0].sender.firstName).toBeDefined();
+    expect(r.body[0].sender.passwordHash).toBeUndefined();
+  });
+
+  it('Board filtert nach Route (kein Treffer)', async () => {
+    const r = await request(http()).get('/requests?originAirport=MUC&destinationAirport=IST');
+    expect(r.status).toBe(200);
+    expect(r.body.length).toBe(0);
+  });
+
+  it('GET /requests/mine liefert die eigenen Wünsche', async () => {
+    const r = await request(http()).get('/requests/mine').set(auth(state.senderToken));
+    expect(r.status).toBe(200);
+    expect(r.body.length).toBe(1);
+  });
+
+  it('GET /requests/:id liefert den Wunsch', async () => {
+    const r = await request(http()).get(`/requests/${state.requestId}`);
+    expect(r.status).toBe(200);
+    expect(r.body.title).toContain('Medikamente');
+  });
+});

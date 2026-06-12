@@ -597,4 +597,47 @@ class AppLocalizationsRu extends AppLocalizations {
   String earningsEstimate(Object amount) {
     return 'Вы можете заработать до $amount €';
   }
+
+  @override
+  String get requestsBoardTitle => 'Доска заявок';
+
+  @override
+  String get requestsBoardSubtitle => 'Посылки, которые нужно перевезти';
+
+  @override
+  String get postRequestTitle => 'Разместить заявку';
+
+  @override
+  String get fieldReward => 'Вознаграждение (€)';
+
+  @override
+  String get rewardLabel => 'Вознаграждение';
+
+  @override
+  String get requestPublished => 'Ваша заявка опубликована.';
+
+  @override
+  String get noRequests => 'Заявок пока нет.';
+
+  @override
+  String get noRequestsHint => 'Будьте первым — разместите заявку на доставку.';
+
+  @override
+  String get requestDetailTitle => 'Детали заявки';
+
+  @override
+  String get desiredBy => 'Желаемо до';
+
+  @override
+  String get homeRequestBoard => 'Доска заявок';
+
+  @override
+  String get homePostRequest => 'Разместить заявку';
+
+  @override
+  String get requestContactHint =>
+      'Вы путешественник? Свяжитесь с отправителем через его профиль, чтобы выполнить заявку.';
+
+  @override
+  String get fieldNotesOptional => 'Примечание (необязательно)';
 }

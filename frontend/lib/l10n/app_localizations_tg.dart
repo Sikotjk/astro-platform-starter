@@ -593,4 +593,47 @@ class AppLocalizationsTg extends AppLocalizations {
   String earningsEstimate(Object amount) {
     return 'Шумо метавонед то $amount € кор кунед';
   }
+
+  @override
+  String get requestsBoardTitle => 'Лавҳаи дархостҳо';
+
+  @override
+  String get requestsBoardSubtitle => 'Бастаҳое, ки касе мехоҳад бурда шавад';
+
+  @override
+  String get postRequestTitle => 'Дархост гузоред';
+
+  @override
+  String get fieldReward => 'Мукофот (€)';
+
+  @override
+  String get rewardLabel => 'Мукофот';
+
+  @override
+  String get requestPublished => 'Дархости шумо нашр шуд.';
+
+  @override
+  String get noRequests => 'Ҳоло дархост нест.';
+
+  @override
+  String get noRequestsHint => 'Аввалин шавед ва дархости интиқол гузоред.';
+
+  @override
+  String get requestDetailTitle => 'Тафсилоти дархост';
+
+  @override
+  String get desiredBy => 'То санаи';
+
+  @override
+  String get homeRequestBoard => 'Лавҳаи дархостҳо';
+
+  @override
+  String get homePostRequest => 'Дархост гузоред';
+
+  @override
+  String get requestContactHint =>
+      'Шумо мусофир ҳастед? Бо фиристанда тавассути профили ӯ тамос гиред.';
+
+  @override
+  String get fieldNotesOptional => 'Эзоҳ (ихтиёрӣ)';
 }
