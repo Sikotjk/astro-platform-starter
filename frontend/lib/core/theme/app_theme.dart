@@ -189,5 +189,15 @@ ThemeData buildAppTheme(Brightness brightness) {
         borderRadius: BorderRadius.circular(AppRadius.lg),
       ),
     ),
+    // Flüssige, plattformübergreifende Seitenübergänge (Material-3-Zoom).
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+        TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
+        TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
+        TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+      },
+    ),
   );
 }

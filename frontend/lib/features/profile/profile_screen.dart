@@ -67,6 +67,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               onPressed: () => context.push('/profile/edit', extra: profile),
             ),
           IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: l10n.settingsTitle,
+            onPressed: () => context.push('/settings'),
+          ),
+          IconButton(
             icon: const Icon(Icons.logout),
             tooltip: l10n.logout,
             onPressed: () => _confirmLogout(context),

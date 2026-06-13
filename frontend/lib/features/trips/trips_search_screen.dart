@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/booking_detail.dart';
 import '../../models/saved_search.dart';
@@ -173,7 +174,7 @@ class _TripsSearchScreenState extends ConsumerState<TripsSearchScreen> {
           Expanded(
             child: result.when(
               data: (trips) => _TripList(trips: trips),
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const ListSkeleton(),
               error: (e, _) =>
                   ErrorRetry(message: e.toString(), onRetry: _search),
             ),

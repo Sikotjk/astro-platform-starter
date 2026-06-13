@@ -679,4 +679,66 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get offerAcceptedSnack => 'Angebot angenommen.';
+
+  @override
+  String get settingsTitle => 'Einstellungen';
+
+  @override
+  String get sectionAppearance => 'Darstellung';
+
+  @override
+  String get themeMode => 'Erscheinungsbild';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Hell';
+
+  @override
+  String get themeDark => 'Dunkel';
+
+  @override
+  String get sectionGeneral => 'Allgemein';
+
+  @override
+  String get sectionSupport => 'Support & Info';
+
+  @override
+  String get settingsHelp => 'Hilfe & FAQ';
+
+  @override
+  String get settingsAbout => 'Über die App';
+
+  @override
+  String get appVersionLabel => 'Version';
+
+  @override
+  String get helpIntro =>
+      'Häufige Fragen rund um Versand, Buchung und Sicherheit.';
+
+  @override
+  String get faqQ1 => 'Wie funktioniert der Versand?';
+
+  @override
+  String get faqA1 =>
+      'Du findest einen Reisenden oder postest einen Wunsch. Nach Annahme wird die Übergabe im Chat abgestimmt; die Zahlung liegt bis zur Zustellung im Treuhandkonto.';
+
+  @override
+  String get faqQ2 => 'Ist meine Zahlung sicher?';
+
+  @override
+  String get faqA2 =>
+      'Ja – das Geld wird treuhänderisch gehalten und erst nach bestätigter Zustellung an den Reisenden ausgezahlt.';
+
+  @override
+  String get faqQ3 => 'Warum brauche ich eine Verifizierung?';
+
+  @override
+  String get faqA3 =>
+      'Die Identitätsprüfung schafft Vertrauen zwischen Sendern und Reisenden und ist Voraussetzung, um Trips anzubieten.';
+
+  @override
+  String get aboutBody =>
+      'TJ-Shipping verbindet Menschen in Deutschland, die Pakete senden möchten, mit Reisenden nach Tadschikistan – sicher, mit Treuhand, Bewertungen und Zoll-Manifest.';
 }

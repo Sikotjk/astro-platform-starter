@@ -1329,6 +1329,120 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Angebot angenommen.'**
   String get offerAcceptedSnack;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Einstellungen'**
+  String get settingsTitle;
+
+  /// No description provided for @sectionAppearance.
+  ///
+  /// In de, this message translates to:
+  /// **'Darstellung'**
+  String get sectionAppearance;
+
+  /// No description provided for @themeMode.
+  ///
+  /// In de, this message translates to:
+  /// **'Erscheinungsbild'**
+  String get themeMode;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In de, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In de, this message translates to:
+  /// **'Hell'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In de, this message translates to:
+  /// **'Dunkel'**
+  String get themeDark;
+
+  /// No description provided for @sectionGeneral.
+  ///
+  /// In de, this message translates to:
+  /// **'Allgemein'**
+  String get sectionGeneral;
+
+  /// No description provided for @sectionSupport.
+  ///
+  /// In de, this message translates to:
+  /// **'Support & Info'**
+  String get sectionSupport;
+
+  /// No description provided for @settingsHelp.
+  ///
+  /// In de, this message translates to:
+  /// **'Hilfe & FAQ'**
+  String get settingsHelp;
+
+  /// No description provided for @settingsAbout.
+  ///
+  /// In de, this message translates to:
+  /// **'Über die App'**
+  String get settingsAbout;
+
+  /// No description provided for @appVersionLabel.
+  ///
+  /// In de, this message translates to:
+  /// **'Version'**
+  String get appVersionLabel;
+
+  /// No description provided for @helpIntro.
+  ///
+  /// In de, this message translates to:
+  /// **'Häufige Fragen rund um Versand, Buchung und Sicherheit.'**
+  String get helpIntro;
+
+  /// No description provided for @faqQ1.
+  ///
+  /// In de, this message translates to:
+  /// **'Wie funktioniert der Versand?'**
+  String get faqQ1;
+
+  /// No description provided for @faqA1.
+  ///
+  /// In de, this message translates to:
+  /// **'Du findest einen Reisenden oder postest einen Wunsch. Nach Annahme wird die Übergabe im Chat abgestimmt; die Zahlung liegt bis zur Zustellung im Treuhandkonto.'**
+  String get faqA1;
+
+  /// No description provided for @faqQ2.
+  ///
+  /// In de, this message translates to:
+  /// **'Ist meine Zahlung sicher?'**
+  String get faqQ2;
+
+  /// No description provided for @faqA2.
+  ///
+  /// In de, this message translates to:
+  /// **'Ja – das Geld wird treuhänderisch gehalten und erst nach bestätigter Zustellung an den Reisenden ausgezahlt.'**
+  String get faqA2;
+
+  /// No description provided for @faqQ3.
+  ///
+  /// In de, this message translates to:
+  /// **'Warum brauche ich eine Verifizierung?'**
+  String get faqQ3;
+
+  /// No description provided for @faqA3.
+  ///
+  /// In de, this message translates to:
+  /// **'Die Identitätsprüfung schafft Vertrauen zwischen Sendern und Reisenden und ist Voraussetzung, um Trips anzubieten.'**
+  String get faqA3;
+
+  /// No description provided for @aboutBody.
+  ///
+  /// In de, this message translates to:
+  /// **'TJ-Shipping verbindet Menschen in Deutschland, die Pakete senden möchten, mit Reisenden nach Tadschikistan – sicher, mit Treuhand, Bewertungen und Zoll-Manifest.'**
+  String get aboutBody;
 }
 
 class _AppLocalizationsDelegate

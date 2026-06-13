@@ -675,4 +675,66 @@ class AppLocalizationsTg extends AppLocalizations {
 
   @override
   String get offerAcceptedSnack => 'Пешниҳод қабул шуд.';
+
+  @override
+  String get settingsTitle => 'Танзимот';
+
+  @override
+  String get sectionAppearance => 'Намуд';
+
+  @override
+  String get themeMode => 'Мавзӯъ';
+
+  @override
+  String get themeSystem => 'Система';
+
+  @override
+  String get themeLight => 'Равшан';
+
+  @override
+  String get themeDark => 'Торик';
+
+  @override
+  String get sectionGeneral => 'Умумӣ';
+
+  @override
+  String get sectionSupport => 'Дастгирӣ ва маълумот';
+
+  @override
+  String get settingsHelp => 'Кӯмак ва FAQ';
+
+  @override
+  String get settingsAbout => 'Дар бораи барнома';
+
+  @override
+  String get appVersionLabel => 'Версия';
+
+  @override
+  String get helpIntro =>
+      'Саволҳои зуд-зуд дар бораи интиқол, фармоиш ва бехатарӣ.';
+
+  @override
+  String get faqQ1 => 'Интиқол чӣ тавр кор мекунад?';
+
+  @override
+  String get faqA1 =>
+      'Мусофир ёбед ё дархост гузоред. Пас аз қабул супоридан дар чат мувофиқа мешавад; пардохт то расондан дар эскроу нигоҳ дошта мешавад.';
+
+  @override
+  String get faqQ2 => 'Оё пардохти ман бехатар аст?';
+
+  @override
+  String get faqA2 =>
+      'Бале — пул дар эскроу нигоҳ дошта шуда, танҳо пас аз тасдиқи расондан ба мусофир дода мешавад.';
+
+  @override
+  String get faqQ3 => 'Чаро тасдиқ лозим аст?';
+
+  @override
+  String get faqA3 =>
+      'Тасдиқи шахсият эътимод месозад ва барои пешниҳоди сафар зарур аст.';
+
+  @override
+  String get aboutBody =>
+      'TJ-Shipping фиристандагони Олмонро бо мусофирони ба Тоҷикистон мепайвандад — бехатар, бо эскроу, баҳодиҳӣ ва манифести гумрукӣ.';
 }

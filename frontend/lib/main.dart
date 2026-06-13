@@ -8,6 +8,7 @@ import 'core/locale_controller.dart';
 import 'core/localization_delegates.dart';
 import 'core/providers.dart';
 import 'core/theme/app_theme.dart';
+import 'core/theme/theme_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'router.dart';
 import 'widgets/app_logo.dart';
@@ -38,6 +39,7 @@ class TjShippingApp extends ConsumerWidget {
 
     final theme = buildAppTheme(Brightness.light);
     final darkTheme = buildAppTheme(Brightness.dark);
+    final themeMode = ref.watch(themeModeProvider);
 
     // Während des Auto-Logins einen Splash zeigen, danach die Router-App.
     if (bootstrap.isLoading) {
@@ -48,6 +50,7 @@ class TjShippingApp extends ConsumerWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         theme: theme,
         darkTheme: darkTheme,
+        themeMode: themeMode,
         home: const _SplashScreen(),
       );
     }
@@ -61,6 +64,7 @@ class TjShippingApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: theme,
       darkTheme: darkTheme,
+      themeMode: themeMode,
       routerConfig: router,
       // Im Demo-Modus eine deutlich sichtbare Ecken-Markierung einblenden.
       builder: AppConfig.isDemoMode

@@ -24,6 +24,7 @@ import 'features/reviews/public_profile_screen.dart';
 import 'models/booking_detail.dart';
 import 'models/package_request.dart';
 import 'features/saved_searches/saved_searches_screen.dart';
+import 'features/settings/settings_screen.dart';
 import 'features/trips/create_trip_screen.dart';
 import 'features/trips/my_trips_screen.dart';
 import 'features/trips/trips_search_screen.dart';
@@ -142,6 +143,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const NotificationsScreen(),
       ),
       GoRoute(path: '/kyc', builder: (_, _) => const KycScreen()),
+      GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
       GoRoute(
         path: '/profile/edit',
         builder: (_, state) =>

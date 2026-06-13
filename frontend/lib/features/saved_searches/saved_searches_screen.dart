@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/saved_search.dart';
 import '../../widgets/empty_state.dart';
@@ -47,7 +48,7 @@ class _SavedSearchesScreenState extends ConsumerState<SavedSearchesScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.savedSearches)),
       body: state.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const ListSkeleton(),
         error: (e, _) => ErrorRetry(
           message: e.toString(),
           onRetry: () =>

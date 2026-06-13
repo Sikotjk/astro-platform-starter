@@ -6,6 +6,7 @@ import '../../core/api_client.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/notification.dart';
 import '../../widgets/empty_state.dart';
@@ -105,7 +106,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                 onRefresh: _refresh,
                 child: _NotificationList(items: items, onTap: _open),
               ),
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const ListSkeleton(),
               error: (e, _) => ErrorRetry(
                 message: e.toString(),
                 onRetry: () => ref

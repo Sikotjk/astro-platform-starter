@@ -679,4 +679,65 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get offerAcceptedSnack => 'Предложение принято.';
+
+  @override
+  String get settingsTitle => 'Настройки';
+
+  @override
+  String get sectionAppearance => 'Оформление';
+
+  @override
+  String get themeMode => 'Тема';
+
+  @override
+  String get themeSystem => 'Система';
+
+  @override
+  String get themeLight => 'Светлая';
+
+  @override
+  String get themeDark => 'Тёмная';
+
+  @override
+  String get sectionGeneral => 'Общее';
+
+  @override
+  String get sectionSupport => 'Поддержка и инфо';
+
+  @override
+  String get settingsHelp => 'Помощь и FAQ';
+
+  @override
+  String get settingsAbout => 'О приложении';
+
+  @override
+  String get appVersionLabel => 'Версия';
+
+  @override
+  String get helpIntro => 'Частые вопросы о доставке, заказах и безопасности.';
+
+  @override
+  String get faqQ1 => 'Как работает доставка?';
+
+  @override
+  String get faqA1 =>
+      'Найдите путешественника или разместите заявку. После принятия передача согласуется в чате; оплата держится на эскроу до доставки.';
+
+  @override
+  String get faqQ2 => 'Безопасна ли оплата?';
+
+  @override
+  String get faqA2 =>
+      'Да — деньги хранятся на эскроу и выплачиваются путешественнику только после подтверждения доставки.';
+
+  @override
+  String get faqQ3 => 'Зачем нужна верификация?';
+
+  @override
+  String get faqA3 =>
+      'Проверка личности создаёт доверие и нужна, чтобы предлагать поездки.';
+
+  @override
+  String get aboutBody =>
+      'TJ-Shipping связывает отправителей в Германии с путешественниками в Таджикистан — безопасно, с эскроу, отзывами и таможенным манифестом.';
 }

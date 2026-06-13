@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/package_request.dart';
 import '../../widgets/empty_state.dart';
@@ -42,7 +43,7 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> {
         label: Text(l10n.postRequestTitle),
       ),
       body: state.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const ListSkeleton(),
         error: (e, _) => ErrorRetry(message: e.toString(), onRetry: _reload),
         data: (requests) => RefreshIndicator(
           onRefresh: _reload,

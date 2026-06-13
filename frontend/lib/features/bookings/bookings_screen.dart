@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
@@ -139,7 +140,7 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
                 onRefresh: _refresh,
                 child: _BookingList(bookings: bookings),
               ),
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const ListSkeleton(),
               error: (e, _) =>
                   ErrorRetry(message: e.toString(), onRetry: _reload),
             ),

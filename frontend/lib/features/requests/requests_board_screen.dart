@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/customs.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/package_request.dart';
 import '../../widgets/empty_state.dart';
@@ -120,7 +121,7 @@ class _RequestsBoardScreenState extends ConsumerState<RequestsBoardScreen> {
           Expanded(
             child: state.when(
               data: (requests) => _RequestList(requests: requests),
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const ListSkeleton(),
               error: (e, _) =>
                   ErrorRetry(message: e.toString(), onRetry: _search),
             ),

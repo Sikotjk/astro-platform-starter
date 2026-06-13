@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/trip.dart';
 import '../../widgets/empty_state.dart';
@@ -31,7 +32,7 @@ class _MyTripsScreenState extends ConsumerState<MyTripsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.myTripsTitle)),
       body: state.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const ListSkeleton(),
         error: (e, _) => ErrorRetry(
           message: e.toString(),
           onRetry: () => ref.read(myTripsControllerProvider.notifier).load(),
