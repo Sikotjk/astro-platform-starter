@@ -10,6 +10,7 @@ import '../../core/theme/app_theme.dart';
 import '../../models/package_request.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/error_retry.dart';
+import '../../widgets/refresh_feedback.dart';
 
 /// Liste der vom Sender selbst geposteten Wünsche.
 class MyRequestsScreen extends ConsumerStatefulWidget {
@@ -31,6 +32,13 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> {
   Future<void> _reload() =>
       ref.read(myRequestsControllerProvider.notifier).load();
 
+  Future<void> _refresh() async {
+    await _reload();
+    if (mounted && !ref.read(myRequestsControllerProvider).hasError) {
+      showRefreshedToast(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -47,7 +55,7 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> {
         loading: () => const ListSkeleton(),
         error: (e, _) => ErrorRetry(message: e.toString(), onRetry: _reload),
         data: (requests) => RefreshIndicator(
-          onRefresh: _reload,
+          onRefresh: _refresh,
           child: requests.isEmpty
               ? ListView(
                   physics: const AlwaysScrollableScrollPhysics(),

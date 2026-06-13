@@ -32,6 +32,7 @@
   "langRu": "Русский",
   "langTj": "Таджикский",
   "refresh": "Обновить",
+  "refreshed": "Обновлено",
   "retry": "Повторить",
   "timeJustNow": "только что",
   "timeMinutesAgo": "{count, plural, one{{count} мин. назад} few{{count} мин. назад} other{{count} мин. назад}}",

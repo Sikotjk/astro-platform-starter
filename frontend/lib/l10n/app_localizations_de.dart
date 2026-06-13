@@ -107,6 +107,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get refresh => 'Aktualisieren';
 
   @override
+  String get refreshed => 'Aktualisiert';
+
+  @override
   String get retry => 'Erneut versuchen';
 
   @override

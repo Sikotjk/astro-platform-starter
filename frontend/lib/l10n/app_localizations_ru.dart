@@ -107,6 +107,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get refresh => 'Обновить';
 
   @override
+  String get refreshed => 'Обновлено';
+
+  @override
   String get retry => 'Повторить';
 
   @override

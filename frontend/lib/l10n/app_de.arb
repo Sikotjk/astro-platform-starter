@@ -35,6 +35,7 @@
   "langRu": "Russisch",
   "langTj": "Tadschikisch",
   "refresh": "Aktualisieren",
+  "refreshed": "Aktualisiert",
   "retry": "Erneut versuchen",
   "timeJustNow": "gerade eben",
   "timeMinutesAgo": "{count, plural, =1{vor 1 Min.} other{vor {count} Min.}}",

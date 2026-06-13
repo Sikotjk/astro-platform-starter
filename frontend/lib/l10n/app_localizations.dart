@@ -292,6 +292,12 @@ abstract class AppLocalizations {
   /// **'Aktualisieren'**
   String get refresh;
 
+  /// No description provided for @refreshed.
+  ///
+  /// In de, this message translates to:
+  /// **'Aktualisiert'**
+  String get refreshed;
+
   /// No description provided for @retry.
   ///
   /// In de, this message translates to:

@@ -32,6 +32,7 @@
   "langRu": "Русӣ",
   "langTj": "Тоҷикӣ",
   "refresh": "Навсозӣ",
+  "refreshed": "Нав карда шуд",
   "retry": "Аз нав кӯшиш кардан",
   "timeJustNow": "ҳозир",
   "timeMinutesAgo": "{count, plural, other{{count} дақ. пеш}}",

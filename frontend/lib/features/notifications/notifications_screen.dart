@@ -12,6 +12,7 @@ import '../../core/theme/app_theme.dart';
 import '../../models/notification.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/error_retry.dart';
+import '../../widgets/refresh_feedback.dart';
 
 class NotificationsScreen extends ConsumerStatefulWidget {
   const NotificationsScreen({super.key});
@@ -32,9 +33,14 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     );
   }
 
-  Future<void> _refresh() => ref
-      .read(notificationsControllerProvider.notifier)
-      .load(unreadOnly: _unreadOnly);
+  Future<void> _refresh() async {
+    await ref
+        .read(notificationsControllerProvider.notifier)
+        .load(unreadOnly: _unreadOnly);
+    if (mounted && !ref.read(notificationsControllerProvider).hasError) {
+      showRefreshedToast(context);
+    }
+  }
 
   /// Markiert die Benachrichtigung als gelesen und springt bei einem
   /// Trip-Treffer direkt zur Buchungsansicht des passenden Trips.

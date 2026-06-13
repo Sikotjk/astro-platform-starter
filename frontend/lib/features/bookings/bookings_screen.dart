@@ -11,6 +11,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/booking.dart';
 import '../../widgets/empty_state.dart';
 import '../../widgets/error_retry.dart';
+import '../../widgets/refresh_feedback.dart';
 
 /// Lokalisierte Beschriftung je Buchungsstatus.
 String bookingStatusLabel(AppLocalizations l10n, String status) {
@@ -75,9 +76,14 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
         .load(role: _role, status: _statusFilter);
   }
 
-  Future<void> _refresh() => ref
-      .read(bookingsControllerProvider.notifier)
-      .load(role: _role, status: _statusFilter);
+  Future<void> _refresh() async {
+    await ref
+        .read(bookingsControllerProvider.notifier)
+        .load(role: _role, status: _statusFilter);
+    if (mounted && !ref.read(bookingsControllerProvider).hasError) {
+      showRefreshedToast(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
