@@ -1,7 +1,8 @@
-name: Demo (GitHub Pages)
+name: App (GitHub Pages)
 
-# Baut die Flutter-Web-App im DEMO-Modus (ohne Backend) und veröffentlicht sie
-# auf GitHub Pages. Ergebnis: ein Link, der auf dem Handy im Browser läuft.
+# Baut die Flutter-Web-App und veröffentlicht sie auf GitHub Pages.
+# - Repo-Variable API_BASE_URL gesetzt  -> ECHTE App gegen dieses Backend
+# - nicht gesetzt                        -> DEMO (In-Memory, ohne Backend)
 #
 # Einmalig aktivieren: Repo → Settings → Pages → "Build and deployment" →
 # Source: "GitHub Actions". Danach läuft dieser Workflow bei jedem Push am
@@ -28,7 +29,7 @@ concurrency:
 
 jobs:
   build:
-    name: Build (Flutter Web, Demo)
+    name: Build (Flutter Web)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -47,12 +48,26 @@ jobs:
 
       # base-href muss dem Pages-Unterpfad entsprechen (Projekt-Site):
       # https://<user>.github.io/<repo>/
-      - name: Build web (Demo-Modus)
-        run: >-
-          flutter build web --release
-          --dart-define=DEMO_MODE=true
-          --base-href "/${{ github.event.repository.name }}/"
-          --no-tree-shake-icons
+      #
+      # Echt-Modus vs. Demo: Ist die Repo-Variable API_BASE_URL gesetzt
+      # (Settings → Secrets and variables → Actions → Variables), wird die
+      # ECHTE App gegen dieses Backend gebaut. Sonst Fallback auf DEMO_MODE.
+      - name: Build web
+        env:
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+          STRIPE_PUBLISHABLE_KEY: ${{ vars.STRIPE_PUBLISHABLE_KEY }}
+        run: |
+          BASE="/${{ github.event.repository.name }}/"
+          if [ -n "$API_BASE_URL" ]; then
+            echo "Building REAL app against $API_BASE_URL"
+            flutter build web --release --base-href "$BASE" --no-tree-shake-icons \
+              --dart-define=API_BASE_URL="$API_BASE_URL" \
+              --dart-define=STRIPE_PUBLISHABLE_KEY="$STRIPE_PUBLISHABLE_KEY"
+          else
+            echo "API_BASE_URL not set -> building DEMO build"
+            flutter build web --release --base-href "$BASE" --no-tree-shake-icons \
+              --dart-define=DEMO_MODE=true
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

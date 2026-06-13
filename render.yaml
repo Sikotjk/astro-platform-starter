@@ -1,0 +1,45 @@
+# Render Blueprint — hostet Backend (Docker) + managed PostgreSQL mit einem Klick.
+#
+# So nutzt du es:
+# 1. Konto auf https://render.com anlegen, GitHub verbinden.
+# 2. "New +" → "Blueprint" → dieses Repo wählen. Render liest render.yaml.
+# 3. "Apply" → es entstehen Datenbank + API. DATABASE_URL & JWT_ACCESS_SECRET
+#    werden automatisch gesetzt; Migrationen laufen beim Containerstart.
+# 4. Die API bekommt eine URL wie https://tj-shipping-api.onrender.com
+#    → diese URL als GitHub-Repo-Variable API_BASE_URL setzen (Settings →
+#    Secrets and variables → Actions → Variables), dann baut der Pages-Workflow
+#    die ECHTE App. CORS_ORIGIN unten ist bereits auf die Pages-Domain gesetzt.
+#
+# Hinweise:
+# - Free-Web-Services "schlafen" bei Inaktivitaet -> erster Aufruf ~30s langsam.
+# - Render-Free-Postgres laeuft 30 Tage; fuer Dauerbetrieb DATABASE_URL auf eine
+#   bestaendige Gratis-DB (z. B. Neon/Supabase) umstellen.
+
+databases:
+  - name: tj-shipping-db
+    plan: free
+    databaseName: tj_shipping
+    user: tj_shipping
+
+services:
+  - type: web
+    name: tj-shipping-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tj-shipping-db
+          property: connectionString
+      - key: JWT_ACCESS_SECRET
+        generateValue: true # Render erzeugt ein starkes, zufaelliges Secret
+      - key: PLATFORM_FEE_RATE
+        value: '0.15'
+      # Muss exakt der Pages-Origin entsprechen (Schema+Host, ohne Pfad):
+      - key: CORS_ORIGIN
+        value: https://sikotjk.github.io
+      # PORT wird von Render automatisch gesetzt; main.ts liest process.env.PORT.
