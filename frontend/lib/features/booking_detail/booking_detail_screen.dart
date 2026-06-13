@@ -413,7 +413,11 @@ class _PartnerCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: ListTile(
         key: const Key('partnerCard'),
-        leading: UserAvatar(name: party.firstName, url: party.avatarUrl),
+        leading: UserAvatar(
+          name: party.firstName,
+          url: party.avatarUrl,
+          heroTag: 'user-avatar-${party.id}',
+        ),
         title: Text(
           party.firstName.isEmpty ? l10n.bookingPartner : party.firstName,
         ),

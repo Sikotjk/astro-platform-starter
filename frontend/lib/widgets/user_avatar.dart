@@ -2,12 +2,23 @@ import 'package:flutter/material.dart';
 
 /// Rundes Profilbild. Zeigt das Bild aus [url]; fehlt es oder lädt es nicht,
 /// wird der erste Buchstabe von [name] auf einer namensabhängigen Farbe gezeigt.
+///
+/// Ist [heroTag] gesetzt, wird der Avatar in einen [Hero] gehüllt — dann
+/// „fliegt" er beim Navigieren zwischen zwei Screens mit gleichem Tag (z. B.
+/// Listenkarte → Profil) animiert an seine neue Position.
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({super.key, required this.name, this.url, this.radius = 20});
+  const UserAvatar({
+    super.key,
+    required this.name,
+    this.url,
+    this.radius = 20,
+    this.heroTag,
+  });
 
   final String name;
   final String? url;
   final double radius;
+  final Object? heroTag;
 
   // Dezente, harmonische Farbpalette für Initialen-Avatare.
   static const _palette = [
@@ -32,7 +43,7 @@ class UserAvatar extends StatelessWidget {
     final hasUrl = url != null && url!.isNotEmpty;
     final color = _colorFor(trimmed);
 
-    return CircleAvatar(
+    final avatar = CircleAvatar(
       radius: radius,
       backgroundColor: color.withValues(alpha: 0.18),
       // foregroundImage fällt bei null/Ladefehler automatisch auf child zurück.
@@ -45,6 +56,15 @@ class UserAvatar extends StatelessWidget {
           color: color,
         ),
       ),
+    );
+
+    if (heroTag == null) return avatar;
+    // Während des Flugs Material-Form wahren, damit der Avatar rund bleibt.
+    return Hero(
+      tag: heroTag!,
+      flightShuttleBuilder: (_, _, _, _, toContext) =>
+          (toContext.widget as Hero).child,
+      child: avatar,
     );
   }
 }

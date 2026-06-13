@@ -49,7 +49,12 @@ class _PublicProfileScreenState extends ConsumerState<PublicProfileScreen> {
         children: [
           Row(
             children: [
-              UserAvatar(name: p.firstName, url: p.avatarUrl, radius: 28),
+              UserAvatar(
+                name: p.firstName,
+                url: p.avatarUrl,
+                radius: 28,
+                heroTag: 'user-avatar-${p.id}',
+              ),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(

@@ -20,4 +20,24 @@ void main() {
     );
     expect(find.text('?'), findsOneWidget);
   });
+
+  testWidgets('ohne heroTag kein Hero, mit heroTag ein Hero', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(body: UserAvatar(name: 'anna')),
+      ),
+    );
+    expect(find.byType(Hero), findsNothing);
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: UserAvatar(name: 'anna', heroTag: 'user-avatar-42'),
+        ),
+      ),
+    );
+    final hero = tester.widget<Hero>(find.byType(Hero));
+    expect(hero.tag, 'user-avatar-42');
+    expect(find.text('A'), findsOneWidget);
+  });
 }
