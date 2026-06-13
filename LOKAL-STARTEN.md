@@ -14,12 +14,22 @@ Kein Demo-Modus. Du startest zwei Teile — **Backend** (Server + Datenbank) und
 
 ## Variante A — Chrome im Browser (am einfachsten, Windows)
 
-1. **`Backend-starten.bat`** doppelklicken. Docker startet PostgreSQL + die API,
-   führt die Migrationen aus und meldet am Ende
+Es gibt zwei Starter-Sätze — nimm **PowerShell** (`.ps1`) oder
+**Eingabeaufforderung** (`.bat`), beide tun dasselbe.
+
+**PowerShell** (empfohlen): Rechtsklick auf das Skript →
+**„Mit PowerShell ausführen"**. Falls Windows die Ausführung blockiert, im
+PowerShell-Fenster einmalig erlauben:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Backend-starten.ps1
+```
+
+1. **`Backend-starten.ps1`** (oder `Backend-starten.bat`) ausführen. Docker
+   startet PostgreSQL + die API, führt die Migrationen aus und meldet am Ende
    `API läuft auf http://localhost:3000`. **Fenster offen lassen.**
    - Test im Browser: `http://localhost:3000/health` → `{"status":"ok"}`
-2. **`App-ansehen.bat`** doppelklicken. Chrome öffnet die App auf
-   `http://localhost:8080`. **Fenster offen lassen.**
+2. **`App-ansehen.ps1`** (oder `App-ansehen.bat`) ausführen. Chrome öffnet die
+   App auf `http://localhost:8080`. **Fenster offen lassen.**
 3. Oben rechts **Registrieren** → Konto anlegen → du bist drin. Trips suchen,
    Wünsche posten, Buchungen, Chat, Profil/Bewertungen, Sprache DE/RU/TJ,
    Hell/Dunkel — alles echt.
