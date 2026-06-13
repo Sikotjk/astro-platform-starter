@@ -234,34 +234,36 @@ class _ActionCard extends StatelessWidget {
       ),
       child: Icon(icon, color: color, size: 24),
     );
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Nur die Benachrichtigungs-Kachel trägt ein Badge.
-              if (showBadge)
-                Badge(
-                  isLabelVisible: badgeCount > 0,
-                  label: Text('$badgeCount'),
-                  child: iconBox,
-                )
-              else
-                iconBox,
-              const SizedBox(height: 10),
-              Flexible(
-                child: Text(
-                  label,
-                  style: Theme.of(context).textTheme.titleMedium,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+    return PressableScale(
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Nur die Benachrichtigungs-Kachel trägt ein Badge.
+                if (showBadge)
+                  Badge(
+                    isLabelVisible: badgeCount > 0,
+                    label: Text('$badgeCount'),
+                    child: iconBox,
+                  )
+                else
+                  iconBox,
+                const SizedBox(height: 10),
+                Flexible(
+                  child: Text(
+                    label,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -48,4 +48,48 @@ void main() {
     expect(find.text('A'), findsOneWidget);
     expect(find.text('B'), findsOneWidget);
   });
+
+  testWidgets(
+    'PressableScale skaliert beim Drücken herunter und federt zurück',
+    (tester) async {
+      var tapped = false;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: PressableScale(
+                child: InkWell(
+                  onTap: () => tapped = true,
+                  child: const SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Text('Tap'),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      double scaleNow() =>
+          tester.widget<AnimatedScale>(find.byType(AnimatedScale)).scale;
+
+      // Ruhezustand: voll skaliert.
+      expect(scaleNow(), 1.0);
+
+      // Finger senken -> skaliert herunter.
+      final gesture = await tester.startGesture(
+        tester.getCenter(find.text('Tap')),
+      );
+      await tester.pump(const Duration(milliseconds: 150));
+      expect(scaleNow(), lessThan(1.0));
+
+      // Loslassen -> Tap löst aus, federt zurück, keine offenen Timer.
+      await gesture.up();
+      await tester.pumpAndSettle();
+      expect(scaleNow(), 1.0);
+      expect(tapped, isTrue);
+    },
+  );
 }
