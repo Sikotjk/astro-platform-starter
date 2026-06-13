@@ -21,14 +21,27 @@ async function bootstrap(): Promise<void> {
   app.useBodyParser('json', { limit: '256kb' });
   app.useBodyParser('urlencoded', { limit: '256kb', extended: true });
 
-  // CORS nur aktivieren, wenn Origins konfiguriert sind (für ein Web-Frontend).
-  // Mobile Apps brauchen kein CORS. CORS_ORIGIN = kommagetrennte Liste.
+  // CORS nur aktivieren, wenn nötig. Mobile Apps brauchen kein CORS.
+  // CORS_ORIGIN = kommagetrennte Liste erlaubter Web-Origins (Produktion).
+  // CORS_ALLOW_LOCALHOST=true erlaubt zusätzlich jeden localhost-Port — damit
+  // die lokale Web-App auf Flutters zufälligem Dev-Port ohne Fehler verbindet.
   const corsOrigins = (process.env.CORS_ORIGIN ?? '')
     .split(',')
     .map((o) => o.trim())
     .filter((o) => o.length > 0);
-  if (corsOrigins.length > 0) {
-    app.enableCors({ origin: corsOrigins, credentials: true });
+  const allowLocalhost = process.env.CORS_ALLOW_LOCALHOST === 'true';
+  const localhostRe = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+  if (corsOrigins.length > 0 || allowLocalhost) {
+    app.enableCors({
+      origin: (origin, cb) => {
+        // Kein Origin-Header (mobile App, curl) -> zulassen.
+        if (!origin) return cb(null, true);
+        if (allowLocalhost && localhostRe.test(origin)) return cb(null, true);
+        if (corsOrigins.includes(origin)) return cb(null, true);
+        return cb(null, false);
+      },
+      credentials: true,
+    });
   }
 
   app.useGlobalFilters(new DomainExceptionFilter());
