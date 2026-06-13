@@ -1,11 +1,11 @@
 {
-    "name": "tj_shipping_app",
-    "short_name": "tj_shipping_app",
+    "name": "TJ-Shipping",
+    "short_name": "TJ-Shipping",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0E6E62",
+    "theme_color": "#0E6E62",
+    "description": "Pakete sicher von Deutschland nach Tadschikistan — verbunden mit geprüften Reisenden.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
