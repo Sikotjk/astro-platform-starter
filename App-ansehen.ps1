@@ -22,7 +22,7 @@ if (-not (Get-Command flutter -ErrorAction SilentlyContinue)) {
 Write-Host "== Abhaengigkeiten laden ==" -ForegroundColor Cyan
 flutter pub get
 
-Write-Host "== App startet im Chrome auf http://localhost:8080 (Fenster offen lassen) ==" -ForegroundColor Cyan
-flutter run -d chrome --web-port=8080 --dart-define=API_BASE_URL=http://localhost:3000
+Write-Host "== App startet im Edge-Browser auf http://localhost:8080 (Fenster offen lassen) ==" -ForegroundColor Cyan
+flutter run -d edge --web-port=8080 --dart-define=API_BASE_URL=http://localhost:3000
 
 Read-Host "Beendet. Mit Enter schliessen"

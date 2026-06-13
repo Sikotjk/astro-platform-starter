@@ -61,7 +61,7 @@ docker compose up --build        # Datenbank + API, Port 3000
 # 2) App (neues Terminal)
 cd frontend
 flutter pub get
-flutter run -d chrome --web-port=8080 --dart-define=API_BASE_URL=http://localhost:3000
+flutter run -d edge --web-port=8080 --dart-define=API_BASE_URL=http://localhost:3000
 ```
 
 ## Zahlungen (optional)

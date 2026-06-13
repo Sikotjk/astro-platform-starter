@@ -5,6 +5,6 @@ REM Voraussetzung 2: Flutter ist installiert (https://docs.flutter.dev/get-start
 cd /d "%~dp0frontend"
 echo == Abhaengigkeiten laden ==
 call flutter pub get
-echo == App startet im Chrome auf festem Port 8080 (Fenster offen lassen) ==
-call flutter run -d chrome --web-port=8080 --dart-define=API_BASE_URL=http://localhost:3000
+echo == App startet im Edge-Browser auf festem Port 8080 (Fenster offen lassen) ==
+call flutter run -d edge --web-port=8080 --dart-define=API_BASE_URL=http://localhost:3000
 pause
