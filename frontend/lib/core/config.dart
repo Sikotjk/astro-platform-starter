@@ -17,8 +17,4 @@ class AppConfig {
   static const String stripeMerchantName = 'TJ-Shipping';
 
   static bool get isStripeConfigured => stripePublishableKey.isNotEmpty;
-
-  /// Demo-Modus: die App läuft komplett ohne Backend gegen In-Memory-Fakedaten
-  /// (`--dart-define=DEMO_MODE=true`). Ideal zum Ansehen/Vorführen der App.
-  static const bool isDemoMode = bool.fromEnvironment('DEMO_MODE');
 }

@@ -47,23 +47,11 @@ import '../models/saved_search.dart';
 import '../models/trip.dart';
 import 'api_client.dart';
 import 'config.dart';
-import 'demo/demo_http_adapter.dart';
 import 'locale_controller.dart';
 import 'token_store.dart';
 
 /// Zentrale Provider-Definitionen (Dependency Injection der App).
-///
-/// Im Demo-Modus (`--dart-define=DEMO_MODE=true`) wird ein vorbefüllter
-/// In-Memory-Token-Store genutzt, sodass die App direkt angemeldet startet.
-final tokenStoreProvider = Provider<TokenStore>((ref) {
-  if (AppConfig.isDemoMode) {
-    final store = InMemoryTokenStore();
-    store.write('demo-access-token');
-    store.writeRefresh('demo-refresh-token');
-    return store;
-  }
-  return SecureTokenStore();
-});
+final tokenStoreProvider = Provider<TokenStore>((ref) => SecureTokenStore());
 
 /// Zählt 401-Antworten. Entkoppelt den ApiClient vom AuthController (sonst
 /// entstünde ein Provider-Zyklus apiClient→authController→authRepository).
@@ -74,7 +62,6 @@ final apiClientProvider = Provider<ApiClient>(
   (ref) => ApiClient.create(
     ref.watch(tokenStoreProvider),
     onUnauthorized: () => ref.read(sessionExpiredProvider.notifier).state++,
-    adapter: AppConfig.isDemoMode ? DemoHttpAdapter() : null,
   ),
 );
 
@@ -283,12 +270,6 @@ final chatRepositoryProvider = Provider<ChatRepository>(
 );
 
 final chatGatewayProvider = Provider<ChatGateway>((ref) {
-  // Demo-Modus: kein echter Socket — der Verlauf kommt aus dem Demo-Backend.
-  if (AppConfig.isDemoMode) {
-    final gateway = FakeChatGateway();
-    ref.onDispose(gateway.dispose);
-    return gateway;
-  }
   final token = ref.watch(authControllerProvider).session?.accessToken ?? '';
   final gateway = SocketChatGateway(
     baseUrl: AppConfig.apiBaseUrl,
