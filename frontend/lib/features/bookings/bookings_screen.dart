@@ -180,7 +180,7 @@ class _BookingList extends StatelessWidget {
       separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, i) => FadeSlideIn(
         index: i,
-        child: _BookingCard(booking: bookings[i]),
+        child: PressableScale(child: _BookingCard(booking: bookings[i])),
       ),
     );
   }

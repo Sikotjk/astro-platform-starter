@@ -149,7 +149,12 @@ class _NotificationList extends StatelessWidget {
       separatorBuilder: (_, _) => const SizedBox(height: 10),
       itemBuilder: (context, i) => FadeSlideIn(
         index: i,
-        child: _NotificationCard(item: items[i], onTap: () => onTap(items[i])),
+        child: PressableScale(
+          child: _NotificationCard(
+            item: items[i],
+            onTap: () => onTap(items[i]),
+          ),
+        ),
       ),
     );
   }

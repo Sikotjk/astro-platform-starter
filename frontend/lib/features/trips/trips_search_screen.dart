@@ -207,7 +207,7 @@ class _TripList extends StatelessWidget {
       separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, i) => FadeSlideIn(
         index: i,
-        child: _TripCard(trip: trips[i]),
+        child: PressableScale(child: _TripCard(trip: trips[i])),
       ),
     );
   }

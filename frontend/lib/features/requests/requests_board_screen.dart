@@ -154,7 +154,7 @@ class _RequestList extends StatelessWidget {
       separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, i) => FadeSlideIn(
         index: i,
-        child: _RequestCard(request: requests[i]),
+        child: PressableScale(child: _RequestCard(request: requests[i])),
       ),
     );
   }
