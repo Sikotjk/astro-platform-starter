@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/animations.dart';
 import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/package_request.dart';
@@ -63,8 +64,10 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> {
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
                   itemCount: requests.length,
                   separatorBuilder: (_, _) => const SizedBox(height: 12),
-                  itemBuilder: (context, i) =>
-                      _MyRequestCard(request: requests[i]),
+                  itemBuilder: (context, i) => FadeSlideIn(
+                    index: i,
+                    child: _MyRequestCard(request: requests[i]),
+                  ),
                 ),
         ),
       ),

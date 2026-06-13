@@ -6,6 +6,7 @@ import '../../core/api_client.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/animations.dart';
 import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/notification.dart';
@@ -146,8 +147,10 @@ class _NotificationList extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
       separatorBuilder: (_, _) => const SizedBox(height: 10),
-      itemBuilder: (context, i) =>
-          _NotificationCard(item: items[i], onTap: () => onTap(items[i])),
+      itemBuilder: (context, i) => FadeSlideIn(
+        index: i,
+        child: _NotificationCard(item: items[i], onTap: () => onTap(items[i])),
+      ),
     );
   }
 }

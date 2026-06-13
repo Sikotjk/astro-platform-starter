@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
 import '../../core/theme/app_theme.dart';
+import '../../widgets/animations.dart';
 import '../../widgets/app_logo.dart';
 import '../../widgets/confirm_dialog.dart';
 import '../../widgets/language_menu.dart';
@@ -71,64 +72,68 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 crossAxisSpacing: 12,
                 childAspectRatio: 1.28,
               ),
-              delegate: SliverChildListDelegate([
-                _ActionCard(
-                  icon: Icons.search_rounded,
-                  label: l10n.homeSearchTrips,
-                  color: AppColors.teal,
-                  onTap: () => context.go('/trips'),
-                ),
-                _ActionCard(
-                  icon: Icons.flight_takeoff_rounded,
-                  label: l10n.offerTripTitle,
-                  color: AppColors.blue,
-                  onTap: () => context.push('/trip/new'),
-                ),
-                _ActionCard(
-                  icon: Icons.inbox_rounded,
-                  label: l10n.homeRequestBoard,
-                  color: AppColors.amberDeep,
-                  onTap: () => context.push('/requests'),
-                ),
-                _ActionCard(
-                  icon: Icons.add_box_rounded,
-                  label: l10n.homePostRequest,
-                  color: AppColors.tealDeep,
-                  onTap: () => context.push('/request/new'),
-                ),
-                _ActionCard(
-                  icon: Icons.luggage_rounded,
-                  label: l10n.myTripsTitle,
-                  color: AppColors.amberDeep,
-                  onTap: () => context.push('/trips/mine'),
-                ),
-                _ActionCard(
-                  icon: Icons.inventory_2_rounded,
-                  label: l10n.homeMyBookings,
-                  color: AppColors.success,
-                  onTap: () => context.go('/bookings'),
-                ),
-                _ActionCard(
-                  icon: Icons.notifications_rounded,
-                  label: l10n.homeNotifications,
-                  color: AppColors.info,
-                  showBadge: true,
-                  badgeCount: unread,
-                  onTap: () => context.push('/notifications'),
-                ),
-                _ActionCard(
-                  icon: Icons.verified_user_rounded,
-                  label: l10n.homeVerify,
-                  color: AppColors.danger,
-                  onTap: () => context.push('/kyc'),
-                ),
-                _ActionCard(
-                  icon: Icons.person_rounded,
-                  label: l10n.profileTitle,
-                  color: AppColors.tealDeep,
-                  onTap: () => context.go('/profile'),
-                ),
-              ]),
+              delegate: SliverChildListDelegate(
+                <Widget>[
+                  _ActionCard(
+                    icon: Icons.search_rounded,
+                    label: l10n.homeSearchTrips,
+                    color: AppColors.teal,
+                    onTap: () => context.go('/trips'),
+                  ),
+                  _ActionCard(
+                    icon: Icons.flight_takeoff_rounded,
+                    label: l10n.offerTripTitle,
+                    color: AppColors.blue,
+                    onTap: () => context.push('/trip/new'),
+                  ),
+                  _ActionCard(
+                    icon: Icons.inbox_rounded,
+                    label: l10n.homeRequestBoard,
+                    color: AppColors.amberDeep,
+                    onTap: () => context.push('/requests'),
+                  ),
+                  _ActionCard(
+                    icon: Icons.add_box_rounded,
+                    label: l10n.homePostRequest,
+                    color: AppColors.tealDeep,
+                    onTap: () => context.push('/request/new'),
+                  ),
+                  _ActionCard(
+                    icon: Icons.luggage_rounded,
+                    label: l10n.myTripsTitle,
+                    color: AppColors.amberDeep,
+                    onTap: () => context.push('/trips/mine'),
+                  ),
+                  _ActionCard(
+                    icon: Icons.inventory_2_rounded,
+                    label: l10n.homeMyBookings,
+                    color: AppColors.success,
+                    onTap: () => context.go('/bookings'),
+                  ),
+                  _ActionCard(
+                    icon: Icons.notifications_rounded,
+                    label: l10n.homeNotifications,
+                    color: AppColors.info,
+                    showBadge: true,
+                    badgeCount: unread,
+                    onTap: () => context.push('/notifications'),
+                  ),
+                  _ActionCard(
+                    icon: Icons.verified_user_rounded,
+                    label: l10n.homeVerify,
+                    color: AppColors.danger,
+                    onTap: () => context.push('/kyc'),
+                  ),
+                  _ActionCard(
+                    icon: Icons.person_rounded,
+                    label: l10n.profileTitle,
+                    color: AppColors.tealDeep,
+                    onTap: () => context.go('/profile'),
+                  ),
+                ].asMap().entries.map((e) {
+                  return FadeSlideIn(index: e.key, child: e.value);
+                }).toList(),
+              ),
             ),
           ),
         ],

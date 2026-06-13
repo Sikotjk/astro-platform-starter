@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/formatting.dart';
 import '../../core/l10n_ext.dart';
 import '../../core/providers.dart';
+import '../../widgets/animations.dart';
 import '../../widgets/shimmer.dart';
 import '../../core/theme/app_theme.dart';
 import '../../models/booking_detail.dart';
@@ -204,7 +205,10 @@ class _TripList extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       itemCount: trips.length,
       separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemBuilder: (context, i) => _TripCard(trip: trips[i]),
+      itemBuilder: (context, i) => FadeSlideIn(
+        index: i,
+        child: _TripCard(trip: trips[i]),
+      ),
     );
   }
 }
