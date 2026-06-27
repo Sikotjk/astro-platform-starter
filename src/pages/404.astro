@@ -1,0 +1,21 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { withBase } from '../lib/site';
+---
+
+<DashboardLayout title="Nicht gefunden" crumb="404">
+    <div class="relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden text-center">
+        <div class="aurora opacity-60"></div>
+        <p class="relative text-[88px] font-bold leading-none text-gradient-brand">404</p>
+        <h1 class="relative mt-2 text-2xl font-bold tracking-tight">Seite nicht gefunden</h1>
+        <p class="relative mt-2 max-w-md text-muted">
+            Diese Seite existiert nicht oder wurde verschoben. Kehre zum Dashboard zurück.
+        </p>
+        <a
+            href={withBase('/')}
+            class="relative mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-medium text-primary-foreground shadow-soft transition-all hover:brightness-110 active:scale-95"
+        >
+            Zum Dashboard
+        </a>
+    </div>
+</DashboardLayout>

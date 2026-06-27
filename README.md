@@ -1,51 +1,57 @@
-# Astro on Netlify Platform Starter
+# Meridian Fund — Web-Plattform
 
-[Live Demo](https://astro-platform-starter.netlify.app/)
+Eine moderne, premium gestaltete Verwaltungsplattform für einen internationalen
+Fonds: Dashboard, Mitglieder, Zahlungen, Berichte und Administration. Gebaut mit
+**Astro 5**, **React-Islands**, **TailwindCSS 4**, **Framer Motion**, **Lucide**
+und **Zod** — als statische Site auf GitHub Pages deploybar.
 
-A modern starter based on Astro.js, Tailwind, and [Netlify Core Primitives](https://docs.netlify.com/core/overview/#develop) (Edge Functions, Image CDN, Blob Store).
+> **Live:** https://sikotjk.github.io/astro-platform-starter/
 
-## Astro Commands
+## Highlights
 
-All commands are run from the root of the project, from a terminal:
+- **Design-System** mit Token-basierten Farben (Indigo / Deep Blue / Emerald /
+  Slate), exzellentem Hell- **und** Dunkelmodus, Glasmorphismus, weichen Schatten.
+- **World-class Dashboard** — KPIs mit animierten Zählern, interaktives
+  Flächendiagramm, Donut-Allokation, Zu-/Abfluss-Balken, Aktivität, Schnellaktionen.
+- **Mitglieder** — Suche, Filter, Sortierung, Pagination, CSV-Export.
+- **Zahlungen** — Beiträge, Auszahlungen, Gebühren mit Status & Referenzen.
+- **Berichte** — Jahresziel-Fortschritt, Mittelverwendung, herunterladbare Exporte.
+- **Verwaltung** — Rollen & Berechtigungen, Audit-Log, Systemeinstellungen.
+- **Command Palette** (⌘K / Strg+K), animierte Sidebar, responsive bis Mobile.
+- **SEO** (OpenGraph, Twitter, JSON-LD, Sitemap, robots), Accessibility, reduce-motion.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## Deploying to Netlify
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-platform-starter)
-
-## Developing Locally
-
-| Prerequisites                                                                |
-| :--------------------------------------------------------------------------- |
-| [Node.js](https://nodejs.org/) v18.14+.                                      |
-| (optional) [nvm](https://github.com/nvm-sh/nvm) for Node version management. |
-
-1. Clone this repository, then run `npm install` in its root directory.
-
-2. For the starter to have full functionality locally (e.g. edge functions, blob store), please ensure you have an up-to-date version of Netlify CLI. Run:
+## Architektur
 
 ```
-npm install netlify-cli@latest -g
+src/
+  components/
+    ui/          Wiederverwendbare Primitive (Button, Card, Badge, StatCard, …)
+    charts/      Eigene animierte SVG-Diagramme (Area, Bar, Donut, Sparkline)
+    app/         Shell: Sidebar, Topbar, CommandPalette, ThemeToggle, PageHeader
+    dashboard/ members/ payments/ reports/ settings/   Feature-Views (Islands)
+  layouts/       DashboardLayout.astro (SEO + No-Flash-Dark-Mode + Shell)
+  lib/           cn, site/base-helper, format, nav, data (Zod-typisierte Mock-Daten)
+  pages/         index, members, payments, reports, settings, 404
+  styles/        globals.css (Design-Tokens + Utilities)
 ```
 
-3. Link your local repository to the deployed Netlify site. This will ensure you're using the same runtime version for both local development and your deployed site.
+Die Daten sind typisierte Beispiel-Daten (`src/lib/data.ts`, Zod-validiert), damit
+die Oberfläche ohne Backend vollständig erlebbar ist.
 
-```
-netlify link
+## Entwicklung
+
+```bash
+npm install
+npm run dev        # http://localhost:4321/astro-platform-starter
+npm run build      # statischer Export nach dist/
+npm run preview
 ```
 
-4. Then, run the Astro.js development server via Netlify CLI:
+Deployment erfolgt automatisch via GitHub Actions
+(`.github/workflows/pages.yml`) bei Push auf `main`.
 
-```
-netlify dev
-```
+---
 
-If your browser doesn't navigate to the site automatically, visit [localhost:8888](http://localhost:8888).
+> Hinweis: Die separaten Ordner `frontend/` (Flutter) und `backend/` (NestJS)
+> gehören zum eigenständigen TJ-Shipping-Projekt und sind unabhängig von dieser
+> Web-Plattform.

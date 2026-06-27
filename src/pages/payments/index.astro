@@ -1,0 +1,19 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import PageHeader from '../../components/app/PageHeader.astro';
+import { Button } from '../../components/ui/Button';
+import { PaymentsView } from '../../components/payments/PaymentsView';
+---
+
+<DashboardLayout title="Zahlungen" crumb="Zahlungen">
+    <PageHeader
+        eyebrow="Finanzen"
+        title="Zahlungen"
+        subtitle="Beiträge, Auszahlungen und Gebühren — vollständig nachverfolgbar mit Belegen und Referenzen."
+    >
+        <Button slot="actions" variant="secondary" size="md" client:visible>Belege</Button>
+        <Button slot="actions" size="md" client:visible>+ Auszahlung</Button>
+    </PageHeader>
+
+    <PaymentsView client:load />
+</DashboardLayout>

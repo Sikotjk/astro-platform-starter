@@ -1,0 +1,18 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import PageHeader from '../../components/app/PageHeader.astro';
+import { Button } from '../../components/ui/Button';
+import { MembersView } from '../../components/members/MembersView';
+---
+
+<DashboardLayout title="Mitglieder" crumb="Mitglieder">
+    <PageHeader
+        eyebrow="Verwaltung"
+        title="Mitglieder"
+        subtitle="Suche, filtere und verwalte alle Mitglieder des Fonds — Rollen, Beiträge und Status."
+    >
+        <Button slot="actions" size="md" client:visible>+ Mitglied einladen</Button>
+    </PageHeader>
+
+    <MembersView client:load />
+</DashboardLayout>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sikotjk.github.io/astro-platform-starter/sitemap-index.xml

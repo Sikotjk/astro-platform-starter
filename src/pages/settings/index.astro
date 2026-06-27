@@ -1,0 +1,15 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import PageHeader from '../../components/app/PageHeader.astro';
+import { SettingsView } from '../../components/settings/SettingsView';
+---
+
+<DashboardLayout title="Verwaltung" crumb="Verwaltung">
+    <PageHeader
+        eyebrow="Administration"
+        title="Verwaltung"
+        subtitle="Rollen & Berechtigungen, vollständiges Audit-Log und Systemeinstellungen — rollenbasiert abgesichert."
+    />
+
+    <SettingsView client:load />
+</DashboardLayout>
